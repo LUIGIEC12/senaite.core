@@ -72,30 +72,42 @@ def _get_mrn_from_ar(ar):
         return u""
     try:
         raw = field.get(ar)
-    except Exception:
+        print("Raw MRN from AR field: {}".format(raw))
+    except Exception as e:
+        print("Error getting MRN from AR field: {}".format(e))
         return u""
-    return _normalize_str(raw)
+    normalized = _normalize_str(raw)
+    print("Normalized MRN from AR: {}".format(normalized))
+    return normalized
 
 
 def _get_patient_from_ar(ar):
     """Resuelve el paciente del AR o por MRN."""
+    print("Getting patient from AR: {}".format(ar.getId() if ar else "None"))
+    
     getp = getattr(ar, "getPatient", None)
     patient = None
     if callable(getp):
         try:
             patient = getp()
-        except Exception:
+            print("Patient from getPatient(): {}".format(patient))
+        except Exception as e:
+            print("Error in getPatient(): {}".format(e))
             patient = None
     if patient:
         return patient
 
     mrn = _get_mrn_from_ar(ar)
+    print("MRN for patient search: {}".format(mrn))
     if not mrn:
         return None
     try:
         from senaite.patient.api import get_patient_by_mrn
-        return get_patient_by_mrn(mrn)
-    except Exception:
+        patient = get_patient_by_mrn(mrn)
+        print("Patient found by MRN: {}".format(patient))
+        return patient
+    except Exception as e:
+        print("Error in get_patient_by_mrn: {}".format(e))
         return None
 
 
@@ -107,11 +119,16 @@ def _patient_fullname(patient):
         acc = getattr(patient, key, None)
         if callable(acc):
             try:
-                return _safe_unicode(acc())
-            except Exception:
+                fullname = _safe_unicode(acc())
+                print("Fullname from {}: {}".format(key, fullname))
+                return fullname
+            except Exception as e:
+                print("Error getting fullname from {}: {}".format(key, e))
                 pass
         elif isinstance(acc, basestring):
-            return _safe_unicode(acc)
+            fullname = _safe_unicode(acc)
+            print("Fullname from string: {}".format(fullname))
+            return fullname
 
     parts = []
     for fld in ("firstname", "middlename", "lastname", "maternal_lastname"):
@@ -119,11 +136,16 @@ def _patient_fullname(patient):
         if val:
             parts.append(_safe_unicode(_normalize_str(val)))
     if parts:
-        return u" ".join(parts)
+        fullname = u" ".join(parts)
+        print("Constructed fullname: {}".format(fullname))
+        return fullname
 
     try:
-        return _safe_unicode(patient.getId())
-    except Exception:
+        patient_id = _safe_unicode(patient.getId())
+        print("Using patient ID as name: {}".format(patient_id))
+        return patient_id
+    except Exception as e:
+        print("Error getting patient ID: {}".format(e))
         return u""
 
 
@@ -136,12 +158,17 @@ def _patient_mrn(patient):
         acc = getattr(patient, key, None)
         if callable(acc):
             try:
-                return _safe_unicode(acc())
-            except Exception:
+                mrn = _safe_unicode(acc())
+                print("MRN from {}: {}".format(key, mrn))
+                return mrn
+            except Exception as e:
+                print("Error getting MRN from {}: {}".format(key, e))
                 pass
     # atributos directos
     v = getattr(patient, "mrn", None) or getattr(patient, "MedicalRecordNumber", None)
-    return _safe_unicode(_normalize_str(v))
+    mrn = _safe_unicode(_normalize_str(v))
+    print("MRN from direct attributes: {}".format(mrn))
+    return mrn
 
 
 # -----------------------
@@ -158,34 +185,47 @@ def getAncestorsUIDs(instance):
 
 @indexer(IRequestAnalysis)
 def getPatientUID(obj):
+    print("=== Indexing PatientUID for: {} ===".format(obj.getId()))
     ar = _get_ar(obj)
     patient = _get_patient_from_ar(ar)
     try:
-        return api.get_uid(patient) if patient else None
-    except Exception:
+        uid = api.get_uid(patient) if patient else None
+        print("PatientUID: {}".format(uid))
+        return uid
+    except Exception as e:
+        print("Error getting PatientUID: {}".format(e))
         return None
 
 
 @indexer(IRequestAnalysis)
 def getPatientFullName(obj):
+    print("=== Indexing PatientFullName for: {} ===".format(obj.getId()))
     ar = _get_ar(obj)
     patient = _get_patient_from_ar(ar)
-    return _patient_fullname(patient) if patient else u""
+    fullname = _patient_fullname(patient) if patient else u""
+    print("PatientFullName: {}".format(fullname))
+    return fullname
 
 
 @indexer(IRequestAnalysis)
 def medical_record_number(obj):
     """Índice/metadata principal para MRN (coincide con el KeywordIndex del catálogo)."""
+    print("=== Indexing MRN for: {} ===".format(obj.getId()))
     ar = _get_ar(obj)
+    print("AR: {}".format(ar.getId() if ar else "None"))
 
     # 1) Si hay paciente, prioriza su MRN
     patient = _get_patient_from_ar(ar)
+    print("Patient found: {}".format(patient is not None))
     mrn = _patient_mrn(patient) if patient else u""
     if mrn:
+        print("MRN from patient: {}".format(mrn))
         return mrn
 
     # 2) Fallback: MRN guardado en el AR
-    return _safe_unicode(_get_mrn_from_ar(ar))
+    ar_mrn = _safe_unicode(_get_mrn_from_ar(ar))
+    print("MRN from AR field: {}".format(ar_mrn))
+    return ar_mrn
 
 
 @indexer(IRequestAnalysis)
@@ -195,7 +235,10 @@ def is_temporary_mrn(obj):
     acc = getattr(ar, "isMedicalRecordTemporary", None)
     if callable(acc):
         try:
-            return bool(acc())
-        except Exception:
+            is_temp = bool(acc())
+            print("is_temporary_mrn: {}".format(is_temp))
+            return is_temp
+        except Exception as e:
+            print("Error getting is_temporary_mrn: {}".format(e))
             return False
     return False
