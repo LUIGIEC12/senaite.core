@@ -9965,3 +9965,45 @@ msgstr "{} semanas y {} día(s)"
 
 msgid "Client share"
 msgstr "Compartir con el cliente"
+
+# Pestañas
+msgid "title_addresses_tab"
+msgstr "Dirección"
+
+msgid "title_bank_details_tab"
+msgstr "Datos bancarios"
+
+# Widget de dirección
+msgid "Address"
+msgstr "Dirección"
+
+msgid "Country"
+msgstr "País"
+
+msgid "State"
+msgstr "Estado"
+
+msgid "District"
+msgstr "Municipio"
+
+msgid "City"
+msgstr "Ciudad"
+
+msgid "Postal code"
+msgstr "Código postal"
+
+msgid "Postal address"
+msgstr "Dirección postal"
+
+msgid "Physical address"
+msgstr "Dirección física"
+
+msgid "Copy from"
+msgstr "Copiar de"
+
+msgid "Billing Address"
+msgstr "Dirección de facturación"
+
+# (Opcional, si el tab de preferencias no se traduce)
+msgid "Preferences"
+msgstr "Preferencias"
