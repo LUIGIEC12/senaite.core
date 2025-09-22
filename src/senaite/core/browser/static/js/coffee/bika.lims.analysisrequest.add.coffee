@@ -2202,3 +2202,53 @@ class window.AnalysisRequestAdd
 
     # Attach the new field to the outer div of the passed file field
     $(element).parent().parent().append file_field_div
+
+    ### -------------------------------------------------------------------------
+# PATCH: Autocompletar Sample Type desde el Profile Keyword al elegir perfiles
+### -------------------------------------------------------------------------
+
+# 1) Helper: busca el Sample Type por texto usando el widget React y lo selecciona
+AnalysisRequestAdd::autofill_sampletype_from_profiles = (arnum) ->
+  try
+    profField = $("#Profiles-#{arnum}")
+    sampField = $("#SampleType-#{arnum}")
+    profCtl = @get_widget_controller(profField)
+    sampCtl = @get_widget_controller(sampField)
+
+    return unless profCtl? and sampCtl?
+
+    # Si ya hay Sample Type, no pisar
+    return if (sampCtl.get_values()?.length ? 0) > 0
+
+    # Tomar el primer perfil seleccionado y leer su getProfileKey
+    recs = profCtl.get_data_records() or {}
+    selected = profCtl.get_values() or []
+    return unless selected.length > 0
+
+    key = null
+    for uid in selected when recs[uid]? and recs[uid].getProfileKey?
+      key = recs[uid].getProfileKey
+      break
+    return unless key
+
+    # Usar la búsqueda del widget: si hay 1 match exacto, seleccionarlo
+    prof = this
+    sampCtl.search(key).then (data) ->
+      return unless data?.count is 1
+      sampCtl.select(data.items)
+      sampCtl.clear_results()
+      # avisar que cambió el formulario (dispara recálculo de dependencias)
+      $(prof).trigger("form:changed")
+  catch err
+    console?.warn? "autofill_sampletype_from_profiles error:", err
+
+# 2) Engancharse al handler existente sin romperlo
+_original_on_analysis_profile_selected = AnalysisRequestAdd::on_analysis_profile_selected
+
+AnalysisRequestAdd::on_analysis_profile_selected = (event) ->
+  _original_on_analysis_profile_selected?.call @, event
+  # detectar la columna activa
+  $el = $(event.currentTarget)
+  arnum = $el.closest("[arnum]").attr("arnum") or "0"
+  @autofill_sampletype_from_profiles(arnum)
+
