@@ -9962,3 +9962,6 @@ msgstr "{} (Caducado)"
 #: bika/lims/controlpanel/bika_instruments.py:173
 msgid "{} weeks and {} day(s)"
 msgstr "{} semanas y {} día(s)"
+
+msgid "Client share"
+msgstr "Compartir con el cliente"
