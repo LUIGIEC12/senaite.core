@@ -1043,3 +1043,19 @@ msgstr "Dirección de facturación"
 # (Opcional, si el tab de preferencias no se traduce)
 msgid "Preferences"
 msgstr "Preferencias"
+
+# Confirmación para desvincular
+msgid "Unlink reference?"
+msgstr "¿Desvincular referencia?"
+
+# Acción sobre perfil de análisis
+msgid "Remove Profile"
+msgstr "Eliminar perfil"
+
+# Confirmación extendida al eliminar perfil
+msgid "Do you also want to remove the profiles services?"
+msgstr "¿También desea eliminar los servicios del perfil?"
+
+# Campo/flag genérico de temporalidad (ej. MRN temporal)
+msgid "Temporary"
+msgstr "Temporal"
