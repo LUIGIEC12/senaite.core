@@ -2203,90 +2203,74 @@ class window.AnalysisRequestAdd
     # Attach the new field to the outer div of the passed file field
     $(element).parent().parent().append file_field_div
 
-### -------------------------------------------------------------------------
-# PATCH: Autocompletar Sample Type desde Profile Keyword (Profiles widget)
-# Funciona cuando cambias la selección del widget de Perfiles.
-### -------------------------------------------------------------------------
+# Helper: hace una búsqueda en el referencewidget de SampleType por profile_keyword
+fetchSampleTypesByProfileKey = (key, cb) ->
+  $.ajax
+    url: portal_url + "/samples/referencewidget_search/search"
+    type: "GET"
+    dataType: "json"
+    data:
+      catalog: "senaite_catalog_setup"
+      portal_type: "SampleType"
+      limit: 20
+      # columna para mostrar y para asegurarnos que llega en el record
+      column_names: ["Title", "Description", "profile_keyword"]
+      # Filtro custom soportado por el indexer + query del ListingView
+      profile_keyword: key
+    success: (resp) -> cb(null, resp?.items or [])
+    error: (xhr) -> cb(new Error("Error buscando SampleTypes por ProfileKey: #{key}"))
 
-# Helper para obtener el "arnum" de una fila
-_get_arnum = ($el) ->
-  ($el.closest("[arnum]").attr("arnum") or "0")
+# Helper: setear el SampleType por UID en el widget de referencia
+setSampleTypeUID = (uid, row=0) ->
+  $st = $("#SampleType-#{row}")
+  return unless $st.length
+  # Usa el evento estándar del widget, para que dispare todo lo demás
+  $st.trigger("referencewidget:select", [{uid: uid, title: null}])
 
-# Devuelve el primer Profile Keyword de los perfiles seleccionados
-_get_first_profile_key = ($profiles) ->
-  try
-    # La data de filas del widget viene en data("records") o en propiedad interna
-    records = $profiles.data("records") or {}
-    selected = ($profiles.data("value") or "").split(",").filter (x) -> x
-    for uid in selected when records[uid]? and records[uid].getProfileKey?
-      return records[uid].getProfileKey
-    null
-  catch e
-    console?.warn? "[AR Add] get_first_profile_key error", e
-    null
+# Handler: cuando seleccionan/quitAN perfiles
+bindProfileKeyToSampleType = ->
+  $(document).off("referencewidget:select.profile2st")
+  $(document).on "referencewidget:select.profile2st", "[id^='Profiles-']", (ev, data) ->
+    # data puede traer {uid, title, ...}; obtenemos el record para ese uid
+    $profiles = $(ev.currentTarget)
+    recs = $profiles.data("records") or {}
+    # valor actual del widget de perfiles (pueden ser varios, separados por coma)
+    selected = (($profiles.data("value") or "") + "").split(",").filter(Boolean)
 
-# Busca un SampleType por título exacto (key) vía endpoint del referencewidget
-_fetch_sampletype_by_title = (arnum, key) ->
-  new Promise (resolve, reject) ->
-    $.ajax
-      url: portal_url + "/samples/referencewidget_search/search"
-      method: "GET"
-      dataType: "json"
-      data:
-        catalog: "senaite_catalog_setup"
-        limit: 5
-        field_name: "SampleType-#{arnum}"
-        portal_type: "SampleType"
-        sort_order: "ascending"
-        is_active: true
-        sort_on: "sortable_title"
-        # Filtro por título (los endpoints admiten filtro literal por columna)
-        # En varios widgets, enviar Title=... filtra por título exacto
-        Title: key
-      success: (resp) ->
-        resolve(resp)
-      error: (xhr, st, err) ->
-        reject(err)
+    # Reunir los Profile Keys de los perfiles seleccionados
+    keys = []
+    selected.forEach (uid) ->
+      rec = recs[uid]
+      key = rec?.getProfileKey or rec?.profile_key or rec?.profileKey
+      if key?
+        key = ("" + key).trim()
+        if key and keys.indexOf(key) is -1 then keys.push(key)
 
-# Selecciona programáticamente en el widget de SampleType
-_select_sampletype_items = ($sampletype, items) ->
-  try
-    if items?.length > 0
-      # Muchos ReferenceWidget exponen un event para seleccionar items
-      $sampletype.trigger("referencewidget:select", [items])
-      # Notificar cambio de formulario
-      $sampletype.closest("form").trigger("change")
-      console?.log? "[AR Add] SampleType autoseleccionado:", items
-  catch e
-    console?.warn? "[AR Add] no se pudo seleccionar SampleType:", e
+    return unless keys.length
 
-# Handler principal: cuando cambian Profiles-*
-$(document).on "referencewidget:updated", "[id^='Profiles-']", (ev, payload) ->
-  $profiles = $(this)
-  arnum = _get_arnum($profiles)
-  $sampletype = $("#SampleType-#{arnum}")
+    # Heurística: si seleccionan varios perfiles, intentamos una concordancia única.
+    # - Si todos los profiles comparten el mismo Profile Key → usamos ese
+    # - Si difieren → priorizamos el PRIMERO (o podrías abrir un modal para elegir)
+    chosenKey = keys[0]
+    # TIP: Si quieres forzar una sola selección coherente, valida que todos sean iguales:
+    # allSame = keys.every((k) -> k is keys[0])
+    # return if not allSame
 
-  # No pisar si ya hay valor
-  current = ($sampletype.data("value") or "").trim()
-  if current
-    console?.log? "[AR Add] SampleType ya tiene valor; no se cambia.", current
-    return
-
-  key = _get_first_profile_key($profiles)
-  if not key
-    console?.log? "[AR Add] No hay ProfileKey disponible en la selección."
-    return
-
-  console?.log? "[AR Add] Buscando SampleType por Title=", key
-  _fetch_sampletype_by_title(arnum, key).then (resp) ->
-    try
-      # Coincidencia exacta: 1 ítem con title == key
-      items = (resp?.items or []).filter (it) -> it.Title?.trim()? and it.Title.trim() is key.trim()
+    fetchSampleTypesByProfileKey chosenKey, (err, items) ->
+      return if err
       if items.length is 1
-        _select_sampletype_items($sampletype, items)
+        setSampleTypeUID(items[0].uid, 0)
+      else if items.length > 1
+        # Si hay más de uno, elige el primero, o abre un selector propio.
+        # Aquí elegimos el primero por simplicidad.
+        setSampleTypeUID(items[0].uid, 0)
       else
-        console?.log? "[AR Add] sin match exacto para SampleType; resp=", resp
-    catch e
-      console?.warn? "[AR Add] error procesando respuesta SampleType:", e
-  .catch (err) ->
-    console?.warn? "[AR Add] error buscando SampleType:", err
+        # No hay SampleType con ese profile_keyword → no tocamos nada
+        return
+
+# En tu init de la vista (cuando ya existe el DOM de AR Add):
+$ ->
+  try
+    bindProfileKeyToSampleType()
+  catch e
+    if window.console? then console.warn("ProfileKey→SampleType bind failed", e)
