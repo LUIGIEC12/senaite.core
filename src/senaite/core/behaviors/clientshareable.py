@@ -95,7 +95,7 @@ class IClientShareableBehavior(model.Schema):
 
     fieldset(
         "clientshareable",
-        label=u"Client share",
+        label=_(u"Client share"),
         fields=["clients"],
     )
 
