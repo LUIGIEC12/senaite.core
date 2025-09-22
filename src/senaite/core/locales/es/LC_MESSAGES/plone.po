@@ -998,3 +998,6 @@ msgstr "sin asignar"
 #: senaite/core/browser/usergroup/templates/usergroups_usersoverview.pt:52
 msgid "user_roles_note"
 msgstr "Tenga en cuenta que los roles aquí establecidos se aplican directamente a un usuario. El símbolo ${image_link_icon} indica un rol heredado por la pertenencia a un grupo."
+
+msgid "Client share"
+msgstr "Compartir con el cliente"
