@@ -322,3 +322,8 @@ msgstr "Envíos de muestras entrantes"
 msgid "Outbound sample shipments"
 msgstr "Envíos de muestras salientes"
 
+msgid "External laboratories"
+msgstr "Laboratorios externos"
+
+msgid "Shipments"
+msgstr "Envíos"
