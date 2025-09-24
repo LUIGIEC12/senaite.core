@@ -699,7 +699,7 @@ msgstr "Recepción automática de muestras"
 
 #: bika/lims/browser/worksheet/templates/results.pt:166
 msgid "Autofill"
-msgstr "Autofill"
+msgstr "Autocompletar"
 
 #: bika/lims/content/bikasetup.py:815
 msgid "Automatic Sticker Printing"
@@ -2351,7 +2351,7 @@ msgstr "Tamaño del fichero"
 
 #: bika/lims/browser/analysisrequest/templates/ar_add2.pt:521
 msgid "Filter analyses by name..."
-msgstr "Filtrar análisis by nombre..."
+msgstr "Filtrar análisis por nombre..."
 
 #: bika/lims/browser/worksheet/views/add_analyses.py:190
 msgid "Filter by template method"
@@ -2590,7 +2590,7 @@ msgstr "Importación finalizada con éxito: ${updated_ars} Muestras y ${updated_
 
 #: senaite/core/exportimport/instruments/importer.py:546
 msgid "Import finished successfully: ${updated_ars} Samples, ${updated_instruments} Instruments and ${updated_results} results updated"
-msgstr "Import finished correctamente: ${updated_ars} muestras, ${updated_instruments} instrumentos and ${updated_results} resultados updated"
+msgstr "Importación finalizada correctamente: ${updated_ars} muestras, ${updated_instruments} instrumentos y ${updated_results} resultados actualizados"
 
 #: bika/lims/browser/resultsimport/autoimportlogs.py:59
 msgid "Imported File"
@@ -6315,19 +6315,19 @@ msgstr "Valor"
 
 #: senaite/core/schema/coordinatefield.py:109
 msgid "Value for degrees must be within 0 and 180"
-msgstr "Valor for degrees must be within 0 and 180"
+msgstr "El valor de los grados debe estar entre 0 y 180"
 
 #: senaite/core/schema/coordinatefield.py:93
 msgid "Value for degrees must be within 0 and 90"
-msgstr "Valor for degrees must be within 0 and 90"
+msgstr "El valor de los grados debe estar entre 0 y 90"
 
 #: senaite/core/schema/coordinatefield.py:68
 msgid "Value for minutes must be within 0 and 59"
-msgstr "Valor for minutos must be within 0 and 59"
+msgstr "El valor por minutos debe estar entre 0 y 59"
 
 #: senaite/core/schema/coordinatefield.py:77
 msgid "Value for seconds must be within 0 and 59.9999"
-msgstr "Valor for segundos must be within 0 and 59.9999"
+msgstr "Valor por segundos debe estar entre 0 and 59.9999"
 
 #: bika/lims/content/abstractanalysis.py:154
 msgid "Values can be entered here which will override the defaults specified in the Calculation Interim Fields."
@@ -7111,7 +7111,7 @@ msgstr "Marque esta casilla if la muestras taken at this point are 'compuesta' a
 #. Default: "The height or depth at which the sample has to be taken"
 #: senaite/core/content/samplepoint.py:91
 msgid "description_samplepoint_elevation"
-msgstr "The altura or profundidad at which la muestra has to be taken"
+msgstr "La altura o profundidad a la que se debe tomar la muestra"
 
 #. Default: "The geographical point or area from which samples are taken for further analysis. It plays a pivotal role in research as it can significantly influence the results and conclusions drawn from the study."
 #: senaite/core/content/samplepoint.py:76
@@ -9527,47 +9527,47 @@ msgstr "Organization account bank branch"
 #. Default: "Bank Name"
 #: senaite/core/content/organization.py:144
 msgid "title_organization_account_bank_name"
-msgstr "Organization account bank nombre"
+msgstr "Nombre del banco de la cuenta de la organización"
 
 #. Default: "Account Name"
 #: senaite/core/content/organization.py:128
 msgid "title_organization_account_name"
-msgstr "Organization account nombre"
+msgstr "Nombre de la cuenta de la organización"
 
 #. Default: "Account Number"
 #: senaite/core/content/organization.py:136
 msgid "title_organization_account_number"
-msgstr "Organization account number"
+msgstr "Número de cuenta de la organización"
 
 #. Default: "Account Type"
 #: senaite/core/content/organization.py:120
 msgid "title_organization_account_type"
-msgstr "Organization account tipo"
+msgstr "Tipo de cuenta de la organización"
 
 #. Default: "Email"
 #: senaite/core/content/organization.py:89
 msgid "title_organization_email"
-msgstr "Organization correo electrónico"
+msgstr "Correo electrónico Organización"
 
 #. Default: "Fax"
 #: senaite/core/content/organization.py:69
 msgid "title_organization_fax"
-msgstr "Organization fax"
+msgstr "Fax organización"
 
 #. Default: "Name"
 #: senaite/core/content/organization.py:45
 msgid "title_organization_name"
-msgstr "Organization nombre"
+msgstr "Nombre Organización"
 
 #. Default: "Phone"
 #: senaite/core/content/organization.py:61
 msgid "title_organization_phone"
-msgstr "Organization teléfono"
+msgstr "Teléfono Organización"
 
 #. Default: "VAT number"
 #: senaite/core/content/organization.py:53
 msgid "title_organization_tax_number"
-msgstr "Organization tax number"
+msgstr "Número de id fiscal de la organización"
 
 #. Default: "Owner"
 #: senaite/core/permissions/localroles.py:37
@@ -9577,7 +9577,7 @@ msgstr "Propietario"
 #. Default: "Preserver"
 #: senaite/core/permissions/localroles.py:51
 msgid "title_preserver_role"
-msgstr "Conservador"
+msgstr "Preservador"
 
 #. Default: "Publisher"
 #: senaite/core/permissions/localroles.py:58
@@ -9624,7 +9624,7 @@ msgstr "Matriz de muestra"
 #. Default: "Attachment"
 #: senaite/core/content/samplepoint.py:159
 msgid "title_samplepoint_attachment_file"
-msgstr "Attachment"
+msgstr "Anexo"
 
 #. Default: "Composite"
 #: senaite/core/content/samplepoint.py:143
@@ -9659,7 +9659,7 @@ msgstr "Tipo de muestras"
 #. Default: "Name"
 #: senaite/core/content/samplepoint.py:56
 msgid "title_samplepoint_title"
-msgstr "Name"
+msgstr "Nombre"
 
 #. Default: "Description"
 #: senaite/core/content/samplepreservation.py:47
@@ -9694,7 +9694,7 @@ msgstr "Descripción"
 #. Default: "Sample collected by the laboratory"
 #: senaite/core/content/sampletemplate.py:226
 msgid "title_sampletemplate_sampling_required"
-msgstr "muestra collected by the laboratory"
+msgstr "muestra recogida por el laboratorio"
 
 #. Default: "Services"
 #: senaite/core/content/sampletemplate.py:269
@@ -9704,12 +9704,12 @@ msgstr "servicios"
 #. Default: "Name"
 #: senaite/core/content/sampletemplate.py:161
 msgid "title_sampletemplate_title"
-msgstr "Name"
+msgstr "Nombre"
 
 #. Default: "Retention Period"
 #: senaite/core/content/sampletype.py:142
 msgid "title_sampletype_duration_period"
-msgstr "Retention Period"
+msgstr "Periodo de retención"
 
 #. Default: "Hazardous"
 #: senaite/core/content/sampletype.py:157
@@ -9719,7 +9719,7 @@ msgstr "Peligroso"
 #. Default: "Minimum Volume"
 #: senaite/core/content/sampletype.py:203
 msgid "title_sampletype_min_volume"
-msgstr "Minimum Volume"
+msgstr "Volumen mínimo"
 
 #. Default: "Sample Type Prefix"
 #: senaite/core/content/sampletype.py:190
@@ -9729,17 +9729,17 @@ msgstr "Prefijo"
 #. Default: "Description"
 #: senaite/core/content/samplingdeviation.py:44
 msgid "title_samplingdeviation_description"
-msgstr "Samplingdeviation"
+msgstr "Desviación de muestreo"
 
 #. Default: "Name"
 #: senaite/core/content/samplingdeviation.py:36
 msgid "title_samplingdeviation_title"
-msgstr "Samplingdeviation"
+msgstr "Desviación de muestreo"
 
 #. Default: "Allow to set the result capture date"
 #: senaite/core/content/senaitesetup.py:172
 msgid "title_senaitesetup_allow_manual_result_capture_date"
-msgstr "Senaitesetup permitir manual resultado captura fecha"
+msgstr "INFOLABSAsetup permitir manual resultado captura fecha"
 
 #. Default: "Always send publication email to responsibles"
 #: senaite/core/content/senaitesetup.py:98
@@ -9759,7 +9759,7 @@ msgstr "Fecha de muestreo obligatoria (configuración)"
 #. Default: "Publication 'From' address"
 #: senaite/core/content/senaitesetup.py:69
 msgid "title_senaitesetup_email_from_sample_publication"
-msgstr "Senaitesetup correo electrónico from muestra publication"
+msgstr "INFOLABSAsetup correo electrónico de publicación de muestra"
 
 #. Default: "Publication Email Text"
 #: senaite/core/content/senaitesetup.py:85
@@ -9774,7 +9774,7 @@ msgstr "No permitir el registro de muestras sin análisis"
 #. Default: "Display laboratory name in the login page"
 #: senaite/core/content/senaitesetup.py:209
 msgid "title_senaitesetup_show_lab_name_in_login"
-msgstr "Senaitesetup show lab nombre in inicio de sesión"
+msgstr "INFOLABSAsetup muestra el nombre del laboratorio en el inicio de sesión"
 
 #. Default: "Service UID"
 #: senaite/core/content/worksheettemplate.py:86
@@ -9789,22 +9789,22 @@ msgstr "Descripción"
 #. Default: "Location Code"
 #: senaite/core/content/storagelocation.py:102
 msgid "title_storagelocation_location_code"
-msgstr "Ubicación Code"
+msgstr "Código de ubicación"
 
 #. Default: "Location Description"
 #: senaite/core/content/storagelocation.py:114
 msgid "title_storagelocation_location_description"
-msgstr "Ubicación Descripción"
+msgstr "Descripción de Ubicación"
 
 #. Default: "Location Title"
 #: senaite/core/content/storagelocation.py:90
 msgid "title_storagelocation_location_title"
-msgstr "Ubicación Title"
+msgstr "Título de ubicación"
 
 #. Default: "Location Type"
 #: senaite/core/content/storagelocation.py:126
 msgid "title_storagelocation_location_type"
-msgstr "Ubicación Tipo"
+msgstr "Tipo de Ubicación"
 
 #. Default: "Shelf Code"
 #: senaite/core/content/storagelocation.py:150
