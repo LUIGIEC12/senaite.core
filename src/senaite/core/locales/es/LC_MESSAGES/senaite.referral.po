@@ -309,3 +309,16 @@ msgstr "La URL no es válida"
 
 msgid "Verified by reference lab: {}"
 msgstr "Verificado por el laboratorio de referencia: {}"
+
+msgid "Outbound Shipments"
+msgstr "Envíos salientes"
+
+msgid "Inbound Shipments"
+msgstr "Envíos entrantes"
+
+msgid "Inbound sample shipments"
+msgstr "Envíos de muestras entrantes"
+
+msgid "Outbound sample shipments"
+msgstr "Envíos de muestras salientes"
+
