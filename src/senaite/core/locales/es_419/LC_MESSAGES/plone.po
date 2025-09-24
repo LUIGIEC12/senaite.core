@@ -1059,3 +1059,9 @@ msgstr "¿También desea eliminar los servicios del perfil?"
 # Campo/flag genérico de temporalidad (ej. MRN temporal)
 msgid "Temporary"
 msgstr "Temporal"
+
+msgid "Name"
+msgstr "Nombre"
+
+msgid "Retention Period"
+msgstr "Retention Period "
