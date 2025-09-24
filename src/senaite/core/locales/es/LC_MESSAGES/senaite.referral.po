@@ -330,3 +330,35 @@ msgstr "Envíos"
 
 msgid "Comments"
 msgstr "Comentarios"
+
+msgid "Code"
+msgstr "Código"
+
+
+msgid "Unique code of the external laboratory. This code is used to ensure your laboratory and the external laboratory know each other on data transfer"
+msgstr "Código único del laboratorio externo. Este código se utiliza para garantizar que su laboratorio y el externo se conozcan al transferir datos."
+
+msgid "Reference Laboratory"
+msgstr "Laboratorio de referencia"
+
+msgid "Whether this external laboratory is capable of analysis or testing on samples sent from the current laboratory. When checked, this external laboratory will be displayed for selection when dispatching a sample"
+msgstr "Si este laboratorio externo puede realizar análisis o pruebas en las muestras enviadas desde el laboratorio actual. Al marcar esta casilla, este laboratorio externo se mostrará para su selección al enviar una muestra."
+
+msgid "Referring Laboratory"
+msgstr "Laboratorio de referencia"
+
+msgid "Whether this external laboratory can send samples to your laboratory for additional analysis or testing. When checked, your SENAITE instance will accept samples for testing sent from this external laboratory"
+msgstr "Si este laboratorio externo puede enviar muestras a su laboratorio para análisis o pruebas adicionales. Al marcar esta casilla, su instancia de INFOLABSA aceptará muestras para análisis enviadas desde este laboratorio externo."
+
+
+msgid "Default client"
+msgstr "Cliente predeterminado"
+
+msgid "The default client for inbound sample shipments received from this external laboratory"
+msgstr "El cliente predeterminado para los envíos de muestras entrantes recibidos de este laboratorio externo"
+
+msgid "Default contact"
+msgstr "Contacto predeterminado"
+
+msgid "The default contact for inbound sample shipments received from this external laboratory"
+msgstr "El contacto predeterminado para los envíos de muestras entrantes recibidos de este laboratorio externo"
