@@ -1,0 +1,332 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: senaite.referral\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-24 14:52%z\n"
+"PO-Revision-Date: 2025-09-24 14:52%z\n"
+"Last-Translator: Shirley Andrade <you@example.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: ChatGPT\n"
+
+msgid "#Samples"
+msgstr "#Muestras"
+
+msgid "&larr; Back"
+msgstr "← Volver"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Add"
+msgstr "Agregar"
+
+msgid "Add new sample"
+msgstr "Agregar nueva muestra"
+
+msgid "Add samples"
+msgstr "Agregar muestras"
+
+msgid "All"
+msgstr "Todos"
+
+msgid "All samples"
+msgstr "Todas las muestras"
+
+msgid "Analyses"
+msgstr "Análisis"
+
+msgid "Cancelled"
+msgstr "Cancelado"
+
+msgid "Client"
+msgstr "Cliente"
+
+msgid "Client SID"
+msgstr "SID del cliente"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "Code cannot contain special characters or spaces"
+msgstr "El código no puede contener caracteres especiales ni espacios"
+
+msgid "Code must be unique"
+msgstr "El código debe ser único"
+
+msgid "Comments"
+msgstr "Comentarios"
+
+msgid "Courier"
+msgstr "Transportista"
+
+msgid "Created"
+msgstr "Creado"
+
+msgid "Created by"
+msgstr "Creado por"
+
+msgid "Date Sampled"
+msgstr "Fecha de muestreo"
+
+msgid "Date time"
+msgstr "Fecha y hora"
+
+msgid "Delivered"
+msgstr "Entregada"
+
+msgid "Dispatched"
+msgstr "Enviada"
+
+msgid "Download"
+msgstr "Descargar"
+
+msgid "Due"
+msgstr "Pendiente"
+
+msgid "Generate the shipment manifest"
+msgstr "Generar el manifiesto de envío"
+
+msgid "Inactive"
+msgstr "Inactiva"
+
+msgid "Inbound sample shipments"
+msgstr "Envíos de muestras entrantes"
+
+msgid "Inbound shipment"
+msgstr "Envío entrante"
+
+msgid "Keep assignment order"
+msgstr "Mantener el orden de asignación"
+
+msgid "Lab code"
+msgstr "Código de laboratorio"
+
+msgid "Laboratory is not set as a reference lab"
+msgstr "El laboratorio no está configurado como laboratorio de referencia"
+
+msgid "Laboratory name"
+msgstr "Nombre del laboratorio"
+
+msgid "Laboratory URL is not valid"
+msgstr "La URL del laboratorio no es válida"
+
+msgid "Last notification"
+msgstr "Última notificación"
+
+msgid "Local Sample ID"
+msgstr "ID de muestra local"
+
+msgid "Login credentials are not set"
+msgstr "Las credenciales de inicio de sesión no están configuradas"
+
+msgid "Lost"
+msgstr "Perdida"
+
+msgid "No POST notification in history"
+msgstr "No hay notificación REGISTRO en el historial"
+
+msgid "No samples selected"
+msgstr "No se seleccionaron muestras"
+
+msgid "No shipment selected"
+msgstr "No se seleccionó ningún envío"
+
+msgid "Notification to remote lab failed"
+msgstr "La notificación al laboratorio de referencia falló"
+
+msgid "Number of samples"
+msgstr "Número de muestras"
+
+msgid "of"
+msgstr "de"
+
+msgid "Origin Sample ID"
+msgstr "ID de la muestra de origen"
+
+msgid "Outbound sample shipments"
+msgstr "Envíos de muestras salientes"
+
+msgid "Outbound shipment"
+msgstr "Envío saliente"
+
+msgid "Page"
+msgstr "Página"
+
+msgid "pkg_resources"
+msgstr "recursos del paquete"
+
+msgid "Pos."
+msgstr "Pos."
+
+msgid "Print stickers"
+msgstr "Imprimir etiqueta"
+
+msgid "Ready"
+msgstr "Listo"
+
+msgid "Received"
+msgstr "Recibido"
+
+msgid "Receiver"
+msgstr "Receptor"
+
+msgid "Reference"
+msgstr "Referencia"
+
+msgid "Reference Lab"
+msgstr "Laboratorio de referencia"
+
+msgid "Reference lab not notified"
+msgstr "Laboratorio de referencia no notificado"
+
+msgid "Referral configuration"
+msgstr "Configuración de referencias"
+
+msgid "Referral control panel"
+msgstr "Panel de control de referencias"
+
+msgid "Referral Settings"
+msgstr "Configuración de referencias"
+
+msgid "Referred"
+msgstr "Referido"
+
+msgid "Referring"
+msgstr "Referente"
+
+msgid "Referring ID must be unique"
+msgstr "El ID de referencia debe ser único"
+
+msgid "Referring Lab"
+msgstr "Laboratorio de referencia"
+
+msgid "Regenerate"
+msgstr "Regenerada"
+
+msgid "Rejected"
+msgstr "Rechazada"
+
+msgid "Rejected at reference"
+msgstr "Rechazado en la referencia"
+
+msgid "Remote laboratory has been notified successfully"
+msgstr "El laboratorio de referencia ha sido notificado correctamente"
+
+msgid "Remote laboratory has been partially notified"
+msgstr "El laboratorio de referencia ha sido notificado parcialmente"
+
+msgid "Remote laboratory has not been notified"
+msgstr "El laboratorio de referencia no ha sido notificado"
+
+msgid "Sample ID"
+msgstr "ID de muestra"
+
+msgid "Sample rejected at reference laboratory"
+msgstr "Muestra rechazada en el laboratorio de referencia"
+
+msgid "Sample shipments won't be created automatically on this external laboratory"
+msgstr "Los envíos de muestras no se crearán automáticamente en este laboratorio externo"
+
+msgid "Sample Type"
+msgstr "Tipo de muestra"
+
+msgid "Sampled"
+msgstr "Muestreada"
+
+msgid "Samples"
+msgstr "Muestras"
+
+msgid "Samples shipment"
+msgstr "Envío de muestras"
+
+msgid "Samples shipment cancelled"
+msgstr "Envío de muestras cancelado"
+
+msgid "Server response"
+msgstr "Respuesta del servidor"
+
+msgid "Shipment"
+msgstr "Envío"
+
+msgid "Shipment cannot be dispatched because no shipment manifest has been"
+msgstr "No se puede despachar el envío porque no se ha generado un manifiesto de envío"
+
+msgid "Shipment ID"
+msgstr "ID de envío"
+
+msgid "Shipment information"
+msgstr "Información del envío"
+
+msgid "Shipment manifest"
+msgstr "Manifiesto del envío"
+
+msgid "Shipment manifest has been generated"
+msgstr "Se ha generado el manifiesto de envío"
+
+msgid "Shipper"
+msgstr "Transpoortista"
+
+msgid "Sort by creation date"
+msgstr "Ordenar por fecha de creación"
+
+msgid "Sort by Sample ID"
+msgstr "Ordenar por ID de muestra"
+
+msgid "State"
+msgstr "Estado"
+
+msgid "Status and information about this shipment, samples and results have"
+msgstr "El estado y la información de este envío, muestras y resultados se han sincronizado correctamente con el laboratorio de referencia"
+
+msgid "The generation of a shipment manifest has been cancelled"
+msgstr "La generación del manifiesto de envío ha sido cancelada"
+
+msgid "The notification to reference lab errored: {}"
+msgstr "Se produjo un error al notificar al laboratorio de referencia: {}"
+
+msgid "The Queue is processing this shipment"
+msgstr "La cola está procesando este envío"
+
+msgid "The synchronization with the referring laboratory did not take place"
+msgstr "La sincronización con el laboratorio de referencia no se realizó o falló para algunas de las muestras recibidas de este envío"
+
+msgid "There are some settings that require your attention"
+msgstr "Hay configuraciones que requieren tu atención"
+
+msgid "Unable to notify the remote laboratory"
+msgstr "No se pudo notificar al laboratorio de referencia"
+
+msgid "Under preparation"
+msgstr "En preparación"
+
+msgid "URL is not valid"
+msgstr "La URL no es válida"
+
+msgid "Verified by reference lab: {}"
+msgstr "Verificado por el laboratorio de referencia: {}"
+
+msgid "Outbound Shipments"
+msgstr "Envíos salientes"
+
+msgid "Inbound Shipments"
+msgstr "Envíos entrantes"
+
+msgid "Inbound sample shipments"
+msgstr "Envíos de muestras entrantes"
+
+msgid "Outbound sample shipments"
+msgstr "Envíos de muestras salientes"
+
+msgid "External laboratories"
+msgstr "Laboratorios externos"
+
+msgid "Shipments"
+msgstr "Envíos"
+
+msgid "Comments"
+msgstr "Comentarios"
