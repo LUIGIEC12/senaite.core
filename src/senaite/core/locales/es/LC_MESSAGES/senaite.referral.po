@@ -327,3 +327,6 @@ msgstr "Laboratorios externos"
 
 msgid "Shipments"
 msgstr "Envíos"
+
+msgid "Comments"
+msgstr "Comentarios"
