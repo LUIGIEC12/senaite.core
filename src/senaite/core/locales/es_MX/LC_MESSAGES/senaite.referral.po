@@ -383,7 +383,7 @@ msgid "label_referral_code"
 msgstr "Código"
 
 msgid "label_referral_create_reference_analyses"
-msgstr "referencia al crear análisis"
+msgstr "Referencia al crear análisis"
 
 msgid "label_referral_manual_inbound_permitted"
 msgstr "Permitir creación manual de envíos entrantes"
@@ -405,3 +405,16 @@ msgstr "Código único del laboratorio de la instancia actual. Este código úni
 
 msgid "Whether the manual creation of inbound sample shipments is permitted. If not enabled, the creation of inbound shipments will only be possible via POST requests by referral laboratories"
 msgstr "Si se permite la creación manual de envíos de muestras entrantes. Si no está habilitada, la creación de envíos entrantes solo será posible mediante solicitudes POST de los laboratorios de referencia."
+
+msgid "Show barcode labels preview on shipment reception"
+msgstr "Mostrar vista previa de las etiquetas de código de barras al recibir el envío"
+
+msgid "Whether the system must redirect the user to the barcode stickers preview when receiving samples from an incoming shipment"
+msgstr "Si el sistema debe redirigir al usuario a la vista previa de las etiquetas de código de barras al recibir muestras de un envío entrante"
+
+
+msgid "Maximum number of inbound samples to receive in a single task"
+msgstr "Número máximo de muestras entrantes a recibir en una sola tarea"
+
+msgid "If the number of inbound samples to receive is above this value, the queue will split the job in as many tasks as required. If the value is 0 or senaite queue is not installed, the system won't process the inbound samples asynchronously and all them will be held in a single request"
+msgstr "Si el número de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o la cola INFOLABSA no está instalada, el sistema no procesará las muestras entrantes de forma asíncrona y todas se almacenarán en una sola solicitud."
