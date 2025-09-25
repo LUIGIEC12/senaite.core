@@ -418,3 +418,27 @@ msgstr "Número máximo de muestras entrantes a recibir en una sola tarea"
 
 msgid "If the number of inbound samples to receive is above this value, the queue will split the job in as many tasks as required. If the value is 0 or senaite queue is not installed, the system won't process the inbound samples asynchronously and all them will be held in a single request"
 msgstr "Si el número de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o la cola INFOLABSA no está instalada, el sistema no procesará las muestras entrantes de forma asíncrona y todas se almacenarán en una sola solicitud."
+
+#: profiles/default/types/ShipmentFolder.xml
+msgid "Shipments"
+msgstr "Envíos"
+
+#: profiles/default/types/InboundSampleShipment.xml
+msgid "Inbound sample shipment"
+msgstr "Envío de muestras entrantes"
+
+#: profiles/default/types/OutboundSampleShipment.xml
+msgid "Outbound sample shipment"
+msgstr "Envío de muestras salientes"
+
+#: profiles/default/types/ExternalLaboratory.xml
+msgid "External laboratory"
+msgstr "Laboratorio externo"
+
+#: profiles/default/types/ExternalLaboratory.xml (action titles)
+msgid "Inbound Shipments"
+msgstr "Envíos entrantes"
+
+#: profiles/default/types/ExternalLaboratory.xml (action titles)
+msgid "Outbound Shipments"
+msgstr "Envíos salientes"
