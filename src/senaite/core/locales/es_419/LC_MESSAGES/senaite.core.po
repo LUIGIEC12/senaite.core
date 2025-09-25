@@ -7579,7 +7579,7 @@ msgstr "Cliente"
 #. Default: "Allow to set the result capture date"
 #: bika/lims/content/bikasetup.py:343
 msgid "label_bikasetup_allow_manual_result_capture_date"
-msgstr "Configuración de bika permitir manual resultado captura fecha"
+msgstr "Configuración de INFOLABSA permitir la captura manual de la fecha de resultado"
 
 #. Default: "Always send publication email to responsibles"
 #: bika/lims/content/bikasetup.py:722
