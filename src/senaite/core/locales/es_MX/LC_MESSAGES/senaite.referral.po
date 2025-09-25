@@ -442,3 +442,9 @@ msgstr "Envíos entrantes"
 #: profiles/default/types/ExternalLaboratory.xml (action titles)
 msgid "Outbound Shipments"
 msgstr "Envíos salientes"
+
+msgid "Comments"
+msgstr "Comenatrios"
+
+msgid "Samples"
+msgstr "Muestras"
