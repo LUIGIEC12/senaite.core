@@ -140,7 +140,7 @@ msgstr "Servidor:"
 #: senaite/core/browser/contentrules/templates/controlpanel.pt:15
 #: senaite/core/browser/controlpanel/templates/overview.pt:16
 #: senaite/core/browser/quickinstaller/templates/quickinstaller.pt:13
-msgid "Site Setup"
+msgid "Results"
 msgstr "Configuración del sitio"
 
 #: senaite/core/profiles/default/registry.xml
@@ -1065,3 +1065,30 @@ msgstr "Nombre"
 
 msgid "Retention Period"
 msgstr "Periodo de retención"
+
+msgid "Security"
+msgstr "Seguridad"
+
+msgid "Accounting"
+msgstr "Contabilidad"
+
+msgid "Results Reports"
+msgstr "Informes de resultados"
+
+msgid "Analyses"
+msgstr "Análisis"
+
+msgid "Appearance"
+msgstr "Apariencia"
+
+msgid "Sampling"
+msgstr "Muestreo"
+
+msgid "Notifications"
+msgstr "Notificaciones"
+
+msgid "Sticker"
+msgstr "Etiqueta autoadhesiva"
+
+msgid "ID Server"
+msgstr "Servidor de IDs"
