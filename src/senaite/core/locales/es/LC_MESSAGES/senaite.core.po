@@ -200,7 +200,7 @@ msgstr "Tipo de cuenta"
 
 #: senaite/core/content/analysisprofile.py:64
 msgid "Accounting"
-msgstr "Conpestañailidad"
+msgstr "Contabilidad"
 
 #: bika/lims/browser/accreditation.py:41
 #: bika/lims/content/laboratory.py:141
@@ -6776,7 +6776,7 @@ msgstr "Cliente al que pertenece este lote. Cuando el usuario indique un cliente
 #. Default: "If this option is activated, the result capture date can be entered manually for analyses"
 #: bika/lims/content/bikasetup.py:345
 msgid "description_bikasetup_allow_manual_result_capture_date"
-msgstr "Configuración de bika permitir manual resultado captura fecha"
+msgstr "Configuración de INFOLABSA permitir captura manual de fecha en resultado"
 
 #. Default: "When selected, the responsible persons of all involved lab departments will receive publication emails."
 #: bika/lims/content/bikasetup.py:725
@@ -6801,7 +6801,7 @@ msgstr "Texto predeterminado del cuerpo del correo electrónico que debe utiliza
 #. Default: "E-mail to use as the 'From' address for outgoing e-mails when publishing results reports. This address overrides the value set at portal's 'Mail settings'."
 #: bika/lims/content/bikasetup.py:682
 msgid "description_bikasetup_email_from_sample_publication"
-msgstr "Configuración de bika correo electrónico from muestra publication"
+msgstr "Configuración de INFOLABSA para correo electrónico como remitente para publicar informes de resultados"
 
 #. Default: "Allow the user to directly enter results after sample creation, e.g. to enter field results immediately, or lab results, when the automatic sample reception is activated."
 #: bika/lims/content/bikasetup.py:383
@@ -7241,7 +7241,7 @@ msgstr "Número máximo de muestras que se pueden crear de acuerdo con el valor 
 #. Default: "Set the email body text to be used by default when sending out result reports to the selected recipients. You can use reserved keywords: $client_name, $recipients, $lab_name, $lab_address"
 #: senaite/core/content/senaitesetup.py:87
 msgid "description_senaitesetup_publication_email_text"
-msgstr "Texto predeterminado del cuerpo del correo electrónico que debe utilizarse predeterminado cuando al enviar informes de resultados a los destinatarios seleccionados. Puede utilizar las palabras reservadas siguientes: $client_name (nombre de cliente), $recipients (lista de contenedors), $lab_name (nombre del laboratorio), $lab_address (dirección física del laboratorio)."
+msgstr "Texto predeterminado del cuerpo del correo electrónico que debe utilizarse predeterminado cuando al enviar informes de resultados a los destinatarios seleccionados. Puede utilizar las palabras reservadas siguientes: $client_name (nombre de cliente), $recipients (lista de contenedores), $lab_name (nombre del laboratorio), $lab_address (dirección física del laboratorio)."
 
 #. Default: "Analyses are required for sample registration"
 #: senaite/core/content/senaitesetup.py:163
@@ -7251,7 +7251,7 @@ msgstr "Marque esta casilla si desea que sea obligatorio seleccionar como mínim
 #. Default: "When selected, the laboratory name will be displayedin the login page, above the access credentials."
 #: senaite/core/content/senaitesetup.py:212
 msgid "description_senaitesetup_show_lab_name_in_login"
-msgstr "Senaitesetup show lab nombre in inicio de sesión"
+msgstr "INFOLABSA setup muestra el nombre del laboratorio al inicio de sesión"
 
 #. Default: "The landing page is shown for non-authenticated users if the Dashboard is not selected as the default front page. If no landing page is selected, the default frontpage is displayed."
 #: bika/lims/content/bikasetup.py:526
@@ -9739,7 +9739,7 @@ msgstr "Desviación de muestreo"
 #. Default: "Allow to set the result capture date"
 #: senaite/core/content/senaitesetup.py:172
 msgid "title_senaitesetup_allow_manual_result_capture_date"
-msgstr "INFOLABSAsetup permitir manual resultado captura fecha"
+msgstr "INFOLABSA setup permitir manual resultado captura fecha"
 
 #. Default: "Always send publication email to responsibles"
 #: senaite/core/content/senaitesetup.py:98
@@ -9759,7 +9759,7 @@ msgstr "Fecha de muestreo obligatoria (configuración)"
 #. Default: "Publication 'From' address"
 #: senaite/core/content/senaitesetup.py:69
 msgid "title_senaitesetup_email_from_sample_publication"
-msgstr "INFOLABSAsetup correo electrónico de publicación de muestra"
+msgstr "INFOLABSA setup correo electrónico de publicación de muestra"
 
 #. Default: "Publication Email Text"
 #: senaite/core/content/senaitesetup.py:85
@@ -9774,7 +9774,7 @@ msgstr "No permitir el registro de muestras sin análisis"
 #. Default: "Display laboratory name in the login page"
 #: senaite/core/content/senaitesetup.py:209
 msgid "title_senaitesetup_show_lab_name_in_login"
-msgstr "INFOLABSAsetup muestra el nombre del laboratorio en el inicio de sesión"
+msgstr "INFOLABSA setup muestra el nombre del laboratorio en el inicio de sesión"
 
 #. Default: "Service UID"
 #: senaite/core/content/worksheettemplate.py:86
@@ -10023,3 +10023,30 @@ msgstr "¿También desea eliminar los servicios del perfil?"
 # Campo/flag genérico de temporalidad (ej. MRN temporal)
 msgid "Temporary"
 msgstr "Temporal"
+
+msgid "Security"
+msgstr "Seguridad"
+
+msgid "Accounting"
+msgstr "Contabilidad"
+
+msgid "Results Reports"
+msgstr "Informes de resultados"
+
+msgid "Analyses"
+msgstr "Análisis"
+
+msgid "Appearance"
+msgstr "Apariencia"
+
+msgid "Sampling"
+msgstr "Muestreo"
+
+msgid "Notifications"
+msgstr "Notificaciones"
+
+msgid "Sticker"
+msgstr "Etiqueta autoadhesiva"
+
+msgid "ID Server"
+msgstr "Servidor de IDs"
