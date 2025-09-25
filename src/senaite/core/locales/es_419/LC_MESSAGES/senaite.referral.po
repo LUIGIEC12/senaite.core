@@ -334,7 +334,6 @@ msgstr "Comentarios"
 msgid "Code"
 msgstr "Código"
 
-
 msgid "Unique code of the external laboratory. This code is used to ensure your laboratory and the external laboratory know each other on data transfer"
 msgstr "Código único del laboratorio externo. Este código se utiliza para garantizar que su laboratorio y el externo se conozcan al transferir datos."
 
@@ -350,7 +349,6 @@ msgstr "Laboratorio de referencia"
 msgid "Whether this external laboratory can send samples to your laboratory for additional analysis or testing. When checked, your SENAITE instance will accept samples for testing sent from this external laboratory"
 msgstr "Si este laboratorio externo puede enviar muestras a su laboratorio para análisis o pruebas adicionales. Al marcar esta casilla, su instancia de INFOLABSA aceptará muestras para análisis enviadas desde este laboratorio externo."
 
-
 msgid "Default client"
 msgstr "Cliente predeterminado"
 
@@ -362,3 +360,43 @@ msgstr "Contacto predeterminado"
 
 msgid "The default contact for inbound sample shipments received from this external laboratory"
 msgstr "El contacto predeterminado para los envíos de muestras entrantes recibidos de este laboratorio externo"
+
+msgid "Referral Settings"
+msgstr "Configuración de referencias"
+
+msgid "description_referral_create_reference_analyses"
+msgstr "descripción de referencia al crear un análisis"
+
+msgid "description_referral_notify_hidden_analyses"
+msgstr "Si está seleccionado, los resultados de análisis ocultos se enviarán al laboratorio remitente tras la verificación de la muestra. Si no, los resultados de análisis marcados como ocultos no se compartirán."
+
+msgid "description_referral_notify_retested_analyses"
+msgstr "Si está seleccionado, los resultados de análisis repetidos se enviarán al laboratorio remitente tras la verificación de la muestra. Si no, solo se compartirán los resultados del reensayo."
+
+msgid "description_referral_notify_unrequested_analyses"
+msgstr "Si está seleccionado, los resultados de análisis no solicitados se enviarán al laboratorio remitente tras la verificación de la muestra. Si no, solo se compartirán los resultados de los análisis solicitados inicialmente."
+
+msgid "description_referral_outbound_samples_order"
+msgstr "Estrategia predeterminada de ordenamiento al añadir muestras a un envío saliente."
+
+msgid "label_referral_code"
+msgstr "Código"
+
+msgid "label_referral_create_reference_analyses"
+msgstr "referencia al crear análisis"
+
+msgid "label_referral_manual_inbound_permitted"
+msgstr "Permitir creación manual de envíos entrantes"
+
+msgid "label_referral_notify_hidden_analyses"
+msgstr "Notificar al laboratorio remitente sobre análisis ocultos"
+
+msgid "label_referral_notify_retested_analyses"
+msgstr "Notificar al laboratorio remitente sobre análisis reensayados"
+
+msgid "label_referral_notify_unrequested_analyses"
+msgstr "Notificar al laboratorio remitente sobre análisis no solicitados"
+
+msgid "label_referral_outbound_samples_order"
+msgstr "Orden predeterminado para muestras en envíos salientes"
+
