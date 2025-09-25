@@ -400,3 +400,15 @@ msgstr "Notificar al laboratorio remitente sobre análisis no solicitados"
 msgid "label_referral_outbound_samples_order"
 msgstr "Orden predeterminado para muestras en envíos salientes"
 
+# === Referral Settings (descriptions) ===
+msgid "description_referral_code"
+msgstr "Código único del laboratorio de esta instancia. Este código es utilizado por los laboratorios de referencia para identificar a este laboratorio como un remitente válido de muestras."
+
+msgid "description_referral_manual_inbound_permitted"
+msgstr "Indica si se permite la creación manual de envíos de muestras entrantes. Si no está habilitado, la creación de envíos entrantes solo será posible mediante solicitudes POST realizadas por los laboratorios de referencia."
+
+msgid "description_referral_inbound_show_barcode_labels_preview_on_reception"
+msgstr "Indica si el sistema debe redirigir al usuario a la vista previa de etiquetas con código de barras al recibir muestras de un envío entrante."
+
+msgid "description_referral_inbound_max_reception_task_size"
+msgstr "Número máximo de muestras entrantes a recibir en una sola tarea. Si el número de muestras supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o no está instalado senaite.queue, el sistema no procesará las muestras entrantes de forma asíncrona y todas se gestionarán en una sola solicitud."
