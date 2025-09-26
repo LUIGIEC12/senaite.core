@@ -1,5 +1,7 @@
 <tal:statusmsg tal:define="messages view/messages"
-               tal:repeat="message messages">
+               tal:repeat="message messages"
+               xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+               i18n:domain="plone">
 
   <div class="alert alert-info"
        tal:define="mtype message/type | nothing;
