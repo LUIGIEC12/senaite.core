@@ -1092,3 +1092,9 @@ msgstr "Etiqueta autoadhesiva"
 
 msgid "ID Server"
 msgstr "Servidor de IDs"
+
+msgid "Comments"
+msgstr "Comenatrios"
+
+msgid "Samples"
+msgstr "Muestras"
