@@ -1104,3 +1104,9 @@ msgstr "Edad"
 
 msgid "Date of Birth"
 msgstr "Fecha de nacimiento"
+
+msgid "Info"
+msgstr "Información"
+
+msgid "Warning"
+msgstr "Advertencia"
