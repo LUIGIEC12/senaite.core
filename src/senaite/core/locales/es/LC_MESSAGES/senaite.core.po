@@ -5404,7 +5404,7 @@ msgstr "Asunto"
 #: senaite/core/profiles/default/workflows/senaite_analysis_workflow/definition.xml
 #: senaite/core/profiles/default/workflows/senaite_duplicateanalysis_workflow/definition.xml
 msgid "Submit"
-msgstr "Tramitar"
+msgstr "Validar"
 
 #: senaite/core/exportimport/import.pt:114
 msgid "Submit a valid Open XML (.XLSX) file containing setup records to continue."
