@@ -448,3 +448,12 @@ msgstr "Comenatrios"
 
 msgid "Samples"
 msgstr "Muestras"
+
+msgid "label_inboundsampleshipment_comments"
+msgstr "Comentarios"
+
+msgid "label_outboundsampleshipment_comments"
+msgstr "Comentarios"
+
+msgid "Additional comments provided by the referring laboratory"
+msgstr "Comentarios adicionales proporcionados por el laboratorio remitente"
