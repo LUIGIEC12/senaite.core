@@ -472,3 +472,21 @@ msgstr "Nombre de usuario"
 
 msgid "Password"
 msgstr "Contraseña"
+
+msgid "label_externallaboratory_reference"
+msgstr "Laboratorio de referencia"
+
+msgid "label_externallaboratory_referring"
+msgstr "Laboratorio remitente"
+
+msgid "label_externallaboratory_defaultclient"
+msgstr "Cliente predeterminado"
+
+msgid "label_externallaboratory_defaultcontact"
+msgstr "Contacto predeterminado"
+
+msgid "label_externallaboratory_username"
+msgstr "Usuario"
+
+msgid "label_externallaboratory_password"
+msgstr "Contraseña"
