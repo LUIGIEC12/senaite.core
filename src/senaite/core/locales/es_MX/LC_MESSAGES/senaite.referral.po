@@ -490,3 +490,6 @@ msgstr "Usuario"
 
 msgid "label_externallaboratory_password"
 msgstr "Contraseña"
+
+msgid "Connectivity"
+msgstr "Conectividad"
