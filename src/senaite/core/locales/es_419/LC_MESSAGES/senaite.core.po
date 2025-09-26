@@ -8014,12 +8014,12 @@ msgstr "Matriz"
 #. Default: "Default small sticker"
 #: senaite/core/content/sampletype.py:102
 msgid "label_sampletype_small_default"
-msgstr "Default small etiqueta"
+msgstr "Etiqueta pequeña predeterminada"
 
 #. Default: "Name"
 #: senaite/core/content/sampletype.py:125
 msgid "label_sampletype_title"
-msgstr "Name"
+msgstr "Nombre"
 
 #. Default: "Save"
 #: senaite/core/browser/viewlets/templates/sampleheader.pt:170
@@ -10068,3 +10068,46 @@ msgstr "Información"
 
 msgid "Warning"
 msgstr "Advertencia"
+
+# ——— Sitio / Apariencia (DX Registry: senaitesetup.py) ———
+#: src/senaite/core/content/senaitesetup.py
+msgid "Site Logo"
+msgstr "Logo del sitio"
+
+#: src/senaite/core/content/senaitesetup.py
+msgid "This shows a custom logo on your SENAITE site."
+msgstr "Muestra un logo personalizado en su sitio INFOLABSA."
+
+#: src/senaite/core/content/senaitesetup.py
+msgid "Site Logo CSS"
+msgstr "CSS del logo del sitio"
+
+#: src/senaite/core/content/senaitesetup.py
+msgid "Add custom CSS rules for the Logo, e.g. height:15px; width:150px;"
+msgstr "Agregue reglas CSS personalizadas para el logo (p. ej., height:15px; width:150px;)."
+
+#: src/senaite/core/content/senaitesetup.py
+msgid "Immediate results entry"
+msgstr "Captura inmediata de resultados"
+
+#: src/senaite/core/content/senaitesetup.py
+msgid "description_senaitesetup_immediateresultsentry"
+msgstr "Permite introducir resultados inmediatamente después de crear la muestra; por ejemplo, registrar resultados de campo al instante o resultados de laboratorio cuando la recepción automática de muestras está activada."
+
+# ——— Texto por defecto del correo de publicación (DX) ———
+#: src/senaite/core/content/senaitesetup.py
+msgid "title_senaitesetup_publication_email_text"
+msgstr "Texto del correo de publicación"
+
+#: src/senaite/core/content/senaitesetup.py
+msgid "description_senaitesetup_publication_email_text"
+msgstr "Defina el cuerpo del correo que se usará por defecto al enviar reportes de resultados a los destinatarios seleccionados. Puede usar palabras reservadas: $client_name, $recipients, $lab_name, $lab_address."
+
+# ——— Copia a responsables (DX; puede existir también en AT) ———
+#: src/senaite/core/content/senaitesetup.py
+msgid "title_senaitesetup_always_cc_responsibles_in_report_emails"
+msgstr "Enviar siempre correo de publicación a los responsables"
+
+#: src/senaite/core/content/senaitesetup.py
+msgid "description_senaitesetup_always_cc_responsibles_in_report_emails"
+msgstr "Cuando se selecciona, las personas responsables de todos los departamentos del laboratorio involucrados recibirán correos de publicación."
