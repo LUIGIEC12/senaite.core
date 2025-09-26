@@ -10056,3 +10056,9 @@ msgstr "Comenatrios"
 
 msgid "Samples"
 msgstr "Muestras"
+
+msgid "Age"
+msgstr "Edad"
+
+msgid "Date of Birth"
+msgstr "Fecha de nacimiento"
