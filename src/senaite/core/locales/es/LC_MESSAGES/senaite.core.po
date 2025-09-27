@@ -10068,3 +10068,15 @@ msgstr "Información"
 
 msgid "Warning"
 msgstr "Advertencia"
+
+#: controlpanel (título del panel)
+msgid "Analysis Categories"
+msgstr "Categorías de análisis"
+
+#: controlpanel
+msgid "Instrument Types"
+msgstr "Tipos de instrumentos"
+
+#: controlpanel
+msgid "Sample Types"
+msgstr "Tipos de muestras"
