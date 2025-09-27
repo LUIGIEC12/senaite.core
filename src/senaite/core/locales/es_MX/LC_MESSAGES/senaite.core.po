@@ -10263,3 +10263,22 @@ msgstr "{{title}} no se puede deseleccionar porque está incluido en:"
 #: /mnt/data/scan/senaite.core-main BACKUP 260925 0302 PM/senaite.core-main/src/bika/lims/browser/analysisrequest/templates/ar_add2.pt
 msgid "{{title}} requires the following services to be selected:"
 msgstr "{{title}} requiere que se seleccionen los siguientes servicios:"
+
+msgid "Enable global Auditlog"
+msgstr "Habilitar el registro de auditoría global"
+
+msgid "The global Auditlog shows all modifications of the system. When enabled, all entities will be indexed in a separate catalog. This will increase the time when objects are created or modified."
+msgstr "El registro de auditoría global muestra todas las modificaciones del sistema. Al habilitarlo, todas las entidades se indexarán en un catálogo independiente. Esto agilizará la creación o modificación de objetos."
+
+msgid "Maximum value for 'Number of samples' field on registration"
+msgstr "Valor máximo para el campo 'Número de muestras' en el registro"
+
+msgid "Maximum number of samples that can be created in accordance with the value set for the field 'Number of samples' on the sample registration form"
+msgstr "Número máximo de muestras que se pueden crear de acuerdo con el valor establecido para el campo 'Número de muestras' en el formulario de registro de muestras"
+
+msgid "Date sampled required"
+msgstr "Fecha de muestreo requerida"
+
+msgid "Select this to make DateSampled field required on sample creation. This functionality only takes effect when 'Sampling workflow' is not active"
+msgstr "Seleccione esta opción para que el campo Fecha de muestreo sea obligatorio al crear la muestra. Esta función solo se activa cuando el flujo de trabajo de muestreo no está activo."
+
