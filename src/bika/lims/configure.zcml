@@ -7,12 +7,9 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     xmlns:monkey="http://namespaces.plone.org/monkey"
     xmlns:plone="http://namespaces.plone.org/plone"
-    i18n_domain="senaite.core">
+    i18n_domain="bika">
 
   <five:registerPackage package="." initialize=".initialize" />
-
-  <!-- https://community.plone.org/t/includedependencies-package-what-does-it-do-plone-6/14780 -->
-  <!-- <includeDependencies package="." /> -->
 
   <!-- Include permissions -->
   <include package="senaite.core.permissions" />
@@ -30,6 +27,9 @@
   <include package=".workflow" />
 
   <include file="profiles.zcml" />
+
+  <!-- Registrar catálogos de traducción de este paquete -->
+  <i18n:registerTranslations directory="locales" />
 
   <cmf:registerDirectory name="skins" directory="skins" recursive="True" />
 
