@@ -37,6 +37,15 @@ senaiteMessageFactory = MessageFactory("senaite.core")
 bikaMessageFactory = senaiteMessageFactory
 _ = senaiteMessageFactory
 
+# --- ADITIVO (no cambia el comportamiento actual) ----------------------------
+# Exponemos TAMBIÉN un factory nativo del dominio 'bika' por si alguna vista/
+# plantilla quiere usar explícitamente el dominio bika:
+#   from bika.lims import bikaNativeMessageFactory as _b
+#   title = _b("Limits")
+# Si no se usa, todo sigue resolviéndose en 'senaite.core' como hasta ahora.
+bikaNativeMessageFactory = MessageFactory("bika")
+# ---------------------------------------------------------------------------
+
 # import this to log messages
 logger = logging.getLogger("senaite.core")
 
