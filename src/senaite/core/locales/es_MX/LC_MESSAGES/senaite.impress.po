@@ -383,3 +383,6 @@ msgstr "Enviar siempre correo de publicación a los responsables"
 #: src/senaite/core/content/senaitesetup.py
 msgid "description_senaitesetup_always_cc_responsibles_in_report_emails"
 msgstr "Cuando se selecciona, las personas responsables de todos los departamentos del laboratorio involucrados recibirán correos de publicación."
+
+msgid "Default"
+msgstr "Por defecto"
