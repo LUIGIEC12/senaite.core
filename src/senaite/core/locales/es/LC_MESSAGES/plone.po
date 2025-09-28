@@ -1260,3 +1260,27 @@ msgid "label_schema_Accounting"
 msgstr "Contabilidad"
 msgid "label_schema_accounting"
 msgstr "Contabilidad"
+
+# Samples (si tu Setup muestra esta pestaña)
+msgid "label_schema_Samples"
+msgstr "Muestras"
+msgid "label_schema_samples"
+msgstr "Muestras"
+
+# Analyses
+msgid "label_schema_Analyses"
+msgstr "Análisis"
+msgid "label_schema_analyses"
+msgstr "Análisis"
+
+# Notifications
+msgid "label_schema_Notifications"
+msgstr "Notificaciones"
+msgid "label_schema_notifications"
+msgstr "Notificaciones"
+
+# Appearance
+msgid "label_schema_Appearance"
+msgstr "Apariencia"
+msgid "label_schema_appearance"
+msgstr "Apariencia"
