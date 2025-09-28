@@ -10094,46 +10094,69 @@ msgstr ""
 "todas las entidades se indexarán en un catálogo separado. Esto incrementará el "
 "tiempo de creación o modificación de objetos."
 
-# --- SENAITE Setup (claves) ---
+# title: "Categorize sample analyses"
 msgid "title_senaitesetup_categorizesampleanalyses"
 msgstr "Categorizar análisis de muestras"
 
+# desc: "Group analyses by category for samples"
 msgid "description_senaitesetup_categorizesampleanalyses"
 msgstr "Agrupar los análisis por categoría para las muestras"
 
+# title: "Require sample analyses"
 msgid "title_senaitesetup_sampleanalysesrequired"
 msgstr "Requerir análisis de la muestra"
 
+# desc: "Analyses are required for sample registration"
 msgid "description_senaitesetup_sampleanalysesrequired"
 msgstr "Los análisis son obligatorios para el registro de muestras"
 
+# title: "Allow to set the result capture date"
 msgid "title_senaitesetup_allow_manual_result_capture_date"
 msgstr "Permitir establecer la fecha de captura de resultados"
 
+# desc: "If this option is activated, the result capture date can be entered manually for analyses"
 msgid "description_senaitesetup_allow_manual_result_capture_date"
 msgstr "Si se activa esta opción, la fecha de captura de resultados se puede introducir manualmente para los análisis."
 
+# label: "Maximum value for 'Number of samples' field on registration"
 msgid "label_senaitesetup_maxnumberofsamplesadd"
 msgstr "Valor máximo para el campo «Número de muestras» en el registro"
 
+# desc: "Maximum number of samples that can be created…"
 msgid "description_senaitesetup_maxnumberofsamplesadd"
 msgstr "Número máximo de muestras que se pueden crear de acuerdo con el valor establecido para «Número de muestras» en el formulario de registro."
 
+# title: "Date sampled required"
 msgid "title_senaitesetup_date_sampled_required"
 msgstr "Fecha de muestreo obligatoria"
 
+# desc: "Select this to make DateSampled field required…"
 msgid "description_senaitesetup_date_sampled_required"
 msgstr "Seleccione esto para hacer obligatorio el campo «Fecha de muestreo» al crear la muestra. Esta funcionalidad solo aplica cuando el «flujo de trabajo de muestreo» no está activo."
 
+# title: "Display laboratory name in the login page"
 msgid "title_senaitesetup_show_lab_name_in_login"
 msgstr "Mostrar el nombre del laboratorio en la página de inicio de sesión"
 
+# desc: "When selected, the laboratory name will be displayed…"
 msgid "description_senaitesetup_show_lab_name_in_login"
 msgstr "Al seleccionarse, el nombre del laboratorio se mostrará en la página de inicio de sesión, por encima de las credenciales de acceso."
 
-# --- Publicación 'From' (claves en bikasetup.py, dominio senaite.core) ---
+# label: "Publication 'From' address"
 msgid "label_bikasetup_email_from_sample_publication"
 msgstr "Dirección «De» para publicación"
 
+# desc: "E-mail to use as the 'From' address …"
 msgid "description_bikasetup_email_from_sample_publication"
 msgstr "Correo que se usará como dirección «De» para los mensajes salientes al publicar informes de resultados. Esta dirección sobrescribe la definida en los «Ajustes de correo» del portal."
+
+msgid "Default"
+msgstr "Por defecto"
+msgid "Samples"
+msgstr "Muestras"
+msgid "Analyses"
+msgstr "Análisis"
+msgid "Notifications"
+msgstr "Notificaciones"
+msgid "Appearance"
+msgstr "Apariencia"
