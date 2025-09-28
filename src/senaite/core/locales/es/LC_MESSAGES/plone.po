@@ -1110,3 +1110,47 @@ msgstr "Información"
 
 msgid "Warning"
 msgstr "Advertencia"
+
+# --- SENAITE Setup (claves) ---
+msgid "title_senaitesetup_categorizesampleanalyses"
+msgstr "Categorizar análisis de muestras"
+
+msgid "description_senaitesetup_categorizesampleanalyses"
+msgstr "Agrupar los análisis por categoría para las muestras"
+
+msgid "title_senaitesetup_sampleanalysesrequired"
+msgstr "Requerir análisis de la muestra"
+
+msgid "description_senaitesetup_sampleanalysesrequired"
+msgstr "Los análisis son obligatorios para el registro de muestras"
+
+msgid "title_senaitesetup_allow_manual_result_capture_date"
+msgstr "Permitir establecer la fecha de captura de resultados"
+
+msgid "description_senaitesetup_allow_manual_result_capture_date"
+msgstr "Si se activa esta opción, la fecha de captura de resultados se puede introducir manualmente para los análisis."
+
+msgid "label_senaitesetup_maxnumberofsamplesadd"
+msgstr "Valor máximo para el campo «Número de muestras» en el registro"
+
+msgid "description_senaitesetup_maxnumberofsamplesadd"
+msgstr "Número máximo de muestras que se pueden crear de acuerdo con el valor establecido para «Número de muestras» en el formulario de registro."
+
+msgid "title_senaitesetup_date_sampled_required"
+msgstr "Fecha de muestreo obligatoria"
+
+msgid "description_senaitesetup_date_sampled_required"
+msgstr "Seleccione esto para hacer obligatorio el campo «Fecha de muestreo» al crear la muestra. Esta funcionalidad solo aplica cuando el «flujo de trabajo de muestreo» no está activo."
+
+msgid "title_senaitesetup_show_lab_name_in_login"
+msgstr "Mostrar el nombre del laboratorio en la página de inicio de sesión"
+
+msgid "description_senaitesetup_show_lab_name_in_login"
+msgstr "Al seleccionarse, el nombre del laboratorio se mostrará en la página de inicio de sesión, por encima de las credenciales de acceso."
+
+# --- Publicación 'From' (claves en bikasetup.py, dominio senaite.core) ---
+msgid "label_bikasetup_email_from_sample_publication"
+msgstr "Dirección «De» para publicación"
+
+msgid "description_bikasetup_email_from_sample_publication"
+msgstr "Correo que se usará como dirección «De» para los mensajes salientes al publicar informes de resultados. Esta dirección sobrescribe la definida en los «Ajustes de correo» del portal."
