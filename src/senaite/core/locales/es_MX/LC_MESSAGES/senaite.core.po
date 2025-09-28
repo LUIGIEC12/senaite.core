@@ -10292,3 +10292,11 @@ msgid "label_schema_Accounting"
 msgstr "Contabilidad"
 msgid "label_schema_accounting"
 msgstr "Contabilidad"
+
+# Label
+msgid "Enable global Audit Log"
+msgstr "Habilitar Audit Log global"
+
+# Help (msgid completo en UNA sola línea)
+msgid "The global Auditlog shows all modifications of the system. When enabled, all entities will be indexed in a separate catalog. This will increase the time when objects are created or modified."
+msgstr "El Auditlog global muestra todas las modificaciones del sistema. Cuando está habilitado, todas las entidades se indexan en un catálogo separado. Esto incrementará el tiempo cuando se crean o modifican objetos."
