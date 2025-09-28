@@ -502,3 +502,12 @@ msgstr "Número máximo de muestras entrantes a recibir en una sola tarea"
 
 msgid "If the number of inbound samples to receive is above this value, the queue will split the job in as many tasks as required. If the value is 0 or senaite queue is not installed, the system won't process the inbound samples asynchronously and all them will be held in a single request"
 msgstr "Si el número de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o la cola senaite no está instalada, el sistema no procesará las muestras entrantes de forma asíncrona y todas se almacenarán en una sola solicitud."
+
+msgid "Show barcode labels preview on shipment reception?"
+msgstr "¿Mostrar vista previa de las etiquetas de código de barras al recibir el envío?"
+
+msgid "Maximum number of inbound samples to receive in a single task"
+msgstr "Número máximo de muestras entrantes a recibir en una sola tarea"
+
+msgid "If the number of inbound samples to receive is above this value, the queue will split the job in as many tasks as required. If the value is 0 or senaite queue is not installed, the system won't process the inbound samples asynchronously and all them will be held in a single request"
+msgstr "Si el número de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o no está instalado senaite.queue, el sistema no procesará las muestras de forma asíncrona y todas se mantendrán en una única solicitud."
