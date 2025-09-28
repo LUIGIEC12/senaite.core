@@ -10160,3 +10160,29 @@ msgid "Notifications"
 msgstr "Notificaciones"
 msgid "Appearance"
 msgstr "Apariencia"
+
+# --- Pestañas / schemata ---
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Analysis"
+msgstr "Análisis"
+
+msgid "Limits"
+msgstr "Límites"
+
+msgid "Method"
+msgstr "Método"
+
+msgid "Uncertainties"
+msgstr "Incertidumbres"
+
+# incluye ambas variantes por si cambian la capitalización
+msgid "Result options"
+msgstr "Opciones de resultado"
+
+msgid "Result Options"
+msgstr "Opciones de resultado"
+
+msgid "Advanced"
+msgstr "Avanzado"
