@@ -65,3 +65,6 @@ msgstr "Valores de resultado adicionales"
 
 msgid "Default result"
 msgstr "Resultado predeterminado"
+
+msgid "Default"
+msgstr "Por defecto"
