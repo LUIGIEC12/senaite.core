@@ -1,23 +1,18 @@
-#
-# Translators:
-# Jordi Puiggené <jpuiggene@naralabs.com>, 2024
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-04-04 12:25+0000\n"
-"PO-Revision-Date: 2022-06-18 11:17+0000\n"
-"Last-Translator: Jordi Puiggené <jpuiggene@naralabs.com>, 2024\n"
-"Language-Team: Spanish (https://app.transifex.com/senaite/teams/139398/es/)\n"
+"Project-Id-Version: senaite.ast\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-28 13:00-0600\n"
+"PO-Revision-Date: 2025-09-28 13:00-0600\n"
+"Last-Translator: Shirley Andrade <you@example.com>\n"
+"Language-Team: Spanish (Latin America)\n"
+"Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: DOMAIN\n"
-"Language: es\n"
+"X-Domain: senaite.ast\n"
 
 #: senaite/ast/browser/content/templates/breakpointstables_duplicate.pt:34
 msgid "AST Breakpoint"
