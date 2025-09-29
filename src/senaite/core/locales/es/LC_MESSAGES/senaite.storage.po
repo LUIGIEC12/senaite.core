@@ -1,26 +1,18 @@
-# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# Translators:
-# Pau Soliva <psoliva@naralabs.com>, 2019
-# Jordi Puiggené <jpuiggene@naralabs.com>, 2024
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2025-04-04 10:05+0000\n"
-"PO-Revision-Date: 2019-03-31 21:21+0000\n"
-"Last-Translator: Jordi Puiggené <jpuiggene@naralabs.com>, 2024\n"
-"Language-Team: Spanish (https://app.transifex.com/senaite/teams/97702/es/)\n"
+"Project-Id-Version: senaite.storage\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-28 13:00-0600\n"
+"PO-Revision-Date: 2025-09-28 13:00-0600\n"
+"Last-Translator: Shirley Andrade <you@example.com>\n"
+"Language-Team: Spanish (Spain)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
-"Language-Code: en\n"
-"Language-Name: English\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: senaite.storage\n"
-"Language: es\n"
+"X-Domain: senaite.storage\n"
 
 #: senaite/storage/browser/container/templates/move_container.pt:23
 #: senaite/storage/browser/container/templates/store_samples.pt:18
