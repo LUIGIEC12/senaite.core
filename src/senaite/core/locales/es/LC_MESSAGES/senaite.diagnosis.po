@@ -157,3 +157,6 @@ msgstr "Género"
 #: senaite/diagnosis/content/symptom.py:79
 msgid "label_symptom_severity"
 msgstr "Niveles de severidad"
+
+msgid "Signs and Symptoms"
+msgstr "Signos y síntomas"
