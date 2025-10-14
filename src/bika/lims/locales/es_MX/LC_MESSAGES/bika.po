@@ -68,3 +68,40 @@ msgstr "Resultado predeterminado"
 
 msgid "Default"
 msgstr "Por defecto"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Result"
+msgstr "Resultado"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Result out of range"
+msgstr "Resultado fuera de rango"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Result in shoulder range"
+msgstr "Resultado en rango de hombro"
+
+# En algunos forks esta cadena podría aparecer sin placeholder;
+# la incluimos por si existiera:
+#: bika/lims/browser/analyses/view.py
+msgid "Result range is different from Specification"
+msgstr "El rango del resultado difiere de la especificación"
+
+# Versión con placeholder usando str.format ({}). El msgid debe ser idéntico.
+#: bika/lims/browser/analyses/view.py
+msgid "Result range is different from Specification: {}"
+msgstr "El rango del resultado difiere de la especificación: {}"
+
+# Si en algún punto se usa plantilla con mapping TAL (${spec}), añadimos esta variante:
+#: bika/lims/browser/analyses/view.py
+msgid "Result range is different from Specification: ${spec}"
+msgstr "El rango del resultado difiere de la especificación: ${spec}"
+
+# Mensajes cortos que a veces acompañan tooltips/alt-text
+#: bika/lims/browser/analyses/view.py
+msgid "Out of range"
+msgstr "Fuera de rango"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Shoulder range"
+msgstr "Rango de hombro"
