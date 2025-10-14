@@ -1440,7 +1440,7 @@ class AnalysesView(ListingView):
         out_range, out_shoulders = is_out_of_range(analysis)
         if out_range:
             msg = _("Result out of range")
-            img = get_image("exclamation.png", title=msg)
+            img = get_image("exclamation_red.svg", title=msg)
             if not out_shoulders:
                 msg = _("Result in shoulder range")
                 img = get_image("warning.png", title=msg)
