@@ -1446,6 +1446,38 @@ class AnalysesView(ListingView):
                 img = get_image("warning.png", title=msg)
             self._append_html_element(item, "Result", img)
 
+    # ======= NUEVO HELPER =======
+    def _is_meaningful_range(self, rr):
+        """Return True if original spec is meaningful (not placeholder).
+        rr: dict from getResultsRange (expected keys: min, max, rangecomment)
+        """
+        if not rr:
+            return False
+
+        # If explicit comment, treat as meaningful
+        if rr.get("rangecomment"):
+            return True
+
+        def to_float(x):
+            try:
+                return float(x)
+            except Exception:
+                return None
+
+        lo = to_float(rr.get("min"))
+        hi = to_float(rr.get("max"))
+
+        # no limits at all => not meaningful
+        if lo is None and hi is None:
+            return False
+
+        # Common placeholder in 2.6 for "force dynamic": 0..0
+        # If 0..0 can be a real spec in your lab, adjust/remove this check.
+        if lo == 0.0 and hi == 0.0:
+            return False
+
+        return True
+
     def _folder_item_result_range_compliance(self, analysis_brain, item):
         """Displays an icon if the range is different from the results ranges
         defined in the Sample
@@ -1457,12 +1489,17 @@ class AnalysesView(ListingView):
         if is_result_range_compliant(analysis):
             return
 
-        # Non-compliant range, display an icon
+        # Non-compliant range: only warn if the "original" range is meaningful
         service_uid = analysis_brain.getServiceUID
         original = self.context.getResultsRange(search_by=service_uid)
-        original = get_formatted_interval(original, "")
+
+        # NUEVO: si la original no es significativa (vacía/0..0), no avisar
+        if not self._is_meaningful_range(original):
+            return
+
+        original_fmt = get_formatted_interval(original, "")
         msg = _("Result range is different from Specification: {}"
-                .format(original))
+                .format(original_fmt))
         img = get_image("warning.png", title=msg)
         self._append_html_element(item, "Specification", img)
 
