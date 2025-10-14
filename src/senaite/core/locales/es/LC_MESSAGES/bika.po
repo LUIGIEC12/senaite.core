@@ -1,0 +1,57 @@
+# Spanish translations for bika.lims
+# Copyright (C) 2025
+# This file is distributed under the same license as the bika.lims package.
+# FIRST AUTHOR <you@example.com>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bika.lims 2.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-10-14 00:00+0000\n"
+"PO-Revision-Date: 2025-10-14 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Domain: bika\n"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Result"
+msgstr "Resultado"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Result out of range"
+msgstr "Resultado fuera de rango"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Result in shoulder range"
+msgstr "Resultado en rango de hombro"
+
+# En algunos forks esta cadena podría aparecer sin placeholder;
+# la incluimos por si existiera:
+#: bika/lims/browser/analyses/view.py
+msgid "Result range is different from Specification"
+msgstr "El rango del resultado difiere de la especificación"
+
+# Versión con placeholder usando str.format ({}). El msgid debe ser idéntico.
+#: bika/lims/browser/analyses/view.py
+msgid "Result range is different from Specification: {}"
+msgstr "El rango del resultado difiere de la especificación: {}"
+
+# Si en algún punto se usa plantilla con mapping TAL (${spec}), añadimos esta variante:
+#: bika/lims/browser/analyses/view.py
+msgid "Result range is different from Specification: ${spec}"
+msgstr "El rango del resultado difiere de la especificación: ${spec}"
+
+# Mensajes cortos que a veces acompañan tooltips/alt-text
+#: bika/lims/browser/analyses/view.py
+msgid "Out of range"
+msgstr "Fuera de rango"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Shoulder range"
+msgstr "Rango de hombro"
+
