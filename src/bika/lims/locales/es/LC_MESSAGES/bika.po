@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: bika.lims\n"
+"Project-Id-Version: bika.lims 2.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-28 13:00\n"
-"PO-Revision-Date: 2025-09-28 13:00\n"
+"POT-Creation-Date: 2025-09-28 13:00+0000\n"
+"PO-Revision-Date: 2025-09-28 13:00+0000\n"
 "Last-Translator: Shirley Andrade <you@example.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -11,6 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Domain: bika\n"
 "X-Domain: bika\n"
 
 # Pestañas (schemata)
@@ -105,3 +106,4 @@ msgstr "Fuera de rango"
 #: bika/lims/browser/analyses/view.py
 msgid "Shoulder range"
 msgstr "Rango de hombro"
+
