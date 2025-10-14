@@ -10301,3 +10301,95 @@ msgstr "Habilitar Audit Log global"
 msgid "The global Auditlog shows all modifications of the system. When enabled, all entities will be indexed in a separate catalog. This will increase the time when objects are created or modified."
 msgstr "El Auditlog global muestra todas las modificaciones del sistema. Cuando está habilitado, todas las entidades se indexan en un catálogo separado. Esto incrementará el tiempo cuando se crean o modifican objetos."
 
+# Pestañas (schemata)
+msgid "Description"
+msgstr "Descripción"
+
+msgid "Analysis"
+msgstr "Análisis"
+
+msgid "Limits"
+msgstr "Límites"
+
+msgid "Method"
+msgstr "Método"
+
+msgid "Uncertainties"
+msgstr "Incertidumbres"
+
+msgid "Result Options"
+msgstr "Opciones de resultado"
+
+msgid "Advanced"
+msgstr "Avanzado"
+
+# Campos clave de analysisservice.py (ejemplos)
+msgid "Methods"
+msgstr "Métodos"
+
+msgid "Available methods to perform the test"
+msgstr "Métodos disponibles para realizar la prueba"
+
+msgid "Instruments"
+msgstr "Instrumentos"
+
+msgid "Available instruments based on the selected methods."
+msgstr "Instrumentos disponibles según los métodos seleccionados."
+
+msgid "Use the Default Calculation of Method"
+msgstr "Usar el cálculo predeterminado del método"
+
+msgid "Calculation"
+msgstr "Cálculo"
+
+msgid "Calculation to be assigned to this content."
+msgstr "Cálculo a asignar a este contenido."
+
+msgid "Result variables"
+msgstr "Variables de resultado"
+
+msgid "Additional result values"
+msgstr "Valores de resultado adicionales"
+
+msgid "Default result"
+msgstr "Resultado predeterminado"
+
+msgid "Default"
+msgstr "Por defecto"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Result"
+msgstr "Resultado"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Result out of range"
+msgstr "Resultado fuera de rango"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Result in shoulder range"
+msgstr "Resultado en rango de hombro"
+
+# En algunos forks esta cadena podría aparecer sin placeholder;
+# la incluimos por si existiera:
+#: bika/lims/browser/analyses/view.py
+msgid "Result range is different from Specification"
+msgstr "El rango del resultado difiere de la especificación"
+
+# Versión con placeholder usando str.format ({}). El msgid debe ser idéntico.
+#: bika/lims/browser/analyses/view.py
+msgid "Result range is different from Specification: {}"
+msgstr "El rango del resultado difiere de la especificación: {}"
+
+# Si en algún punto se usa plantilla con mapping TAL (${spec}), añadimos esta variante:
+#: bika/lims/browser/analyses/view.py
+msgid "Result range is different from Specification: ${spec}"
+msgstr "El rango del resultado difiere de la especificación: ${spec}"
+
+# Mensajes cortos que a veces acompañan tooltips/alt-text
+#: bika/lims/browser/analyses/view.py
+msgid "Out of range"
+msgstr "Fuera de rango"
+
+#: bika/lims/browser/analyses/view.py
+msgid "Shoulder range"
+msgstr "Rango de hombro"
