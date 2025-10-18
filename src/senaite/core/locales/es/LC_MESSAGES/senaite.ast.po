@@ -326,87 +326,87 @@ msgstr "Diámetro de la zona de inhibición (mm)"
 #. Default: "The method to determine microbial susceptibility to antibiotics"
 #: senaite/ast/behaviors/astpanel.py:110
 msgid "description_astpanel_method"
-msgstr "método descripción astpanel"
+msgstr "Método descripción astpanel"
 
 #. Default: "When enabled, an additional row for the introduction of the Minimum Inhibitory Concentration value in μg/mL is displayed in the results entry view, above resistance call options."
 #: senaite/ast/behaviors/astpanel.py:152
 msgid "description_astpanel_mic_value"
-msgstr "descripción astpanel valor mic"
+msgstr "Descripción astpanel valor mic"
 
 #. Default: "When enabled, an additional row for the introduction of the diameter of inhibition zone (DIZ) in mm is displayed in the results entry view, above resistance call options."
 #: senaite/ast/behaviors/astpanel.py:136
 msgid "description_astpanel_zone_size"
-msgstr "descripción tamaño de la zona del panel ast"
+msgstr "Descripción tamaño de la zona del panel ast"
 
 #. Default: "Zone diameter breakpoint"
 #: senaite/ast/behaviors/breakpointstable.py:112
 msgid "description_breakpoint_diameter_r"
-msgstr "descripción punto de ruptura diámetro r"
+msgstr "Descripción punto de ruptura diámetro r"
 
 #. Default: "Zone diameter breakpoint"
 #: senaite/ast/behaviors/breakpointstable.py:98
 msgid "description_breakpoint_diameter_s"
-msgstr "descripción diámetro del punto de ruptura s"
+msgstr "Descripción diámetro del punto de ruptura s"
 
 #. Default: "MIC breakpoint"
 #: senaite/ast/behaviors/breakpointstable.py:75
 msgid "description_breakpoint_mic_r"
-msgstr "descripción punto de interrupción mic r"
+msgstr "Descripción punto de interrupción mic r"
 
 #. Default: "MIC breakpoint"
 #: senaite/ast/behaviors/breakpointstable.py:61
 msgid "description_breakpoint_mic_s"
-msgstr "descripción punto de interrupción mic s"
+msgstr "Descripción punto de interrupción mic s"
 
 #. Default: "List of susceptibility testing categories breakpoints for this antimicrobial agent depending on the concentration added to the filter paper (disk content or potency) expressed in μg and the microorganism to test. These MIC and zone diameter breakpoints are used on AST results entry view to automatically calculate the susceptibility testing category."
 #: senaite/ast/behaviors/breakpointstable.py:130
 msgid "description_breakpointstable"
-msgstr "descripción de tabla de puntos de interrupción"
+msgstr "Descripción de tabla de puntos de interrupción"
 
 #. Default: "Method"
 #: senaite/ast/behaviors/astpanel.py:109
 msgid "label_astpanel_method"
-msgstr "método de etiqueta astpanel"
+msgstr "Método de etiqueta astpanel"
 
 #. Default: "Antibiotic"
 #: senaite/ast/behaviors/breakpointstable.py:39
 msgid "label_breakpoint_antibiotic"
-msgstr "etiqueta punto de interrupción de antibiótico"
+msgstr "Etiqueta punto de interrupción de antibiótico"
 
 #. Default: "R < (mm)"
 #: senaite/ast/behaviors/breakpointstable.py:108
 msgid "label_breakpoint_diameter_r"
-msgstr "diámetro del punto de interrupción de la etiqueta r"
+msgstr "Diámetro del punto de interrupción de la etiqueta r"
 
 #. Default: "S ≥ (mm)"
 #: senaite/ast/behaviors/breakpointstable.py:94
 msgid "label_breakpoint_diameter_s"
-msgstr "diámetro del punto de interrupción de la etiqueta"
+msgstr "Diámetro del punto de interrupción de la etiqueta"
 
 #. Default: "Disk content (μg)"
 #: senaite/ast/behaviors/breakpointstable.py:85
 msgid "label_breakpoint_disk_content"
-msgstr "etiqueta punto de interrupción del contenido del disco"
+msgstr "Etiqueta punto de interrupción del contenido del disco"
 
 #. Default: "R > (μg/mL)"
 #: senaite/ast/behaviors/breakpointstable.py:71
 msgid "label_breakpoint_mic_r"
-msgstr "etiqueta punto de interrupción mic r"
+msgstr "Etiqueta punto de interrupción mic r"
 
 #. Default: "S ≤ (μg/mL)"
 #: senaite/ast/behaviors/breakpointstable.py:57
 msgid "label_breakpoint_mic_s"
-msgstr "etiqueta punto de interrupción mic s"
+msgstr "Etiqueta punto de interrupción mic s"
 
 #. Default: "Species"
 #: senaite/ast/behaviors/breakpointstable.py:48
 msgid "label_breakpoint_microorganism"
-msgstr "punto de interrupción de la etiqueta microorganismo"
+msgstr "Punto de interrupción de la etiqueta microorganismo"
 
 #. Default: "Clinical Breakpoints"
 #: senaite/ast/behaviors/breakpointstable.py:126
 msgid "label_breakpointstable"
-msgstr "tabla de puntos de interrupción de etiquetas"
+msgstr "Tabla de puntos de interrupción de etiquetas"
 
 #. Default: "Include MIC value in μg/mL"
 #: senaite/ast/behaviors/astpanel.py:148
@@ -430,3 +430,6 @@ msgstr "método vocabc ast mic"
 
 msgid "AST Breakpoints Tables"
 msgstr "Tablas de puntos de corte (AST)"
+
+msgid "AST Breakpoints Table"
+msgstr "Tabla de puntos de corte (AST)"
