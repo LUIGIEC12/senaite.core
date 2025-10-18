@@ -530,17 +530,17 @@ class DashboardView(BrowserView):
                 'panels': out}
 
     # ---------------------------
-    # Helper para detalle de "sin asignar" (Analysis)
+    # Helper: enlace a Muestras → "Sin asignar"
     # ---------------------------
-    def _analyses_unassigned_search_link(self):
-        """Devuelve el enlace al buscador con Analysis 'unassigned' (detalle)."""
-        qs = [
-            'portal_type=Analysis', 'portal_type:list=Analysis',
-            'Type=Analysis', 'Type:list=Analysis',
-            'review_state=unassigned', 'review_state:list=unassigned',
-            'sort_on=created', 'sort_order=reverse',
-        ]
-        return 'search?' + '&'.join(qs)
+    def _samples_unassigned_link(self):
+        """
+        Devuelve el enlace para abrir el listado de Muestras filtrado a:
+        - review_state = sample_received
+        - assigned_state = unassigned
+        Usamos el prefijo 'samples_' en los parámetros para ser coherentes con
+        el resto de enlaces del dashboard (p.ej. samples?samples_review_state=...).
+        """
+        return 'samples?samples_assigned_state=unassigned&samples_review_state=sample_received'
 
     def get_analyses_section(self):
         """ Returns the section dictionary related with Analyses,
@@ -557,18 +557,18 @@ class DashboardView(BrowserView):
         # Active Analyses (All)
         total = self.search_count(query, bc.id)
 
-        # 1) Pendientes de asignar -> detalle de "unassigned" (Analysis)
+        # 1) Pendientes de asignar -> abrir Muestras "Sin asignar"
         name = _('Assignment pending')
         desc = _('Assignment pending')
-        purl = self._analyses_unassigned_search_link()
+        purl = self._samples_unassigned_link()
         query['review_state'] = ['unassigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
-        # 2) Resultados pendientes -> MISMO detalle de "unassigned"
+        # 2) Resultados pendientes -> abrir el MISMO detalle de Muestras "Sin asignar"
         name = _('Results pending')
         desc = _('Results pending')
-        purl = self._analyses_unassigned_search_link()
-        # Conteo clásico: unassigned + assigned
+        purl = self._samples_unassigned_link()
+        # Conteo clásico: unassigned + assigned (Analysis)
         query['review_state'] = ['unassigned', 'assigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
