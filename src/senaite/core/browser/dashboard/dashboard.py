@@ -60,11 +60,17 @@ PERIODICITY_ALL = "a"
 
 
 def get_dashboard_registry_record():
+    """
+    Return the 'senaite.core.dashboard_panels_visibility' values.
+    :return: A dictionary or None
+    """
     try:
         registry = api.portal.get_registry_record(
             'senaite.core.dashboard_panels_visibility')
         return registry
     except InvalidParameterError:
+        # No entry in the registry for dashboard panels roles.
+        # Maybe upgradestep 1.1.8 was not run?
         logger.warn("Cannot find a record with name "
                     "'senaite.core.dashboard_panels_visibility' in "
                     "registry_record. Missed upgrade 2.0.0?")
@@ -72,6 +78,13 @@ def get_dashboard_registry_record():
 
 
 def set_dashboard_registry_record(registry_info):
+    """
+    Sets the 'senaite.core.dashboard_panels_visibility' values.
+
+    :param registry_info: A dictionary type object with all its values as
+    *unicode* objects.
+    :return: A dictionary or None
+    """
     try:
         api.portal.set_registry_record(
             'senaite.core.dashboard_panels_visibility', registry_info)
@@ -82,13 +95,22 @@ def set_dashboard_registry_record(registry_info):
 
 
 def setup_dashboard_panels_visibility_registry(section_name):
+    """
+    Initializes the values for panels visibility in registry_records. By
+    default, only users with LabManager or Manager roles can see the panels.
+    :param section_name:
+    :return: An string like: "role1,yes,role2,no,rol3,no"
+    """
     registry_info = get_dashboard_registry_record()
     role_permissions_list = []
+    # Getting roles defined in the system
     roles = []
     acl_users = get_tool("acl_users")
     roles_tree = acl_users.portal_role_manager.listRoleIds()
     for role in roles_tree:
         roles.append(role)
+    # Set view permissions to each role as 'yes':
+    # "role1,yes,role2,no,rol3,no"
     for role in roles:
         role_permissions_list.append(role)
         visible = 'no'
@@ -97,32 +119,51 @@ def setup_dashboard_panels_visibility_registry(section_name):
         role_permissions_list.append(visible)
     role_permissions = ','.join(role_permissions_list)
 
+    # Set permissions string into dict
     registry_info[get_unicode(section_name)] = get_unicode(role_permissions)
+    # Set new values to registry record
     set_dashboard_registry_record(registry_info)
     return registry_info
 
 
 def get_dashboard_panels_visibility_by_section(section_name):
+    """
+    Return a list of pairs as values that represents the role-permission
+    view relation for the panel section passed in.
+    :param section_name: the panels section id.
+    :return: a list of tuples.
+    """
     registry_info = get_dashboard_registry_record()
     if section_name not in registry_info:
-        registry_info = setup_dashboard_panels_visibility_registry(section_name)
+        # Registry hasn't been set, do it at least for this section
+        registry_info = \
+            setup_dashboard_panels_visibility_registry(section_name)
 
     pairs = registry_info.get(section_name)
     pairs = get_strings(pairs)
     if pairs is None:
+        # In the registry, but with None value?
         setup_dashboard_panels_visibility_registry(section_name)
         return get_dashboard_panels_visibility_by_section(section_name)
 
     pairs = pairs.split(',')
     if len(pairs) == 0 or len(pairs) % 2 != 0:
+        # Non-valid or malformed value
         setup_dashboard_panels_visibility_registry(section_name)
         return get_dashboard_panels_visibility_by_section(section_name)
 
-    result = [(pairs[i], pairs[i + 1]) for i in range(len(pairs)) if i % 2 == 0]
+    result = [
+        (pairs[i], pairs[i + 1]) for i in range(len(pairs)) if i % 2 == 0]
     return result
 
 
 def is_panel_visible_for_user(panel, user):
+    """
+    Checks if the user is allowed to see the panel
+    :param panel: panel ID as string
+    :param user: a MemberData object
+    :return: Boolean
+    """
     roles = user.getRoles()
     visibility = get_dashboard_panels_visibility_by_section(panel)
     for pair in visibility:
@@ -140,6 +181,7 @@ class DashboardView(BrowserView):
         self.member = None
 
     def __call__(self):
+        # If a client contact, redirect to the client's page
         client = get_current_client()
         if client:
             url = get_url(client)
@@ -147,11 +189,13 @@ class DashboardView(BrowserView):
 
         frontpage_url = self.portal_url + "/senaite-frontpage"
         if not self.context.bika_setup.getDashboardByDefault():
+            # Do not render dashboard, render frontpage instead
             self.request.response.redirect(frontpage_url)
             return
 
         mtool = getToolByName(self.context, 'portal_membership')
         if mtool.isAnonymousUser():
+            # Anonymous user, redirect to frontpage
             self.request.response.redirect(frontpage_url)
             return
 
@@ -165,7 +209,20 @@ class DashboardView(BrowserView):
         return self.template()
 
     def check_dashboard_cookie(self):
+        """
+        Check if the dashboard cookie should exist through bikasetup
+        configuration.
+
+        If it should exist but doesn't exist yet, the function creates it
+        with all values as default.
+        If it should exist and already exists, it returns the value.
+        Otherwise, the function returns None.
+
+        :return: a dictionary of strings
+        """
+        # Getting cookie
         cookie_raw = self.request.get(DASHBOARD_FILTER_COOKIE, None)
+        # If it doesn't exist, create it with default values
         if cookie_raw is None:
             cookie_raw = self._create_raw_data()
             self.request.response.setCookie(
@@ -177,28 +234,58 @@ class DashboardView(BrowserView):
         return get_strings(json.loads(cookie_raw))
 
     def is_filter_selected(self, selection_id, value):
+        """
+        Compares whether the 'selection_id' parameter value saved in the
+        cookie is the same value as the "value" parameter.
+
+        :param selection_id: a string as a dashboard_cookie key.
+        :param value: The value to compare against the value from
+        dashboard_cookie key.
+        :return: Boolean.
+        """
         selected = self.dashboard_cookie.get(selection_id)
         return selected == value
 
     def is_admin_user(self):
+        """
+        Checks if the user is the admin or a SiteAdmin user.
+        :return: Boolean
+        """
         user = api.user.get_current()
         roles = user.getRoles()
         return "LabManager" in roles or "Manager" in roles
 
     def _create_raw_data(self):
+        """
+        Gathers the different sections ids and creates a string as first
+        cookie data.
+
+        :return: A dictionary like:
+            {'analyses':'all','analysisrequest':'all','worksheets':'all'}
+        """
         result = {}
         for section in self.get_sections():
             result[section.get('id')] = 'all'
         return result
 
     def get_date_range(self, periodicity=PERIODICITY_WEEKLY):
+        """Returns a date range (date from, date to) that suits with the passed
+        in periodicity.
+
+        :param periodicity: string that represents the periodicity
+        :type periodicity: str
+        :return: A date range
+        :rtype: [(DateTime, DateTime)]
+        """
         today = datetime.date.today()
         if periodicity == PERIODICITY_DAILY:
+            # Daily, load last 30 days
             date_from = DateTime() - 30
             date_to = DateTime() + 1
             return date_from, date_to
 
         if periodicity == PERIODICITY_MONTHLY:
+            # Monthly, load last 2 years
             min_year = today.year - 1 if today.month == 12 else today.year - 2
             min_month = 1 if today.month == 12 else today.month
             date_from = DateTime(min_year, min_month, 1)
@@ -208,34 +295,47 @@ class DashboardView(BrowserView):
             return date_from, date_to
 
         if periodicity == PERIODICITY_QUARTERLY:
+            # Quarterly, load last 4 years
             m = (((today.month - 1) / 3) * 3) + 1
             min_year = today.year - 4 if today.month == 12 else today.year - 5
             date_from = DateTime(min_year, m, 1)
             date_to = DateTime(today.year, m + 2,
-                               monthrange(today.year, m + 2)[1], 23, 59, 59)
+                               monthrange(today.year, m + 2)[1], 23, 59,
+                               59)
             return date_from, date_to
         if periodicity == PERIODICITY_BIANNUAL:
+            # Biannual, load last 10 years
             m = (((today.month - 1) / 6) * 6) + 1
             min_year = today.year - 10 if today.month == 12 else today.year - 11
             date_from = DateTime(min_year, m, 1)
             date_to = DateTime(today.year, m + 5,
-                               monthrange(today.year, m + 5)[1], 23, 59, 59)
+                               monthrange(today.year, m + 5)[1], 23, 59,
+                               59)
             return date_from, date_to
 
         if periodicity in [PERIODICITY_YEARLY, PERIODICITY_ALL]:
+            # Yearly or All time, load last 15 years
             min_year = today.year - 15 if today.month == 12 else today.year - 16
             date_from = DateTime(min_year, 1, 1)
             date_to = DateTime(today.year, 12, 31, 23, 59, 59)
             return date_from, date_to
 
+        # Default Weekly, load last six months
         year, weeknum, dow = today.isocalendar()
         min_year = today.year if today.month > 6 else today.year - 1
-        min_month = today.month - 6 if today.month > 6 else (today.month - 6) + 12
+        min_month = today.month - 6 if today.month > 6 \
+            else (today.month - 6) + 12
         date_from = DateTime(min_year, min_month, 1)
         date_to = DateTime() - dow + 7
         return date_from, date_to
 
     def get_sections(self):
+        """ Returns an array with the sections to be displayed.
+            Every section is a dictionary with the following structure:
+                {'id': <section_identifier>,
+                 'title': <section_title>,
+                'panels': <array of panels>}
+        """
         sections = []
         user = api.user.get_current()
         if is_panel_visible_for_user('analyses', user):
@@ -247,6 +347,10 @@ class DashboardView(BrowserView):
         return sections
 
     def get_filter_options(self):
+        """
+        Returns dasboard filter options.
+        :return: Boolean
+        """
         dash_opt = DisplayList((
             ('all', _('All')),
             ('mine', _('Mine')),
@@ -274,71 +378,92 @@ class DashboardView(BrowserView):
         return out
 
     def get_analysisrequests_section(self):
+        """ Returns the section dictionary related with Analysis
+            Requests, that contains some informative panels (like
+            ARs to be verified, ARs to be published, etc.)
+        """
         out = []
         catalog = getToolByName(self.context, SAMPLE_CATALOG)
         query = {'portal_type': "AnalysisRequest",
                  'is_active': True}
 
+        # Check if dashboard_cookie contains any values to query
+        # elements by
         query = self._update_criteria_with_filters(query, 'analysisrequests')
+
+        # Active Samples (All)
         total = self.search_count(query, catalog.id)
 
+        # Sampling workflow enabled?
         if self.context.bika_setup.getSamplingWorkflowEnabled():
+            # Samples awaiting to be sampled or scheduled
             name = _('Samples to be sampled')
             desc = _("To be sampled")
             purl = 'samples?samples_review_state=to_be_sampled'
             query['review_state'] = ['to_be_sampled', ]
             out.append(self._getStatistics(name, desc, purl, catalog, query, total))
 
+            # Samples awaiting to be preserved
             name = _('Samples to be preserved')
             desc = _("To be preserved")
             purl = 'samples?samples_review_state=to_be_preserved'
             query['review_state'] = ['to_be_preserved', ]
             out.append(self._getStatistics(name, desc, purl, catalog, query, total))
 
+            # Samples scheduled for Sampling
             name = _('Samples scheduled for sampling')
             desc = _("Sampling scheduled")
             purl = 'samples?samples_review_state=scheduled_sampling'
             query['review_state'] = ['scheduled_sampling', ]
             out.append(self._getStatistics(name, desc, purl, catalog, query, total))
 
+        # Samples awaiting for reception
         name = _('Samples to be received')
         desc = _("Reception pending")
         purl = 'samples?samples_review_state=sample_due'
         query['review_state'] = ['sample_due', ]
         out.append(self._getStatistics(name, desc, purl, catalog, query, total))
 
+        # Samples under way
         name = _('Samples with results pending')
         desc = _("Results pending")
         purl = 'samples?samples_review_state=sample_received'
         query['review_state'] = ['sample_received', ]
         out.append(self._getStatistics(name, desc, purl, catalog, query, total))
 
+        # Samples to be verified
         name = _('Samples to be verified')
         desc = _("To be verified")
         purl = 'samples?samples_review_state=to_be_verified'
         query['review_state'] = ['to_be_verified', ]
         out.append(self._getStatistics(name, desc, purl, catalog, query, total))
 
+        # Samples verified (to be published)
         name = _('Samples verified')
         desc = _("Verified")
         purl = 'samples?samples_review_state=verified'
         query['review_state'] = ['verified', ]
         out.append(self._getStatistics(name, desc, purl, catalog, query, total))
 
+        # Samples published
         name = _('Samples published')
         desc = _("Published")
         purl = 'samples?samples_review_state=published'
         query['review_state'] = ['published', ]
         out.append(self._getStatistics(name, desc, purl, catalog, query, total))
 
+        # Samples to be printed
         if self.context.bika_setup.getPrintingWorkflowEnabled():
             name = _('Samples to be printed')
             desc = _("To be printed")
             purl = 'samples?samples_getPrinted=0'
             query['getPrinted'] = '0'
             query['review_state'] = ['published', ]
-            out.append(self._getStatistics(name, desc, purl, catalog, query, total))
+            out.append(
+                self._getStatistics(name, desc, purl, catalog, query, total))
 
+        # Chart with the evolution of ARs over a period, grouped by
+        # periodicity
         outevo = self.fill_dates_evo(catalog, query)
         out.append({'type':         'bar-chart-panel',
                     'name':         _('Evolution of Samples'),
@@ -352,30 +477,44 @@ class DashboardView(BrowserView):
                 'panels': out}
 
     def get_worksheets_section(self):
+        """ Returns the section dictionary related with Worksheets,
+            that contains some informative panels (like
+            WS to be verified, WS with results pending, etc.)
+        """
         out = []
         bc = getToolByName(self.context, WORKSHEET_CATALOG)
         query = {'portal_type': "Worksheet", }
+
+        # Check if dashboard_cookie contains any values to query
+        # elements by
         query = self._update_criteria_with_filters(query, 'worksheets')
+
+        # Active Worksheets (all)
         total = self.search_count(query, bc.id)
 
+        # Open worksheets
         name = _('Results pending')
         desc = _('Results pending')
         purl = 'worksheets?list_review_state=open'
         query['review_state'] = ['open']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
+        # Worksheets to be verified
         name = _('To be verified')
         desc = _('To be verified')
         purl = 'worksheets?list_review_state=to_be_verified'
         query['review_state'] = ['to_be_verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
+        # Worksheets verified
         name = _('Verified')
         desc = _('Verified')
         purl = 'worksheets?list_review_state=verified'
         query['review_state'] = ['verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
+        # Chart with the evolution of WSs over a period, grouped by
+        # periodicity
         outevo = self.fill_dates_evo(bc, query)
         out.append({'type':         'bar-chart-panel',
                     'name':         _('Evolution of Worksheets'),
@@ -389,9 +528,10 @@ class DashboardView(BrowserView):
                 'panels': out}
 
     # ---------------------------
-    # Helpers para Analyses
+    # Helpers para resolver vista de Analyses (Py2.7-safe)
     # ---------------------------
     def _traverse_exists(self, name):
+        """Devuelve True si la ruta 'name' es traversable en el portal."""
         portal = api.portal.get()
         try:
             portal.restrictedTraverse(name)
@@ -400,6 +540,7 @@ class DashboardView(BrowserView):
             return False
 
     def _get_analyses_listing_name(self):
+        """Intenta varias rutas típicas para el listado de análisis."""
         candidates = [
             'analyses', '@@analyses',
             'analysis', '@@analysis',
@@ -418,63 +559,100 @@ class DashboardView(BrowserView):
         logger.warn("No analyses listing view found. Tried: %r" % candidates)
         return None
 
-    def _build_analysis_link(self, base, state_single):
-        """Arma el URL de detalle para Análisis según la vista disponible."""
+    def _build_analysis_link(self, base, states):
+        """Arma el URL de detalle para Análisis según la vista disponible.
+
+        - Si base es 'search' o '@@search', usa los parámetros del buscador de Plone
+          e incluye múltiples estados con review_state:list=...
+        - Si es una listing específica, usa list_review_state (y también review_state)
+          por compatibilidad.
+        """
         if not base:
             return '#'
 
-        # Si es el buscador de Plone, usar TODOS los nombres de parámetros
-        # posibles (Type/portal_type y review_state en simple y :list)
+        # Normaliza a lista
+        if isinstance(states, (str, unicode)):
+            states = [states]
+
+        # Plone search
         if base in ('search', '@@search'):
             qs = [
                 'Type=Analysis',
                 'Type:list=Analysis',
                 'portal_type=Analysis',
                 'portal_type:list=Analysis',
-                'review_state=%s' % state_single,
-                'review_state:list=%s' % state_single,
                 'sort_on=created',
                 'sort_order=reverse',
             ]
+            # añade cada estado como review_state y review_state:list
+            for st in states:
+                qs.append('review_state=%s' % st)
+                qs.append('review_state:list=%s' % st)
             return base + '?' + '&'.join(qs)
 
-        # Si es una listing específica de Senaite
-        return base + ('?list_review_state=%s&review_state=%s&sort_on=created&sort_order=reverse'
-                       % (state_single, state_single))
+        # Listados específicos (aceptan 1 solo valor en list_review_state,
+        # pero enviamos también los múltiples review_state:list por si se soporta)
+        if len(states) == 1:
+            st = states[0]
+            return base + ('?list_review_state=%s&review_state=%s&sort_on=created&sort_order=reverse'
+                           % (st, st))
+
+        # Varios estados: no todos los listados aceptan CSV; proveemos todos los
+        # review_state:list y dejamos list_review_state vacío para no romper
+        qs = ['sort_on=created', 'sort_order=reverse']
+        for st in states:
+            qs.append('review_state=%s' % st)
+            qs.append('review_state:list=%s' % st)
+        return base + '?' + '&'.join(qs)
 
     def get_analyses_section(self):
+        """ Returns the section dictionary related with Analyses,
+            that contains some informative panels (analyses pending
+            analyses assigned, etc.)
+        """
         out = []
         bc = getToolByName(self.context, ANALYSIS_CATALOG)
         query = {'portal_type': "Analysis", 'is_active': True}
+
+        # Check if dashboard_cookie contains any values to query elements by
         query = self._update_criteria_with_filters(query, 'analyses')
+
+        # Active Analyses (All)
         total = self.search_count(query, bc.id)
 
+        # Resolver el nombre real de la vista de análisis en esta instancia
         analyses_view = self._get_analyses_listing_name()
 
+        # Analyses to be assigned
         name = _('Assignment pending')
         desc = _('Assignment pending')
         purl = self._build_analysis_link(analyses_view, 'unassigned')
         query['review_state'] = ['unassigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
+        # Analyses pending  (unassigned + assigned)
         name = _('Results pending')
         desc = _('Results pending')
-        purl = self._build_analysis_link(analyses_view, 'assigned')
+        purl = self._build_analysis_link(analyses_view, ['unassigned', 'assigned'])
         query['review_state'] = ['unassigned', 'assigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
+        # Analyses to be verified
         name = _('To be verified')
         desc = _('To be verified')
         purl = self._build_analysis_link(analyses_view, 'to_be_verified')
         query['review_state'] = ['to_be_verified']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
+        # Analyses verified
         name = _('Verified')
         desc = _('Verified')
         purl = self._build_analysis_link(analyses_view, 'verified')
         query['review_state'] = ['verified']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
+        # Chart with the evolution of Analyses over a period, grouped by
+        # periodicity
         outevo = self.fill_dates_evo(bc, query)
         out.append({'type':         'bar-chart-panel',
                     'name':         _('Evolution of Analyses'),
@@ -568,6 +746,7 @@ class DashboardView(BrowserView):
             created = created - dow
             created = '%s-%s-%s' % (str(created.year())[2:], str(created.month()).zfill(2), str(created.day()).zfill(2))
         elif period == PERIODICITY_ALL:
+            # All time, but evolution chart grouped by year
             created = created.year()
         else:
             created = '%s-%s-%s' % (str(created.year())[2:], str(created.month()).zfill(2), str(created.day()).zfill(2))
@@ -578,12 +757,20 @@ class DashboardView(BrowserView):
         query_json = json.dumps(sorted_query)
         return self._fill_dates_evo(query_json, catalog.id, self.periodicity)
 
-    def _fill_dates_evo_cachekey(method, self, query_json, catalog_name, periodicity):
+    def _fill_dates_evo_cachekey(method, self, query_json, catalog_name,
+                                 periodicity):
         hour = time() // (60 * 60 * 2)
         return hour, catalog_name, query_json, periodicity
 
     @ram.cache(_fill_dates_evo_cachekey)
     def _fill_dates_evo(self, query_json, catalog_name, periodicity):
+        """Returns an array of dictionaries, where each dictionary contains the
+        amount of items created at a given date and grouped by review_state,
+        based on the passed in periodicity.
+
+        This is an expensive function that will not be called more than once
+        every 2 hours (note cache decorator with `time() // (60 * 60 * 2)
+        """
         outevoidx = {}
         outevo = []
         days = 1
@@ -600,12 +787,14 @@ class DashboardView(BrowserView):
         elif periodicity == PERIODICITY_ALL:
             days = 336
 
+        # Get the date range
         date_from, date_to = self.get_date_range(periodicity)
         query = json.loads(query_json)
         if 'review_state' in query:
             del query['review_state']
         query['sort_on'] = 'created'
-        query['created'] = {'query': (date_from, date_to), 'range': 'min:max'}
+        query['created'] = {'query': (date_from, date_to),
+                            'range': 'min:max'}
 
         otherstate = _('Other status')
         statesmap = self.get_states_map(query['portal_type'])
@@ -613,7 +802,7 @@ class DashboardView(BrowserView):
         stats.sort()
         stats.append(otherstate)
         statscount = {s: 0 for s in stats}
-
+        # Add first all periods, cause we want all segments to be displayed
         curr = date_from.asdatetime()
         end = date_to.asdatetime()
         while curr < end:
@@ -642,15 +831,19 @@ class DashboardView(BrowserView):
                 else:
                     outevo[oidx][state] = 1
             else:
-                currow = {'date': created, state: 1}
+                # Create new row
+                currow = {'date': created,
+                          state: 1}
                 outevo.append(currow)
 
+        # Remove all those states for which there is no data
         rstates = [k for k, v in statscount.items() if v == 0]
         for o in outevo:
             for r in rstates:
                 if r in o:
                     del o[r]
 
+        # Sort available status by number of occurences descending
         sorted_states = sorted(statscount.items(), key=itemgetter(1))
         sorted_states = map(lambda item: item[0], sorted_states)
         sorted_states.reverse()
@@ -668,6 +861,14 @@ class DashboardView(BrowserView):
         return len(brains)
 
     def _update_criteria_with_filters(self, query, section_name):
+        """
+        This method updates the 'query' dictionary with the criteria stored in
+        dashboard cookie.
+
+        :param query: A dictionary with search criteria.
+        :param section_name: The dashboard section name
+        :return: The 'query' dictionary
+        """
         if self.dashboard_cookie is None:
             return query
         cookie_criteria = self.dashboard_cookie.get(section_name)
@@ -676,12 +877,23 @@ class DashboardView(BrowserView):
         return query
 
     def get_dashboard_panels_visibility(self, section_name):
+        """
+        Return a list of pairs as values that represents the role-permission
+        view relation for the panel section.
+        :param section_name: the panels section id.
+        :return: a list of tuples.
+        """
         return get_dashboard_panels_visibility_by_section(section_name)
 
 
 class DashboardViewPermissionUpdate(BrowserView):
+    """
+    Updates the values in 'senaite.core.dashboard_panels_visibility' registry.
+    """
+
     def __call__(self):
         protect.CheckAuthenticator(self.request)
+        # Getting values from post
         section_name = self.request.get('section_name', None)
         if section_name is None:
             return None
@@ -695,6 +907,7 @@ class DashboardViewPermissionUpdate(BrowserView):
             check_state = 'no'
         else:
             check_state = 'yes'
+        # Update registry
         registry_info = get_dashboard_registry_record()
         pairs = get_dashboard_panels_visibility_by_section(section_name)
         role_permissions = list()
@@ -705,6 +918,7 @@ class DashboardViewPermissionUpdate(BrowserView):
             value = '{0},{1}'.format(pair[0], visibility)
             role_permissions.append(value)
         role_permissions = ','.join(role_permissions)
+        # Set permissions string into dict
         registry_info[section_name] = get_unicode(role_permissions)
         set_dashboard_registry_record(registry_info)
         return True
