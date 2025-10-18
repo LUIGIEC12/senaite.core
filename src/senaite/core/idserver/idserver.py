@@ -45,6 +45,35 @@ from zope.component import getAdapters
 from zope.component import getUtility
 from zope.component import queryAdapter
 
+# >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# AJUSTE: usar zona horaria del portal para el cálculo de fechas del IDServer
+# (reinicio de secuencia a medianoche local del portal y NO a medianoche UTC)
+try:
+    from plone import api as ploneapi
+except Exception:
+    ploneapi = None
+
+
+def _now_portal_tz():
+    """Devuelve 'ahora' en la zona horaria del portal.
+
+    - Usa DateTime (clase Zope) para mantenerse consistente con el resto del
+      stack y porque formatea nativamente con .strftime() y .toZone().
+    - Si por alguna razón no está disponible plone.api o hay error, hace
+      fallback al DateTime() por defecto (que suele ir a TZ del sistema).
+    """
+    try:
+        if ploneapi is not None:
+            tzname = ploneapi.portal.get_current_timezone()
+            if tzname:
+                return DateTime().toZone(tzname)
+        # Fallback si no hay plone.api o tzname
+        return DateTime()
+    except Exception:
+        # Fallback final
+        return DateTime()
+# <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 AR_TYPES = [
     "AnalysisRequest",
     "AnalysisRequestRetest",
@@ -359,13 +388,19 @@ def slice(string, separator="-", start=None, end=None):
 
 def get_current_year():
     """Returns the current year as a two digit string
+    (ajustado a la zona horaria del portal)
     """
-    return DateTime().strftime("%Y")[2:]
+    now = _now_portal_tz()
+    return now.strftime("%Y")[2:]
+
 
 def get_yymmdd():
     """Returns the current date in yymmdd format
+    (ajustado a la zona horaria del portal)
     """
-    return datetime.now().strftime("%y%m%d")
+    now = _now_portal_tz()
+    return now.strftime("%y%m%d")
+
 
 def make_storage_key(portal_type, prefix=None):
     """Make a storage (dict-) key for the number generator
