@@ -411,25 +411,28 @@ msgstr "Tabla de puntos de interrupción de etiquetas"
 #. Default: "Include MIC value in μg/mL"
 #: senaite/ast/behaviors/astpanel.py:148
 msgid "title_astpanel_mic_value"
-msgstr "título astpanel valor mic"
+msgstr "Título astpanel valor mic"
 
 #. Default: "Include zone diameter in mm"
 #: senaite/ast/behaviors/astpanel.py:132
 msgid "title_astpanel_zone_size"
-msgstr "título tamaño de la zona del panel ast"
+msgstr "Título tamaño de la zona del panel ast"
 
 #. Default: "Diffusion disk"
 #: senaite/ast/config.py:93
 msgid "vocab_astmethod_diffusiondisk"
-msgstr "disco de difusión del método vocab_ast"
+msgstr "Disco de difusión del método vocab_ast"
 
 #. Default: "Minimum Inhibitory Concentration (MIC)"
 #: senaite/ast/config.py:97
 msgid "vocab_astmethod_mic"
-msgstr "método vocabc ast mic"
+msgstr "Método vocabc ast mic"
 
 msgid "AST Breakpoints Tables"
 msgstr "Tablas de puntos de corte (AST)"
 
 msgid "AST Breakpoints Table"
 msgstr "Tabla de puntos de corte (AST)"
+
+msgid "AST Panels"
+msgstr "Panel (AST)"
