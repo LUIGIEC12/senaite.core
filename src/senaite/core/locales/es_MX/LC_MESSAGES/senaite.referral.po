@@ -522,3 +522,9 @@ msgstr "Si la cantidad de muestras entrantes a recibir supera este valor, la col
 #: src/senaite/referral/browser/controlpanel.py:XXX
 msgid "label_preview_barcodes_on_shipment_reception"
 msgstr "Mostrar vista previa de etiquetas de código de barras al recibir el envío"
+
+msgid "label_barcodes_preview_reception"
+msgstr "Mostrar vista previa de etiquetas de código de barras al recibir el envío"
+
+msgid "label_add_to_shipment"
+msgstr "Añadir al envío"
