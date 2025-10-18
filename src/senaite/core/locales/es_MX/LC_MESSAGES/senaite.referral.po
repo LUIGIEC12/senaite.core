@@ -529,8 +529,8 @@ msgstr "Mostrar vista previa de etiquetas de código de barras al recibir el env
 msgid "label_add_to_shipment"
 msgstr "Añadir al envío"
 
-msgid "Default client"
+msgid "label_externallaboratory_defaultclient"
 msgstr "Cliente predeterminado"
 
-msgid "Default contact"
+msgid "label_externallaboratory_defaultcontact"
 msgstr "Contacto predeterminado"
