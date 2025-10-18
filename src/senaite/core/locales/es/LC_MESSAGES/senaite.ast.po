@@ -436,3 +436,9 @@ msgstr "Tabla de puntos de corte (AST)"
 
 msgid "AST Panels"
 msgstr "Panel (AST)"
+
+msgid "Include disk content in μg"
+msgstr "Incluir contenido del disco en μg"
+
+msgid "When enabled, an additional row for the introduction of the disk content (potency) in μg is displayed in the results entry view, above resistance call options"
+msgstr "Cuando está habilitado, se muestra una fila adicional para la introducción del contenido del disco (potencia) en μg en la vista de entrada de resultados, encima de las opciones de llamada de resistencia."
