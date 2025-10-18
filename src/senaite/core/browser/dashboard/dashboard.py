@@ -544,10 +544,22 @@ class DashboardView(BrowserView):
     def _get_analyses_listing_name(self):
         """Intenta varias rutas típicas para el listado de análisis."""
         candidates = [
+            # Nombres clásicos
             'analyses', '@@analyses',
             'analysis', '@@analysis',
+
+            # Vistas que suelen exponer los análisis como resultados
+            'results', '@@results',
+            'analysisresults', '@@analysisresults',
+            'analysis_results', '@@analysis_results',
+
+            # Variantes de listings
             'analyses_listing', '@@analyses_listing',
             'analysis_listing', '@@analysis_listing',
+
+            # Prefijos ocasionales
+            'bika_analyses', '@@bika_analyses',
+            'senaite_analyses', '@@senaite_analyses',
         ]
         for name in candidates:
             if self._traverse_exists(name):
@@ -578,29 +590,29 @@ class DashboardView(BrowserView):
         # Analyses to be assigned
         name = _('Assignment pending')
         desc = _('Assignment pending')
-        purl = base != '#' and (base + '?list_review_state=unassigned') or '#'
+        purl = base != '#' and (base + '?list_review_state=unassigned&review_state=unassigned') or '#'
         query['review_state'] = ['unassigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses pending
         name = _('Results pending')
         desc = _('Results pending')
-        # Puedes usar CSV si tu vista lo soporta: 'unassigned,assigned'
-        purl = base != '#' and (base + '?list_review_state=assigned') or '#'
+        # Usamos 'assigned' para el click; el panel cuenta assigned+unassigned
+        purl = base != '#' and (base + '?list_review_state=assigned&review_state=assigned') or '#'
         query['review_state'] = ['unassigned', 'assigned', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses to be verified
         name = _('To be verified')
         desc = _('To be verified')
-        purl = base != '#' and (base + '?list_review_state=to_be_verified') or '#'
+        purl = base != '#' and (base + '?list_review_state=to_be_verified&review_state=to_be_verified') or '#'
         query['review_state'] = ['to_be_verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses verified
         name = _('Verified')
         desc = _('Verified')
-        purl = base != '#' and (base + '?list_review_state=verified') or '#'
+        purl = base != '#' and (base + '?list_review_state=verified&review_state=verified') or '#'
         query['review_state'] = ['verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
