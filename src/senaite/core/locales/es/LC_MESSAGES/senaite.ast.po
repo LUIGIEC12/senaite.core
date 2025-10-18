@@ -427,3 +427,6 @@ msgstr "disco de difusión del método vocab_ast"
 #: senaite/ast/config.py:97
 msgid "vocab_astmethod_mic"
 msgstr "método vocabc ast mic"
+
+msgid "AST Breakpoints Tables"
+msgstr "Tablas de puntos de corte (AST)"
