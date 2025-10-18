@@ -530,7 +530,7 @@ class DashboardView(BrowserView):
                 'panels': out}
 
     # ---------------------------
-    # NEW: helpers para resolver la vista de Análisis disponible
+    # Helpers para resolver vista de Analyses (Py2.7-safe)
     # ---------------------------
     def _traverse_exists(self, name):
         """Devuelve True si la ruta 'name' es traversable en el portal."""
@@ -578,30 +578,29 @@ class DashboardView(BrowserView):
         # Analyses to be assigned
         name = _('Assignment pending')
         desc = _('Assignment pending')
-        purl = f'{base}?list_review_state=unassigned' if base != '#' else '#'
+        purl = base != '#' and (base + '?list_review_state=unassigned') or '#'
         query['review_state'] = ['unassigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses pending
         name = _('Results pending')
         desc = _('Results pending')
-        # Nota: si tu listado acepta múltiples estados por coma, puedes
-        # navegar con ambos. Para mantener compatibilidad, usamos 'assigned'.
-        purl = f'{base}?list_review_state=assigned' if base != '#' else '#'
+        # Puedes usar CSV si tu vista lo soporta: 'unassigned,assigned'
+        purl = base != '#' and (base + '?list_review_state=assigned') or '#'
         query['review_state'] = ['unassigned', 'assigned', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses to be verified
         name = _('To be verified')
         desc = _('To be verified')
-        purl = f'{base}?list_review_state=to_be_verified' if base != '#' else '#'
+        purl = base != '#' and (base + '?list_review_state=to_be_verified') or '#'
         query['review_state'] = ['to_be_verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses verified
         name = _('Verified')
         desc = _('Verified')
-        purl = f'{base}?list_review_state=verified' if base != '#' else '#'
+        purl = base != '#' and (base + '?list_review_state=verified') or '#'
         query['review_state'] = ['verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
