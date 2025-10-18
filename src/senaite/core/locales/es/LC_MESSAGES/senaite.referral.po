@@ -1,11 +1,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: senaite.referral\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-24 14:52%z\n"
-"PO-Revision-Date: 2025-09-24 14:52%z\n"
+"Report-Msgid-Bugs-To: i18n@senaite.org\n"
+"POT-Creation-Date: 2025-09-24 14:52+0000\n"
+"PO-Revision-Date: 2025-09-24 14:52+0000\n"
 "Last-Translator: Shirley Andrade <you@example.com>\n"
-"Language-Team: Spanish\n"
+"Language-Team: Spanish <you@example.com>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -128,7 +128,7 @@ msgid "Lost"
 msgstr "Perdida"
 
 msgid "No POST notification in history"
-msgstr "No hay notificación REGISTRO en el historial"
+msgstr "No hay notificación POST en el historial"
 
 msgid "No samples selected"
 msgstr "No se seleccionaron muestras"
@@ -158,7 +158,7 @@ msgid "Page"
 msgstr "Página"
 
 msgid "pkg_resources"
-msgstr "recursos del paquete"
+msgstr "pkg_resources"
 
 msgid "Pos."
 msgstr "Pos."
@@ -197,16 +197,16 @@ msgid "Referred"
 msgstr "Referido"
 
 msgid "Referring"
-msgstr "Referente"
+msgstr "Remitente"
 
 msgid "Referring ID must be unique"
-msgstr "El ID de referencia debe ser único"
+msgstr "El ID de remitente debe ser único"
 
 msgid "Referring Lab"
-msgstr "Laboratorio de referencia"
+msgstr "Laboratorio remitente"
 
 msgid "Regenerate"
-msgstr "Regenerada"
+msgstr "Regenerar"
 
 msgid "Rejected"
 msgstr "Rechazada"
@@ -269,7 +269,7 @@ msgid "Shipment manifest has been generated"
 msgstr "Se ha generado el manifiesto de envío"
 
 msgid "Shipper"
-msgstr "Transpoortista"
+msgstr "Transportista"
 
 msgid "Sort by creation date"
 msgstr "Ordenar por fecha de creación"
@@ -293,7 +293,7 @@ msgid "The Queue is processing this shipment"
 msgstr "La cola está procesando este envío"
 
 msgid "The synchronization with the referring laboratory did not take place"
-msgstr "La sincronización con el laboratorio de referencia no se realizó o falló para algunas de las muestras recibidas de este envío"
+msgstr "La sincronización con el laboratorio remitente no se realizó o falló para algunas de las muestras recibidas de este envío"
 
 msgid "There are some settings that require your attention"
 msgstr "Hay configuraciones que requieren tu atención"
@@ -344,10 +344,10 @@ msgid "Whether this external laboratory is capable of analysis or testing on sam
 msgstr "Si este laboratorio externo puede realizar análisis o pruebas en las muestras enviadas desde el laboratorio actual. Al marcar esta casilla, este laboratorio externo se mostrará para su selección al enviar una muestra."
 
 msgid "Referring Laboratory"
-msgstr "Laboratorio de referencia"
+msgstr "Laboratorio remitente"
 
 msgid "Whether this external laboratory can send samples to your laboratory for additional analysis or testing. When checked, your SENAITE instance will accept samples for testing sent from this external laboratory"
-msgstr "Si este laboratorio externo puede enviar muestras a su laboratorio para análisis o pruebas adicionales. Al marcar esta casilla, su instancia de INFOLABSA aceptará muestras para análisis enviadas desde este laboratorio externo."
+msgstr "Si este laboratorio externo puede enviar muestras a su laboratorio para análisis o pruebas adicionales. Al marcar esta casilla, su instancia de SENAITE aceptará muestras para análisis enviadas desde este laboratorio externo."
 
 msgid "Default client"
 msgstr "Cliente predeterminado"
@@ -365,10 +365,10 @@ msgid "Referral Settings"
 msgstr "Configuración de referencias"
 
 msgid "description_referral_create_reference_analyses"
-msgstr "descripción de referencia al crear un análisis"
+msgstr "Si está habilitado, se crearán análisis de referencia para las muestras derivadas."
 
 msgid "description_referral_notify_hidden_analyses"
-msgstr "Si está seleccionado, los resultados de análisis ocultos se enviarán al laboratorio remitente tras la verificación de la muestra. Si no, los resultados de análisis marcados como ocultos no se compartirán."
+msgstr "Si está seleccionado, los resultados de análisis ocultos se enviarán al laboratorio remitente tras la verificación de la muestra. Si no, los resultados marcados como ocultos no se compartirán."
 
 msgid "description_referral_notify_retested_analyses"
 msgstr "Si está seleccionado, los resultados de análisis repetidos se enviarán al laboratorio remitente tras la verificación de la muestra. Si no, solo se compartirán los resultados del reensayo."
@@ -383,28 +383,28 @@ msgid "label_referral_code"
 msgstr "Código"
 
 msgid "label_referral_create_reference_analyses"
-msgstr "Referencia al crear análisis"
+msgstr "Crear análisis de referencia"
 
 msgid "label_referral_manual_inbound_permitted"
 msgstr "Permitir creación manual de envíos entrantes"
 
 msgid "label_referral_notify_hidden_analyses"
-msgstr "Notificar al laboratorio remitente sobre análisis ocultos"
+msgstr "Notificar sobre análisis ocultos"
 
 msgid "label_referral_notify_retested_analyses"
-msgstr "Notificar al laboratorio remitente sobre análisis reensayados"
+msgstr "Notificar sobre análisis reensayados"
 
 msgid "label_referral_notify_unrequested_analyses"
-msgstr "Notificar al laboratorio remitente sobre análisis no solicitados"
+msgstr "Notificar sobre análisis no solicitados"
 
 msgid "label_referral_outbound_samples_order"
 msgstr "Orden predeterminado para muestras en envíos salientes"
 
 msgid "Unique code of current instance's laboratory. This unique code is used by reference laboratories to identify this laboratory as a valid sample referrer."
-msgstr "Código único del laboratorio de la instancia actual. Este código único lo utilizan los laboratorios de referencia para identificarlo como referente válido de la muestra."
+msgstr "Código único del laboratorio de la instancia actual. Este código único lo utilizan los laboratorios de referencia para identificarlo como remitente válido de muestras."
 
 msgid "Whether the manual creation of inbound sample shipments is permitted. If not enabled, the creation of inbound shipments will only be possible via POST requests by referral laboratories"
-msgstr "Si se permite la creación manual de envíos de muestras entrantes. Si no está habilitada, la creación de envíos entrantes solo será posible mediante solicitudes POST de los laboratorios de referencia."
+msgstr "Si se permite la creación manual de envíos de muestras entrantes. Si no está habilitada, la creación de envíos entrantes solo será posible mediante solicitudes POST de los laboratorios remitentes."
 
 msgid "Show barcode labels preview on shipment reception"
 msgstr "Mostrar vista previa de las etiquetas de código de barras al recibir el envío"
@@ -412,12 +412,11 @@ msgstr "Mostrar vista previa de las etiquetas de código de barras al recibir el
 msgid "Whether the system must redirect the user to the barcode stickers preview when receiving samples from an incoming shipment"
 msgstr "Si el sistema debe redirigir al usuario a la vista previa de las etiquetas de código de barras al recibir muestras de un envío entrante"
 
-
 msgid "Maximum number of inbound samples to receive in a single task"
 msgstr "Número máximo de muestras entrantes a recibir en una sola tarea"
 
 msgid "If the number of inbound samples to receive is above this value, the queue will split the job in as many tasks as required. If the value is 0 or senaite queue is not installed, the system won't process the inbound samples asynchronously and all them will be held in a single request"
-msgstr "Si el número de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o la cola INFOLABSA no está instalada, el sistema no procesará las muestras entrantes de forma asíncrona y todas se almacenarán en una sola solicitud."
+msgstr "Si el número de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o no está instalado senaite.queue, el sistema no procesará las muestras entrantes de forma asíncrona y todas se gestionarán en una sola solicitud."
 
 #: profiles/default/types/ShipmentFolder.xml
 msgid "Shipments"
@@ -444,7 +443,7 @@ msgid "Outbound Shipments"
 msgstr "Envíos salientes"
 
 msgid "Comments"
-msgstr "Comenatrios"
+msgstr "Comentarios"
 
 msgid "Samples"
 msgstr "Muestras"
@@ -459,13 +458,13 @@ msgid "Additional comments provided by the referring laboratory"
 msgstr "Comentarios adicionales proporcionados por el laboratorio remitente"
 
 msgid "URL of the external laboratory's SENAITE instance. If the external laboratory is configured as a reference laboratory (destination), your system will use this URL to remotely create the dispatched samples on the destination laboratory. When the external laboratory is configured as a referring laboratory (origin), your system will use this URL to send updates about the referred samples to the laboratory of origin"
-msgstr "URL de la instancia INFOLABSA del laboratorio externo. Si el laboratorio externo está configurado como laboratorio de referencia (destino), el sistema usará esta URL para generar remotamente las muestras enviadas al laboratorio de destino. Si el laboratorio externo está configurado como laboratorio remitente (origen), el sistema usará esta URL para enviar actualizaciones sobre las muestras derivadas al laboratorio de origen."
+msgstr "URL de la instancia SENAITE del laboratorio externo. Si el laboratorio externo está configurado como laboratorio de referencia (destino), el sistema usará esta URL para crear remotamente las muestras enviadas en el laboratorio de destino. Si el laboratorio externo está configurado como laboratorio remitente (origen), el sistema usará esta URL para enviar actualizaciones sobre las muestras derivadas al laboratorio de origen."
 
 msgid "Username of the user account from the external laboratory thatwill be used for the remote creation of dispatched samples when the external laboratory is configured as a reference laboratory or for updates regarding referred samples when configured as a referring laboratory"
-msgstr "Nombre de usuario de la cuenta de usuario del laboratorio externo que se utilizará para la creación remota de muestras enviadas cuando el laboratorio externo esté configurado como laboratorio de referencia o para actualizaciones respecto de muestras referidas cuando esté configurado como laboratorio referente"
+msgstr "Nombre de usuario de la cuenta del laboratorio externo que se utilizará para la creación remota de muestras enviadas cuando el laboratorio externo esté configurado como laboratorio de referencia o para actualizaciones relativas a muestras derivadas cuando esté configurado como laboratorio remitente."
 
 msgid "Password of the user account from the external laboratory thatwill be used for the remote creation of dispatched samples when the external laboratory is configured as a reference laboratory or for updates regarding referred samples when configured as a referring laboratory"
-msgstr "Contraseña de la cuenta de usuario del laboratorio externo que se utilizará para la creación remota de muestras enviadas cuando el laboratorio externo esté configurado como laboratorio de referencia o para actualizaciones respecto de muestras referidas cuando esté configurado como laboratorio referente"
+msgstr "Contraseña de la cuenta del laboratorio externo que se utilizará para la creación remota de muestras enviadas cuando el laboratorio externo esté configurado como laboratorio de referencia o para actualizaciones relativas a muestras derivadas cuando esté configurado como laboratorio remitente."
 
 msgid "Username"
 msgstr "Nombre de usuario"
@@ -501,10 +500,25 @@ msgid "Maximum number of inbound samples to receive in a single task"
 msgstr "Número máximo de muestras entrantes a recibir en una sola tarea"
 
 msgid "If the number of inbound samples to receive is above this value, the queue will split the job in as many tasks as required. If the value is 0 or senaite queue is not installed, the system won't process the inbound samples asynchronously and all them will be held in a single request"
-msgstr "Si el número de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o la cola senaite no está instalada, el sistema no procesará las muestras entrantes de forma asíncrona y todas se almacenarán en una sola solicitud."
+msgstr "Si el número de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o no está instalado senaite.queue, el sistema no procesará las muestras entrantes de forma asíncrona y todas se almacenarán en una sola solicitud."
+
+msgid "Show barcode labels preview on shipment reception?"
+msgstr "¿Mostrar vista previa de las etiquetas de código de barras al recibir el envío?"
 
 msgid "Maximum number of inbound samples to receive in a single task"
 msgstr "Número máximo de muestras entrantes a recibir en una sola tarea"
 
 msgid "If the number of inbound samples to receive is above this value, the queue will split the job in as many tasks as required. If the value is 0 or senaite queue is not installed, the system won't process the inbound samples asynchronously and all them will be held in a single request"
 msgstr "Si el número de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o no está instalado senaite.queue, el sistema no procesará las muestras de forma asíncrona y todas se mantendrán en una única solicitud."
+
+#: src/senaite/referral/browser/controlpanel.py:XXX
+msgid "label_chunk_size_receive_inbound_sample"
+msgstr "Número máximo de muestras entrantes a recibir en una sola tarea"
+
+#: src/senaite/referral/browser/controlpanel.py:XXX
+msgid "description_chunk_size_receive_inbound_sample"
+msgstr "Si la cantidad de muestras entrantes a recibir supera este valor, la cola dividirá el trabajo en tantas tareas como sea necesario. Si el valor es 0 o no está instalado senaite.queue, el sistema no procesará las muestras entrantes de forma asíncrona y todas se gestionarán en una sola solicitud."
+
+#: src/senaite/referral/browser/controlpanel.py:XXX
+msgid "label_preview_barcodes_on_shipment_reception"
+msgstr "Mostrar vista previa de etiquetas de código de barras al recibir el envío"
