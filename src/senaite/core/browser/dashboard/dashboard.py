@@ -547,33 +547,28 @@ class DashboardView(BrowserView):
         # Analyses to be assigned
         name = _('Assignment pending')
         desc = _('Assignment pending')
-        # CHANGED: link to analyses listing filtered by 'unassigned'
-        purl = 'analyses?list_review_state=unassigned'
+        purl = '@@analyses?list_review_state=unassigned'
         query['review_state'] = ['unassigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
-        # Analyses pending (assigned + unassigned). If your view doesn't
-        # support multiple states in URL, point to 'assigned' as default.
+        # Analyses pending
         name = _('Results pending')
         desc = _('Results pending')
-        # CHANGED: link to analyses listing; default to 'assigned'
-        purl = 'analyses?list_review_state=assigned'
+        purl = '@@analyses?list_review_state=assigned'
         query['review_state'] = ['unassigned', 'assigned', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses to be verified
         name = _('To be verified')
         desc = _('To be verified')
-        # CHANGED: link to analyses listing filtered by 'to_be_verified'
-        purl = 'analyses?list_review_state=to_be_verified'
+        purl = '@@analyses?list_review_state=to_be_verified'
         query['review_state'] = ['to_be_verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses verified
         name = _('Verified')
         desc = _('Verified')
-        # CHANGED: link to analyses listing filtered by 'verified'
-        purl = 'analyses?list_review_state=verified'
+        purl = '@@analyses?list_review_state=verified'
         query['review_state'] = ['verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
