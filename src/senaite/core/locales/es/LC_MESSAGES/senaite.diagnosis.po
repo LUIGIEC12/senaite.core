@@ -160,3 +160,6 @@ msgstr "Niveles de severidad"
 
 msgid "Signs and Symptoms"
 msgstr "Signos y síntomas"
+
+msgid "Diseases and Conditions"
+msgstr "Enfermedades y condiciones"
