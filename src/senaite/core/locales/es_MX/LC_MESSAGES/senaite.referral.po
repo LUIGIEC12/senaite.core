@@ -529,8 +529,22 @@ msgstr "Mostrar vista previa de etiquetas de código de barras al recibir el env
 msgid "label_add_to_shipment"
 msgstr "Añadir al envío"
 
+# --- Default client/contact: claves de schema más comunes ---
 msgid "label_externallaboratory_defaultclient"
 msgstr "Cliente predeterminado"
 
 msgid "label_externallaboratory_defaultcontact"
+msgstr "Contacto predeterminado"
+
+# --- Literales directos (por si la vista usa el texto sin clave) ---
+msgid "Default client"
+msgstr "Cliente predeterminado"
+
+msgid "Default Client"
+msgstr "Cliente predeterminado"
+
+msgid "Default contact"
+msgstr "Contacto predeterminado"
+
+msgid "Default Contact"
 msgstr "Contacto predeterminado"
