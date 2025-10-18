@@ -530,7 +530,7 @@ class DashboardView(BrowserView):
                 'panels': out}
 
     # ---------------------------
-    # Helpers para resolver vista de Analyses (Py2.7-safe)
+    # Helpers para Analyses
     # ---------------------------
     def _traverse_exists(self, name):
         """Devuelve True si la ruta 'name' es traversable en el portal."""
@@ -544,28 +544,51 @@ class DashboardView(BrowserView):
     def _get_analyses_listing_name(self):
         """Intenta varias rutas típicas para el listado de análisis."""
         candidates = [
-            # Nombres clásicos
             'analyses', '@@analyses',
             'analysis', '@@analysis',
-
-            # Vistas que suelen exponer los análisis como resultados
             'results', '@@results',
             'analysisresults', '@@analysisresults',
             'analysis_results', '@@analysis_results',
-
-            # Variantes de listings
             'analyses_listing', '@@analyses_listing',
             'analysis_listing', '@@analysis_listing',
-
-            # Prefijos ocasionales
             'bika_analyses', '@@bika_analyses',
             'senaite_analyses', '@@senaite_analyses',
+            # fallback genérico del sitio
+            'search', '@@search',
         ]
         for name in candidates:
             if self._traverse_exists(name):
                 return name
         logger.warn("No analyses listing view found. Tried: %r" % candidates)
         return None
+
+    def _build_analysis_link(self, base, states_single):
+        """
+        Construye el URL de detalle para análisis según la vista disponible.
+        - base: nombre de vista/resourcetraversal encontrado (ej. 'analyses', '@@search').
+        - states_single: un string de estado único para el enlace (p.ej. 'assigned').
+          (El panel de 'pendientes' cuenta varios estados, pero para abrir detalle
+           usamos uno representativo para que la vista filtre algo concreto.)
+        """
+        if not base:
+            return '#'
+
+        # Si el "base" es una búsqueda genérica, pasamos filtros de forma redundante
+        # para maximizar compatibilidad con querystring:
+        if base in ('search', '@@search'):
+            # Nota: algunos setups esperan :list
+            qs = [
+                'portal_type=Analysis',
+                'portal_type:list=Analysis',
+                'review_state=%s' % states_single,
+                'review_state:list=%s' % states_single,
+            ]
+            return base + '?' + '&'.join(qs)
+
+        # Si es una vista específica de listados, usamos los parámetros típicos
+        # que aceptan las listings de Senaite/Plone.
+        return base + ('?list_review_state=%s&review_state=%s' %
+                       (states_single, states_single))
 
     def get_analyses_section(self):
         """ Returns the section dictionary related with Analyses,
@@ -584,36 +607,33 @@ class DashboardView(BrowserView):
 
         # Resolver el nombre real de la vista de análisis en esta instancia
         analyses_view = self._get_analyses_listing_name()
-        # Fallback seguro
-        base = analyses_view if analyses_view else '#'
 
         # Analyses to be assigned
         name = _('Assignment pending')
         desc = _('Assignment pending')
-        purl = base != '#' and (base + '?list_review_state=unassigned&review_state=unassigned') or '#'
+        purl = self._build_analysis_link(analyses_view, 'unassigned')
         query['review_state'] = ['unassigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
-        # Analyses pending
+        # Analyses pending (contamos unassigned+assigned, enlazamos a 'assigned')
         name = _('Results pending')
         desc = _('Results pending')
-        # Usamos 'assigned' para el click; el panel cuenta assigned+unassigned
-        purl = base != '#' and (base + '?list_review_state=assigned&review_state=assigned') or '#'
-        query['review_state'] = ['unassigned', 'assigned', ]
+        purl = self._build_analysis_link(analyses_view, 'assigned')
+        query['review_state'] = ['unassigned', 'assigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses to be verified
         name = _('To be verified')
         desc = _('To be verified')
-        purl = base != '#' and (base + '?list_review_state=to_be_verified&review_state=to_be_verified') or '#'
-        query['review_state'] = ['to_be_verified', ]
+        purl = self._build_analysis_link(analyses_view, 'to_be_verified')
+        query['review_state'] = ['to_be_verified']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses verified
         name = _('Verified')
         desc = _('Verified')
-        purl = base != '#' and (base + '?list_review_state=verified&review_state=verified') or '#'
-        query['review_state'] = ['verified', ]
+        purl = self._build_analysis_link(analyses_view, 'verified')
+        query['review_state'] = ['verified']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Chart with the evolution of Analyses over a period, grouped by
