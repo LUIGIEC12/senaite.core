@@ -529,6 +529,32 @@ class DashboardView(BrowserView):
                 'title': _('Worksheets'),
                 'panels': out}
 
+    # ---------------------------
+    # NEW: helpers para resolver la vista de Análisis disponible
+    # ---------------------------
+    def _traverse_exists(self, name):
+        """Devuelve True si la ruta 'name' es traversable en el portal."""
+        portal = api.portal.get()
+        try:
+            portal.restrictedTraverse(name)
+            return True
+        except Exception:
+            return False
+
+    def _get_analyses_listing_name(self):
+        """Intenta varias rutas típicas para el listado de análisis."""
+        candidates = [
+            'analyses', '@@analyses',
+            'analysis', '@@analysis',
+            'analyses_listing', '@@analyses_listing',
+            'analysis_listing', '@@analysis_listing',
+        ]
+        for name in candidates:
+            if self._traverse_exists(name):
+                return name
+        logger.warn("No analyses listing view found. Tried: %r" % candidates)
+        return None
+
     def get_analyses_section(self):
         """ Returns the section dictionary related with Analyses,
             that contains some informative panels (analyses pending
@@ -544,31 +570,38 @@ class DashboardView(BrowserView):
         # Active Analyses (All)
         total = self.search_count(query, bc.id)
 
+        # Resolver el nombre real de la vista de análisis en esta instancia
+        analyses_view = self._get_analyses_listing_name()
+        # Fallback seguro
+        base = analyses_view if analyses_view else '#'
+
         # Analyses to be assigned
         name = _('Assignment pending')
         desc = _('Assignment pending')
-        purl = '@@analyses?list_review_state=unassigned'
+        purl = f'{base}?list_review_state=unassigned' if base != '#' else '#'
         query['review_state'] = ['unassigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses pending
         name = _('Results pending')
         desc = _('Results pending')
-        purl = '@@analyses?list_review_state=assigned'
+        # Nota: si tu listado acepta múltiples estados por coma, puedes
+        # navegar con ambos. Para mantener compatibilidad, usamos 'assigned'.
+        purl = f'{base}?list_review_state=assigned' if base != '#' else '#'
         query['review_state'] = ['unassigned', 'assigned', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses to be verified
         name = _('To be verified')
         desc = _('To be verified')
-        purl = '@@analyses?list_review_state=to_be_verified'
+        purl = f'{base}?list_review_state=to_be_verified' if base != '#' else '#'
         query['review_state'] = ['to_be_verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
         # Analyses verified
         name = _('Verified')
         desc = _('Verified')
-        purl = '@@analyses?list_review_state=verified'
+        purl = f'{base}?list_review_state=verified' if base != '#' else '#'
         query['review_state'] = ['verified', ]
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
