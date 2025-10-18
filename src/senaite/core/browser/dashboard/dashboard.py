@@ -89,6 +89,8 @@ def set_dashboard_registry_record(registry_info):
         api.portal.set_registry_record(
             'senaite.core.dashboard_panels_visibility', registry_info)
     except InvalidParameterError:
+        # No entry in the registry for dashboard panels roles.
+        # Maybe upgradestep 1.1.8 was not run?
         logger.warn("Cannot find a record with name "
                     "'senaite.core.dashboard_panels_visibility' in "
                     "registry_record. Missed upgrade 2.0.0?")
@@ -528,82 +530,17 @@ class DashboardView(BrowserView):
                 'panels': out}
 
     # ---------------------------
-    # Helpers para resolver vista de Analyses (Py2.7-safe)
+    # Helper para detalle de "sin asignar" (Analysis)
     # ---------------------------
-    def _traverse_exists(self, name):
-        """Devuelve True si la ruta 'name' es traversable en el portal."""
-        portal = api.portal.get()
-        try:
-            portal.restrictedTraverse(name)
-            return True
-        except Exception:
-            return False
-
-    def _get_analyses_listing_name(self):
-        """Intenta varias rutas típicas para el listado de análisis."""
-        candidates = [
-            'analyses', '@@analyses',
-            'analysis', '@@analysis',
-            'results', '@@results',
-            'analysisresults', '@@analysisresults',
-            'analysis_results', '@@analysis_results',
-            'analyses_listing', '@@analyses_listing',
-            'analysis_listing', '@@analysis_listing',
-            'bika_analyses', '@@bika_analyses',
-            'senaite_analyses', '@@senaite_analyses',
-            'search', '@@search',
+    def _analyses_unassigned_search_link(self):
+        """Devuelve el enlace al buscador con Analysis 'unassigned' (detalle)."""
+        qs = [
+            'portal_type=Analysis', 'portal_type:list=Analysis',
+            'Type=Analysis', 'Type:list=Analysis',
+            'review_state=unassigned', 'review_state:list=unassigned',
+            'sort_on=created', 'sort_order=reverse',
         ]
-        for name in candidates:
-            if self._traverse_exists(name):
-                return name
-        logger.warn("No analyses listing view found. Tried: %r" % candidates)
-        return None
-
-    def _build_analysis_link(self, base, states):
-        """Arma el URL de detalle para Análisis según la vista disponible.
-
-        - Si base es 'search' o '@@search', usa los parámetros del buscador de Plone
-          e incluye múltiples estados con review_state:list=...
-        - Si es una listing específica, usa list_review_state (y también review_state)
-          por compatibilidad.
-        """
-        if not base:
-            return '#'
-
-        # Normaliza a lista
-        if isinstance(states, (str, unicode)):
-            states = [states]
-
-        # Plone search
-        if base in ('search', '@@search'):
-            qs = [
-                'Type=Analysis',
-                'Type:list=Analysis',
-                'portal_type=Analysis',
-                'portal_type:list=Analysis',
-                'sort_on=created',
-                'sort_order=reverse',
-            ]
-            # añade cada estado como review_state y review_state:list
-            for st in states:
-                qs.append('review_state=%s' % st)
-                qs.append('review_state:list=%s' % st)
-            return base + '?' + '&'.join(qs)
-
-        # Listados específicos (aceptan 1 solo valor en list_review_state,
-        # pero enviamos también los múltiples review_state:list por si se soporta)
-        if len(states) == 1:
-            st = states[0]
-            return base + ('?list_review_state=%s&review_state=%s&sort_on=created&sort_order=reverse'
-                           % (st, st))
-
-        # Varios estados: no todos los listados aceptan CSV; proveemos todos los
-        # review_state:list y dejamos list_review_state vacío para no romper
-        qs = ['sort_on=created', 'sort_order=reverse']
-        for st in states:
-            qs.append('review_state=%s' % st)
-            qs.append('review_state:list=%s' % st)
-        return base + '?' + '&'.join(qs)
+        return 'search?' + '&'.join(qs)
 
     def get_analyses_section(self):
         """ Returns the section dictionary related with Analyses,
@@ -620,39 +557,36 @@ class DashboardView(BrowserView):
         # Active Analyses (All)
         total = self.search_count(query, bc.id)
 
-        # Resolver el nombre real de la vista de análisis en esta instancia
-        analyses_view = self._get_analyses_listing_name()
-
-        # Analyses to be assigned
+        # 1) Pendientes de asignar -> detalle de "unassigned" (Analysis)
         name = _('Assignment pending')
         desc = _('Assignment pending')
-        purl = self._build_analysis_link(analyses_view, 'unassigned')
+        purl = self._analyses_unassigned_search_link()
         query['review_state'] = ['unassigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
-        # Analyses pending  (unassigned + assigned)
+        # 2) Resultados pendientes -> MISMO detalle de "unassigned"
         name = _('Results pending')
         desc = _('Results pending')
-        purl = self._build_analysis_link(analyses_view, ['unassigned', 'assigned'])
+        purl = self._analyses_unassigned_search_link()
+        # Conteo clásico: unassigned + assigned
         query['review_state'] = ['unassigned', 'assigned']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
-        # Analyses to be verified
+        # 3) Pendientes de verificar -> mismo enlace que en Muestras
         name = _('To be verified')
         desc = _('To be verified')
-        purl = self._build_analysis_link(analyses_view, 'to_be_verified')
+        purl = 'samples?samples_review_state=to_be_verified'
         query['review_state'] = ['to_be_verified']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
-        # Analyses verified
+        # 4) Verificadas -> mismo enlace que en Muestras
         name = _('Verified')
         desc = _('Verified')
-        purl = self._build_analysis_link(analyses_view, 'verified')
+        purl = 'samples?samples_review_state=verified'
         query['review_state'] = ['verified']
         out.append(self._getStatistics(name, desc, purl, bc, query, total))
 
-        # Chart with the evolution of Analyses over a period, grouped by
-        # periodicity
+        # Chart with the evolution of Analyses over a period, grouped by periodicity
         outevo = self.fill_dates_evo(bc, query)
         out.append({'type':         'bar-chart-panel',
                     'name':         _('Evolution of Analyses'),
