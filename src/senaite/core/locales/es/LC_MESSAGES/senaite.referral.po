@@ -548,6 +548,9 @@ msgstr "Enviar"
 msgid "Delivered"
 msgstr "Enviado"
 
+msgid "Create and add a new sample to this shipment or select existing samples you wish to add"
+msgstr "Cree y agregue una nueva muestra a este envío o seleccione las muestras existentes que desea agregar"
+
 msgid "Generate manifest"
 msgstr "Generar manifiesto"
 
