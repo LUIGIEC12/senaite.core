@@ -539,7 +539,7 @@ msgstr "Contacto predeterminado"
 msgid "Shipment cannot be dispatched because no shipment manifest has been generated yet"
 msgstr "El envío no puede despacharse porque aún no se ha generado el manifiesto de envío."
 
-msgid "Ready for shipment"
+msgid "title_ready_for_shipment"
 msgstr "Listo para envío"
 
 msgid "Comments"
