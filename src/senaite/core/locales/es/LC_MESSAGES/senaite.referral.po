@@ -542,8 +542,11 @@ msgstr "El envío no puede despacharse porque aún no se ha generado el manifies
 msgid "title_ready_for_shipment"
 msgstr "Listo para envío"
 
-msgid "Comments"
-msgstr "Comentarios"
+msgid "Deliver"
+msgstr "Enviar"
+
+msgid "Delivered"
+msgstr "Enviado"
 
 msgid "Generate manifest"
 msgstr "Generar manifiesto"
