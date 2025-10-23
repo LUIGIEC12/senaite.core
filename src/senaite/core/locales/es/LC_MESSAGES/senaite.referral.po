@@ -535,3 +535,18 @@ msgstr "Cliente predeterminado"
 
 msgid "label_externallaboratory_default_contact"
 msgstr "Contacto predeterminado"
+
+msgid "Shipment cannot be dispatched because no shipment manifest has been generated yet"
+msgstr "El envío no puede despacharse porque aún no se ha generado el manifiesto de envío."
+
+msgid "Ready for shipment"
+msgstr "Listo para envío"
+
+msgid "Comments"
+msgstr "Comentarios"
+
+msgid "Generate manifest"
+msgstr "Generar manifiesto"
+
+msgid "Cancel"
+msgstr "Cancelar"
