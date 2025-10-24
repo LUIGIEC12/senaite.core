@@ -5,7 +5,7 @@
                      sample_type item/getSampleTypeTitle;
                      date_sampled python:view.ulocalized_time(item.getDateSampled());
                      hazardous item/getHazardous;
-                     patient_fullname python:(item.getPatient() and item.getPatient().getFullname()) or ''">
+                     patient python: hasattr(item, 'getPatient') and item.getPatient() or None;">
 
   <!-- Barcode -->
   <div class="barcode"
@@ -20,19 +20,31 @@
   <div class="sample-info">
     <table cellpadding="0" cellspacing="0" border="0">
       <tr>
-        <td rowspan="2" tal:condition="hazardous | nothing">
+        <!-- ahora hay 3 filas: ID, PACIENTE, FECHA/TIPO -->
+        <td rowspan="3" tal:condition="hazardous | nothing">
           <img tal:attributes="src string:${portal_url}/senaite_theme/icon/hazardous"/>
         </td>
         <td colspan="2">
           <strong tal:content="sample_id">Sample ID</strong>
         </td>
       </tr>
+
+      <!-- Paciente (solo nombre, con fallbacks) -->
+      <tr tal:condition="python: patient or hasattr(item, 'getPatientFullName')">
+        <td colspan="2" style="line-height:1.1">
+          <div tal:condition="python: hasattr(item, 'getPatientFullName')"
+               tal:content="python: item.getPatientFullName()">Nombre Paciente</div>
+
+          <div tal:condition="python: not hasattr(item, 'getPatientFullName') and patient and hasattr(patient, 'getFullname')"
+               tal:content="python: patient.getFullname()">Nombre Paciente</div>
+
+          <div tal:condition="python: not hasattr(item, 'getPatientFullName') and patient and not hasattr(patient, 'getFullname') and hasattr(patient, 'Title')"
+               tal:content="python: patient.Title()">Nombre Paciente</div>
+        </td>
+      </tr>
+
       <tr>
         <td>
-          <!-- NUEVO: Nombre del paciente (si existe) -->
-          <div tal:condition="patient_fullname"
-               tal:content="patient_fullname">Patient Name</div>
-
           <div tal:content="date_sampled">Date Sampled</div>
           <div tal:content="sample_type">Sample Type</div>
         </td>
