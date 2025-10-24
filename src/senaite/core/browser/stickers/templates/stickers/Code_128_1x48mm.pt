@@ -1,17 +1,15 @@
-<tal:sticker define="portal_state context/@@plone_portal_state;
-                     portal_url portal_state/portal_url;
-                     item python:view.current_item;
-                     sample_id item/getId;
-                     sample_type item/getSampleTypeTitle;
-                     date_sampled python:view.ulocalized_time(item.getDateSampled());
-                     hazardous item/getHazardous;
+<tal:sticker define="
+    portal_state context/@@plone_portal_state;
+    portal_url portal_state/portal_url;
+    item python:view.current_item;
+    sample_id item/getId;
+    sample_type item/getSampleTypeTitle;
+    date_sampled python:view.ulocalized_time(item.getDateSampled());
+    hazardous item/getHazardous;
+    patient python: hasattr(item, 'getPatient') and item.getPatient() or None;
+">
 
-                     patient python:item.getPatient();
-                     patient_name python: getattr(item, 'getPatientFullName', lambda: '')() or (patient and getattr(patient, 'getFullname', lambda: '')()) or '';
-                     patient_age  python: patient and getattr(patient, 'getCurrentAgeAsText', lambda: '')() or '';
-                     patient_sex  python: getattr(item, 'getSex', lambda: '')() or (patient and getattr(patient, 'getSex', lambda: '')()) or '' ">
-
-  <!-- Barcode -->
+  <!-- Código de barras (sin cambios) -->
   <div class="barcode"
        tal:attributes="data-id sample_id;"
        data-code="code128"
@@ -20,30 +18,49 @@
        data-showHRI="false">
   </div>
 
-  <!-- Some additional info about the sample -->
+  <!-- Info de la muestra -->
   <div class="sample-info">
     <table cellpadding="0" cellspacing="0" border="0">
       <tr>
-        <td rowspan="2" tal:condition="hazardous | nothing">
+        <td rowspan="3" tal:condition="hazardous | nothing">
           <img tal:attributes="src string:${portal_url}/senaite_theme/icon/hazardous"/>
         </td>
         <td colspan="2">
           <strong tal:content="sample_id">Sample ID</strong>
         </td>
       </tr>
+
+      <!-- Paciente (Nombre / Edad / Sexo) -->
+      <tr tal:condition="python: patient or hasattr(item, 'getPatientFullName') or hasattr(item, 'getSex')">
+        <td colspan="2" style="line-height:1.1">
+          <!-- Nombre del paciente (varios fallbacks) -->
+          <div tal:condition="python: hasattr(item, 'getPatientFullName')"
+               tal:content="python: item.getPatientFullName()">Nombre Paciente</div>
+
+          <div tal:condition="python: not hasattr(item, 'getPatientFullName') and patient and hasattr(patient, 'getFullname')"
+               tal:content="python: patient.getFullname()">Nombre Paciente</div>
+
+          <div tal:condition="python: not hasattr(item, 'getPatientFullName') and patient and not hasattr(patient, 'getFullname') and hasattr(patient, 'Title')"
+               tal:content="python: patient.Title()">Nombre Paciente</div>
+
+          <!-- Edad (si se puede calcular) -->
+          <div tal:condition="python: patient and hasattr(patient, 'getCurrentAgeAsText')"
+               tal:content="python: 'Edad: %s' % patient.getCurrentAgeAsText()">Edad</div>
+          <div tal:condition="python: patient and not hasattr(patient, 'getCurrentAgeAsText') and hasattr(patient, 'getAgeAsText')"
+               tal:content="python: 'Edad: %s' % patient.getAgeAsText()">Edad</div>
+
+          <!-- Sexo (en AR o en Patient) -->
+          <div tal:condition="python: hasattr(item, 'getSex')"
+               tal:content="python: 'Sexo: %s' % item.getSex()">Sexo</div>
+          <div tal:condition="python: not hasattr(item, 'getSex') and patient and hasattr(patient, 'getSex')"
+               tal:content="python: 'Sexo: %s' % patient.getSex()">Sexo</div>
+        </td>
+      </tr>
+
       <tr>
         <td>
           <div tal:content="date_sampled">Date Sampled</div>
           <div tal:content="sample_type">Sample Type</div>
-
-          <!-- ADDED: Patient info (shown only if available) -->
-          <div tal:condition="patient_name"
-               tal:content="python:'Pac.: ' + patient_name">Pac.: Nombre</div>
-          <div tal:condition="patient_age"
-               tal:content="python:'Edad: ' + patient_age">Edad</div>
-          <div tal:condition="patient_sex"
-               tal:content="python:'Sexo: ' + patient_sex">Sexo</div>
-          <!-- /ADDED -->
         </td>
       </tr>
     </table>
