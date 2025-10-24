@@ -9,14 +9,28 @@
 
   <!-- Compactar visualmente SOLO esta plantilla -->
   <style type="text/css">
-    /* Todo dentro del alcance de esta etiqueta */
-    .sticker .sample-info table { border-collapse: collapse; }
-    .sticker .sample-info td { padding: 0; vertical-align: top; }
-    .sticker .sample-info { font-size: 8px; line-height: 1.05; }
+    /* Centrado global del contenido del sticker */
+    .sticker .barcode { text-align: center; }
+    .sticker .sample-info { 
+      font-size: 8px; 
+      line-height: 1.05; 
+      text-align: center;        /* <-- centra texto del bloque */
+    }
+    .sticker .sample-info table { 
+      border-collapse: collapse; 
+      margin: 0 auto;           /* <-- centra la tabla */
+    }
+    .sticker .sample-info td { 
+      padding: 0; 
+      vertical-align: top; 
+      text-align: center;        /* <-- centra el texto de las celdas */
+    }
     .sticker .sample-info .patient-line,
     .sticker .sample-info .id-line,
     .sticker .sample-info .date-type-line {
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      white-space: nowrap; 
+      overflow: hidden; 
+      text-overflow: ellipsis;
       max-width: 100%;
     }
     .sticker .sample-info .hazardous img { width: 10px; height: 10px; }
@@ -35,7 +49,7 @@
   <div class="sample-info">
     <table cellpadding="0" cellspacing="0" border="0">
       <tr>
-        <!-- ahora hay 3 filas: ID, PACIENTE, FECHA/TIPO -->
+        <!-- 3 filas: ID, PACIENTE, FECHA/TIPO -->
         <td class="hazardous" rowspan="3" tal:condition="hazardous | nothing">
           <img tal:attributes="src string:${portal_url}/senaite_theme/icon/hazardous"/>
         </td>
