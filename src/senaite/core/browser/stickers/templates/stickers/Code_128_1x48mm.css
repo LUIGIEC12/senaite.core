@@ -11,6 +11,8 @@ Sticker margins: 8mm, 1mm
     font-size: 7pt;
     text-align: center;
     overflow: hidden;
+    /* Opcional pero ayuda a centrar/apilar de forma robusta */
+    /* display: flex; flex-direction: column; align-items: center; */
 }
 
 .sticker .error {
@@ -19,17 +21,38 @@ Sticker margins: 8mm, 1mm
     z-index: 1000;
 }
 
+/* Asegura que el barcode ocupe toda la fila y quede centrado */
 .sticker .barcode {
     margin: 0 auto;
     padding: 1mm 0 !important;
+    text-align: center;
+    display: block;
+    width: 100%;
+    float: none;
+}
+
+/* Bloque de info: ancho completo, apilado y centrado */
+.sample-info {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    float: none;
+    clear: both;
     text-align: center;
 }
 
 .sample-info table {
     width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;   /* centra la tabla bajo el código de barras */
 }
+
+/* Antes: padding: 0 1em; — eso empujaba el contenido a la derecha */
 .sample-info table td {
-    padding: 0 1em;
+    padding: 0;
+    vertical-align: top;
+    /* si quieres un pelín de aire horizontal, usa algo mínimo: */
+    /* padding: 0 1mm; */
 }
 
 @media print {
@@ -41,5 +64,17 @@ Sticker margins: 8mm, 1mm
         width: 48mm !important;
         height: 18mm !important;
         margin: 0mm !important;
+    }
+
+    /* Reafirmamos el apilado/centrado en modo impresión */
+    .sticker { text-align: center; }
+    .sticker .barcode,
+    .sample-info {
+        display: block;
+        width: 100%;
+        clear: both;
+    }
+    .sample-info table {
+        margin: 0 auto;
     }
 }
