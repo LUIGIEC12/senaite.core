@@ -54,23 +54,37 @@ except Exception:
     ploneapi = None
 
 
-def _now_portal_tz():
-    """Devuelve 'ahora' en la zona horaria del portal.
-
-    - Usa DateTime (clase Zope) para mantenerse consistente con el resto del
-      stack y porque formatea nativamente con .strftime() y .toZone().
-    - Si por alguna razón no está disponible plone.api o hay error, hace
-      fallback al DateTime() por defecto (que suele ir a TZ del sistema).
+def _get_portal_tzname():
+    """Devuelve SIEMPRE el nombre de zona horaria configurado en el portal.
+    Fallback a la tz “actual” de plone.api y, por último, a la del sistema.
     """
     try:
         if ploneapi is not None:
+            site = ploneapi.portal.get()
+            # Plone guarda la tz del portal como property 'timezone'
+            tzname = getattr(site, "getProperty", lambda *a, **k: None)("timezone", None)
+            if tzname:
+                return tzname
+            # Fallback: la “actual” (a veces depende de REQUEST y puede ser UTC)
             tzname = ploneapi.portal.get_current_timezone()
             if tzname:
-                return DateTime().toZone(tzname)
-        # Fallback si no hay plone.api o tzname
-        return DateTime()
+                return tzname
     except Exception:
-        # Fallback final
+        pass
+    # Último fallback: la tz del sistema donde corre Zope
+    try:
+        return DateTime().timezone()
+    except Exception:
+        return "UTC"
+
+
+def _now_portal_tz():
+    """Devuelve 'ahora' en la zona horaria del portal (estable y sin depender de REQUEST)."""
+    try:
+        tzname = _get_portal_tzname()
+        # Construye DateTime con el epoch actual y tz explícita: evita ambigüedades de .toZone()
+        return DateTime(DateTime().timeTime(), tzname)
+    except Exception:
         return DateTime()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
