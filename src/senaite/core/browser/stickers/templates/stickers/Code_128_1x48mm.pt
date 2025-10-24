@@ -7,36 +7,74 @@
                      hazardous item/getHazardous;
                      patient python: hasattr(item, 'getPatient') and item.getPatient() or None;">
 
-  <!-- Compactar visualmente SOLO esta plantilla -->
+  <!-- Estilos locales (centrado fuerte para vista e impresión) -->
   <style type="text/css">
-    /* Centrado global del contenido del sticker */
-    .sticker .barcode { text-align: center; }
-    .sticker .sample-info { 
-      font-size: 8px; 
-      line-height: 1.05; 
-      text-align: center;        /* <-- centra texto del bloque */
+    /* Asegurar que ningún estilo externo afecte medidas/alineación */
+    .sticker, .sticker * { box-sizing: border-box; }
+
+    /* Barcode siempre centrado */
+    .sticker .barcode {
+      display: block;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1mm 0 !important;
+      text-align: center !important;
     }
-    .sticker .sample-info table { 
-      border-collapse: collapse; 
-      margin: 0 auto;           /* <-- centra la tabla */
+
+    /* Contenedor de info como columna centrada con flexbox */
+    .sticker .sample-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;   /* centra horizontal */
+      justify-content: flex-start;
+      gap: 0;                /* sin separación adicional */
+      width: 100%;
+      margin: 0 auto;
+      font-size: 8px;
+      line-height: 1.05;
+      text-align: center !important;   /* refuerzo */
     }
-    .sticker .sample-info td { 
-      padding: 0; 
-      vertical-align: top; 
-      text-align: center;        /* <-- centra el texto de las celdas */
-    }
-    .sticker .sample-info .patient-line,
-    .sticker .sample-info .id-line,
-    .sticker .sample-info .date-type-line {
-      white-space: nowrap; 
-      overflow: hidden; 
-      text-overflow: ellipsis;
+
+    /* Cada línea bloque centrado y con recorte de overflow */
+    .sticker .sample-info .line {
+      display: inline-flex;            /* se centra por el contenedor padre */
+      align-items: center;             /* alinear icono + texto verticalmente */
+      justify-content: center;
       max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center !important;
     }
-    .sticker .sample-info .hazardous img { width: 10px; height: 10px; }
+
+    .sticker .sample-info .id-line { font-weight: 700; }
+
+    .sticker .sample-info .hazardous-icon {
+      width: 10px; height: 10px;
+      margin-right: 2px;
+      flex: 0 0 auto;
+    }
+
+    /* En caso de que existan estilos viejos con tablas, nos blindamos */
+    .sticker .sample-info table,
+    .sticker .sample-info tr,
+    .sticker .sample-info td {
+      all: initial;
+      display: none !important; /* no usamos tablas aquí */
+    }
+
+    @media print {
+      .sticker,
+      .sticker .barcode,
+      .sticker .sample-info,
+      .sticker .sample-info .line {
+        text-align: center !important;
+        margin: 0 auto !important;
+      }
+    }
   </style>
 
-  <!-- Barcode (altura levemente menor para ganar 1 línea) -->
+  <!-- Código de barras -->
   <div class="barcode"
        tal:attributes="data-id sample_id;"
        data-code="code128"
@@ -45,38 +83,34 @@
        data-showHRI="false">
   </div>
 
-  <!-- Info -->
+  <!-- Info (sin tablas, 1 columna centrada) -->
   <div class="sample-info">
-    <table cellpadding="0" cellspacing="0" border="0">
-      <tr>
-        <!-- 3 filas: ID, PACIENTE, FECHA/TIPO -->
-        <td class="hazardous" rowspan="3" tal:condition="hazardous | nothing">
-          <img tal:attributes="src string:${portal_url}/senaite_theme/icon/hazardous"/>
-        </td>
-        <td colspan="2" class="id-line">
-          <strong tal:content="sample_id">Sample ID</strong>
-        </td>
-      </tr>
+    <!-- Línea 1: (opcional) ícono hazardous + Sample ID -->
+    <div class="line id-line">
+      <tal:haz condition="hazardous | nothing">
+        <img class="hazardous-icon"
+             tal:attributes="src string:${portal_url}/senaite_theme/icon/hazardous"/>
+      </tal:haz>
+      <span tal:content="sample_id">Sample ID</span>
+    </div>
 
-      <!-- Paciente (solo nombre, con fallbacks) -->
-      <tr tal:condition="python: patient or hasattr(item, 'getPatientFullName')">
-        <td colspan="2" class="patient-line">
-          <span tal:condition="python: hasattr(item, 'getPatientFullName')"
-                tal:content="python: item.getPatientFullName()">Nombre Paciente</span>
-          <span tal:condition="python: not hasattr(item, 'getPatientFullName') and patient and hasattr(patient, 'getFullname')"
-                tal:content="python: patient.getFullname()">Nombre Paciente</span>
-          <span tal:condition="python: not hasattr(item, 'getPatientFullName') and patient and not hasattr(patient, 'getFullname') and hasattr(patient, 'Title')"
-                tal:content="python: patient.Title()">Nombre Paciente</span>
-        </td>
-      </tr>
+    <!-- Línea 2: Paciente (solo nombre, con fallbacks) -->
+    <tal:patientline condition="python: patient or hasattr(item, 'getPatientFullName')">
+      <div class="line patient-line">
+        <span tal:condition="python: hasattr(item, 'getPatientFullName')"
+              tal:content="python: item.getPatientFullName()">Nombre Paciente</span>
+        <span tal:condition="python: not hasattr(item, 'getPatientFullName') and patient and hasattr(patient, 'getFullname')"
+              tal:content="python: patient.getFullname()">Nombre Paciente</span>
+        <span tal:condition="python: not hasattr(item, 'getPatientFullName') and patient and not hasattr(patient, 'getFullname') and hasattr(patient, 'Title')"
+              tal:content="python: patient.Title()">Nombre Paciente</span>
+      </div>
+    </tal:patientline>
 
-      <tr>
-        <td colspan="2" class="date-type-line">
-          <span tal:content="date_sampled">Date Sampled</span>
-          &nbsp;•&nbsp;
-          <span tal:content="sample_type">Sample Type</span>
-        </td>
-      </tr>
-    </table>
+    <!-- Línea 3: Fecha • Tipo de muestra -->
+    <div class="line date-type-line">
+      <span tal:content="date_sampled">Date Sampled</span>
+      &nbsp;•&nbsp;
+      <span tal:content="sample_type">Sample Type</span>
+    </div>
   </div>
 </tal:sticker>
