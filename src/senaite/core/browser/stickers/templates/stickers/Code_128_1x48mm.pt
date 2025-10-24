@@ -4,32 +4,65 @@
                      sample_id item/getId;
                      sample_type item/getSampleTypeTitle;
                      date_sampled python:view.ulocalized_time(item.getDateSampled());
-                     hazardous item/getHazardous">
+                     hazardous item/getHazardous;
 
-  <!-- Barcode -->
+                     patient python:item.getPatient() if hasattr(item, 'getPatient') else None;
+                     patient_name python:(patient and patient.getFullname()) or '';
+                     sex python:( (patient and (getattr(patient,'getGender',None) and patient.getGender())) \
+                                  or (hasattr(item,'getSubject') and hasattr(item.getSubject(),'getSex') and item.getSubject().getSex()) \
+                                  or '' );
+                     age_years python:( (patient and hasattr(patient,'getAge') and patient.getAge()) \
+                                        or (hasattr(item,'getSubject') and hasattr(item.getSubject(),'age') and item.getSubject().age()) \
+                                        or '' )">
+
+  <!-- Barcode (ligeramente más bajo para dejar espacio a texto) -->
   <div class="barcode"
        tal:attributes="data-id sample_id;"
        data-code="code128"
-       data-barHeight="12"
+       data-barHeight="10"
        data-addQuietZone="true"
        data-showHRI="false">
   </div>
 
-  <!-- Some additional info about the sample -->
+  <!-- Info de la muestra + paciente -->
   <div class="sample-info">
-    <table cellpadding="0" cellspacing="0" border="0">
+    <table cellpadding="0" cellspacing="0" border="0" style="width:100%;table-layout:fixed;">
       <tr>
-        <td rowspan="2" tal:condition="hazardous | nothing">
-          <img tal:attributes="src string:${portal_url}/senaite_theme/icon/hazardous"/>
+        <td rowspan="3" tal:condition="hazardous | nothing" style="width:5mm;">
+          <img tal:attributes="src string:${portal_url}/senaite_theme/icon/hazardous" style="width:4mm;height:4mm;display:block;"/>
         </td>
-        <td colspan="2">
-          <strong tal:content="sample_id">Sample ID</strong>
+        <td colspan="2" style="padding:0;">
+          <strong tal:content="sample_id" style="font-size:9pt;letter-spacing:0.1pt;">Sample ID</strong>
         </td>
       </tr>
+
+      <!-- Paciente (opcional, se muestra si existe) -->
+      <tr tal:condition="python: bool(patient_name)">
+        <td colspan="2" style="padding:0;font-size:7pt;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+          <span style="opacity:.8;margin-right:1mm;">Pac:</span>
+          <span tal:content="patient_name">Nombre Apellidos</span>
+        </td>
+      </tr>
+
+      <!-- Sexo/Edad (opcional) -->
+      <tr tal:condition="python: bool(sex) or bool(age_years)">
+        <td colspan="2" style="padding:0;font-size:7pt;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+          <span tal:condition="python: bool(sex)">
+            <span tal:content="python: sex[:1].upper()">M</span>
+          </span>
+          <span tal:condition="python: bool(sex) and bool(age_years)"> · </span>
+          <span tal:condition="python: bool(age_years)">
+            <span tal:content="python: u'{}a'.format(age_years)">34a</span>
+          </span>
+        </td>
+      </tr>
+
+      <!-- Fecha / Tipo de muestra -->
       <tr>
-        <td>
-          <div tal:content="date_sampled">Date Sampled</div>
-          <div tal:content="sample_type">Sample Type</div>
+        <td colspan="2" style="padding:0;font-size:7pt;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+          <span class="date" tal:content="date_sampled">24/10/2025 12:34</span>
+          <span style="opacity:.6;"> · </span>
+          <span class="stype" tal:content="sample_type">Suero</span>
         </td>
       </tr>
     </table>
