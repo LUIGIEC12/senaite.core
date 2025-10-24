@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => { 
 
   class DateTimeWidget {
 
@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 🔒 Palabras clave para nunca tocar (DoB)
       this.blockedNames = ["birth", "date_of_birth", "dateofbirth", "dob"].map(s => s.toLowerCase());
+
+      // ✅ Inicializa siempre como arreglos vacíos para evitar .length sobre undefined
+      this.datefields = this.datefields || [];
+      this.timefields = this.timefields || [];
 
       this.waitForFields();
       // referencia global para reuso en pageshow
@@ -28,9 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     waitForFields() {
       let datefields = document.querySelectorAll("input[type='date']");
       let timefields = document.querySelectorAll("input[type='time']");
-      if (datefields.length && timefields.length) {
-        this.datefields = Array.from(datefields);
-        this.timefields = Array.from(timefields);
+
+      // ✅ Mantén sincronizadas las propiedades aunque falte alguno
+      this.datefields = Array.from(datefields || []);
+      this.timefields = Array.from(timefields || []);
+
+      if (this.datefields.length && this.timefields.length) {
         this.bind_fields();
         this.disable_autocomplete();
         // ❌ Eliminado el reset global de formularios
@@ -42,18 +49,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 🔹 Enlaza eventos de cambio
     bind_fields() {
-      this.datefields.forEach((el) => {
+      // ✅ Itera de forma segura aunque estén vacíos
+      (this.datefields || []).forEach((el) => {
         el.addEventListener("change", this.on_change);
       });
-      this.timefields.forEach((el) => {
+      (this.timefields || []).forEach((el) => {
         el.addEventListener("change", this.on_change);
       });
     }
 
     // 🔹 Desactiva autocompletar (Chrome ignora "off", usamos "new-password")
     disable_autocomplete() {
-      this.datefields.forEach((df) => df.setAttribute("autocomplete", "new-password"));
-      this.timefields.forEach((tf) => tf.setAttribute("autocomplete", "new-password"));
+      // ✅ Iteraciones seguras
+      (this.datefields || []).forEach((df) => df.setAttribute("autocomplete", "new-password"));
+      (this.timefields || []).forEach((tf) => tf.setAttribute("autocomplete", "new-password"));
     }
 
     // 🔹 Mantengo el método pero sin tocar TinyMCE ni resetear forms globales
@@ -93,7 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 🔹 Precarga fecha y hora actual SOLO si el campo está vacío y NO está bloqueado
     autofill_now() {
-      if (!this.datefields.length || !this.timefields.length) {
+      // ✅ Comprueba existencia ANTES de leer .length (evita el TypeError)
+      if (!(this.datefields && this.datefields.length) || !(this.timefields && this.timefields.length)) {
         console.warn("⚠️ DateTimeWidget: no encontró inputs date/time");
         return;
       }
@@ -109,19 +119,19 @@ document.addEventListener("DOMContentLoaded", () => {
       let timeStr = `${hh}:${min}`;
 
       // 👉 Solo establecer si el input está vacío y no está bloqueado (protege DoB y campos ya guardados)
-      this.datefields.forEach((df) => {
+      (this.datefields || []).forEach((df) => {
         if (!this.isBlocked(df) && this.isEmpty(df.value)) {
           df.value = dateStr;
         }
       });
-      this.timefields.forEach((tf) => {
+      (this.timefields || []).forEach((tf) => {
         if (!this.isBlocked(tf) && this.isEmpty(tf.value)) {
           tf.value = timeStr;
         }
       });
 
       // actualiza campo oculto también, pero solo si está vacío
-      this.timefields.forEach((tf) => {
+      (this.timefields || []).forEach((tf) => {
         let target = tf.getAttribute("target");
         if (target) {
           let hidden = document.querySelector(`input[name='${target}']`);
