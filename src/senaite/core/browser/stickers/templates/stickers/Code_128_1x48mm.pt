@@ -5,7 +5,16 @@
                      sample_type item/getSampleTypeTitle;
                      date_sampled python:view.ulocalized_time(item.getDateSampled(), long_format=False);
                      hazardous item/getHazardous;
-                     patient python: hasattr(item, 'getPatient') and item.getPatient() or None;">
+                     patient python: hasattr(item, 'getPatient') and item.getPatient() or None;
+                     re modules/re;
+                     sex_raw python: (hasattr(item,'getSex') and item.getSex()) or (patient and hasattr(patient,'getSex') and patient.getSex()) or '';
+                     sex_text python: (sex_raw and (sex_raw.lower().startswith('f') and 'femenino' or (sex_raw.lower().startswith('m') and 'masculino' or sex_raw))) or '';
+                     age_raw python: (patient and hasattr(patient,'getAge') and patient.getAge()) or '';
+                     age_m_y python: re.search(r'(\d+)\s*Y', age_raw);
+                     age_m_m python: (not age_m_y) and re.search(r'(\d+)\s*M', age_raw) or None;
+                     age_m_d python: (not age_m_y and not age_m_m) and re.search(r'(\d+)\s*D', age_raw) or None;
+                     age_text python: age_m_y and (age_m_y.group(1) + u' años') or (age_m_m and (age_m_m.group(1) + u' meses') or (age_m_d and (age_m_d.group(1) + u' días') or ''));
+                    ">
 
   <!-- Estilos locales (centrado fuerte para vista e impresión) -->
   <style type="text/css">
@@ -37,8 +46,8 @@
 
     /* Cada línea bloque centrado y con recorte de overflow */
     .sticker .sample-info .line {
-      display: inline-flex;            /* se centra por el contenedor padre */
-      align-items: center;             /* alinear icono + texto verticalmente */
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
       max-width: 100%;
       white-space: nowrap;
@@ -56,7 +65,7 @@
       flex: 0 0 auto;
     }
 
-    /* En caso de que existan estilos viejos con tablas, nos blindamos */
+    /* Blindaje ante estilos antiguos con tablas */
     .sticker .sample-info table,
     .sticker .sample-info tr,
     .sticker .sample-info td {
@@ -107,39 +116,16 @@
       </div>
     </tal:patientline>
 
-    <!-- Línea 2.5 NUEVA: Sexo • Edad (normalizado a 'Masculino/Femenino' y edad en español) -->
-    <tal:sexage define="
-        sex_raw python:
-          (hasattr(item, 'getSex') and item.getSex())
-          or (patient and hasattr(patient, 'getSex') and patient.getSex())
-          or (patient and hasattr(patient, 'getGender') and patient.getGender())
-          or '';
-        sex_lc   python: sex_raw and sex_raw.strip().lower() or '';
-        sex_txt  python: (sex_lc.startswith('m') or sex_lc.startswith('h')) and 'Masculino' or (sex_lc.startswith('f') or sex_lc.startswith('w')) and 'Femenino' or (sex_raw or '');
-        age_raw  python:
-          (patient and (
-            (hasattr(patient, 'getCurrentAgeAsText') and patient.getCurrentAgeAsText())
-            or (hasattr(patient, 'getAgeAsText') and patient.getAgeAsText())
-          )) or '';
-        age_txt  python: age_raw and age_raw\
-          .replace('years', 'años')\
-          .replace('year', 'año')\
-          .replace('yrs', 'años')\
-          .replace('yr', 'año')\
-          .replace('months', 'meses')\
-          .replace('month', 'mes')\
-          .replace('days', 'días')\
-          .replace('day', 'día') or '';
-      ">
-      <div class="line sex-age-line"
-           tal:condition="python: sex_txt or age_txt">
-        <span tal:condition="sex_txt" tal:content="sex_txt">Masculino</span>
-        <span tal:condition="python: sex_txt and age_txt">
-          &nbsp;•&nbsp;
-        </span>
-        <span tal:condition="age_txt" tal:content="age_txt">42 años</span>
+    <!-- Línea 2.5: Sexo • Edad (solo si hay algo que mostrar) -->
+    <tal:sexageline condition="python: sex_text or age_text">
+      <div class="line sex-age-line">
+        <span tal:condition="python: sex_text"
+              tal:content="python: sex_text">sexo</span>
+        <span tal:condition="python: sex_text and age_text">&nbsp;•&nbsp;</span>
+        <span tal:condition="python: age_text"
+              tal:content="python: age_text">edad</span>
       </div>
-    </tal:sexage>
+    </tal:sexageline>
 
     <!-- Línea 3: Fecha • Tipo de muestra -->
     <div class="line date-type-line">
