@@ -9,68 +9,29 @@
 
   <!-- Estilos locales (centrado fuerte para vista e impresión) -->
   <style type="text/css">
-    /* Asegurar que ningún estilo externo afecte medidas/alineación */
     .sticker, .sticker * { box-sizing: border-box; }
-
-    /* Barcode siempre centrado */
     .sticker .barcode {
-      display: block;
-      width: 100%;
-      margin: 0 auto;
-      padding: 1mm 0 !important;
-      text-align: center !important;
+      display: block; width: 100%; margin: 0 auto;
+      padding: 1mm 0 !important; text-align: center !important;
     }
-
-    /* Contenedor de info como columna centrada con flexbox */
     .sticker .sample-info {
-      display: flex;
-      flex-direction: column;
-      align-items: center;   /* centra horizontal */
-      justify-content: flex-start;
-      gap: 0;                /* sin separación adicional */
-      width: 100%;
-      margin: 0 auto;
-      font-size: 8px;
-      line-height: 1.05;
-      text-align: center !important;   /* refuerzo */
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: flex-start;
+      gap: 0; width: 100%; margin: 0 auto;
+      font-size: 8px; line-height: 1.05; text-align: center !important;
     }
-
-    /* Cada línea bloque centrado y con recorte de overflow */
     .sticker .sample-info .line {
-      display: inline-flex;            /* se centra por el contenedor padre */
-      align-items: center;             /* alinear icono + texto verticalmente */
-      justify-content: center;
-      max-width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-align: center !important;
+      display: inline-flex; align-items: center; justify-content: center;
+      max-width: 100%; white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis; text-align: center !important;
     }
-
     .sticker .sample-info .id-line { font-weight: 700; }
-    .sticker .sample-info .sex-age-line { font-size: 7.5px; } /* un pelín más compacta */
-
-    .sticker .sample-info .hazardous-icon {
-      width: 10px; height: 10px;
-      margin-right: 2px;
-      flex: 0 0 auto;
-    }
-
-    /* Blindaje por si quedan estilos viejos con tablas */
-    .sticker .sample-info table,
-    .sticker .sample-info tr,
-    .sticker .sample-info td {
-      all: initial;
-      display: none !important; /* no usamos tablas aquí */
-    }
-
+    .sticker .sample-info .sex-age-line { font-size: 7.5px; }
+    .sticker .sample-info .hazardous-icon { width: 10px; height: 10px; margin-right: 2px; flex: 0 0 auto; }
+    .sticker .sample-info table, .sticker .sample-info tr, .sticker .sample-info td { all: initial; display: none !important; }
     @media print {
-      .sticker,
-      .sticker .barcode,
-      .sticker .sample-info,
-      .sticker .sample-info .line {
-        text-align: center !important;
-        margin: 0 auto !important;
+      .sticker, .sticker .barcode, .sticker .sample-info, .sticker .sample-info .line {
+        text-align: center !important; margin: 0 auto !important;
       }
     }
   </style>
@@ -107,29 +68,28 @@
       </div>
     </tal:patientline>
 
-    <!-- Línea 2.5: Sexo • Edad -->
+    <!-- Línea 2.5: Sexo • Edad (sexo ya te funcionaba; añadimos edad robusta) -->
     <tal:sexage define="
-        /* SEXO (ya te funcionaba; solo normalizo a minúsculas) */
         sex_raw python: (hasattr(item,'getSex') and item.getSex()) or (patient and hasattr(patient,'getSex') and patient.getSex()) or (patient and hasattr(patient,'getGender') and patient.getGender()) or '';
         sex_lc  python: sex_raw and sex_raw.strip().lower() or '';
-        sex_txt python: sex_lc and ((sex_lc.startswith('f') or sex_lc.startswith('w')) and 'femenino' or ((sex_lc.startswith('m') or sex_lc.startswith('h')) and 'masculino' or sex_lc)) or '';
+        sex_txt python: (sex_lc and ((sex_lc.startswith('f') or sex_lc.startswith('w')) and 'femenino' or ((sex_lc.startswith('m') or sex_lc.startswith('h')) and 'masculino' or sex_lc))) or '';
 
-        /* EDAD: 1) texto nativo si existe; 2) cálculo por DOB a la fecha de muestreo */
         age_raw python: patient and ((hasattr(patient,'getCurrentAgeAsText') and patient.getCurrentAgeAsText()) or (hasattr(patient,'getAgeAsText') and patient.getAgeAsText())) or '';
 
-        now_dt     python: modules['DateTime'].DateTime();
-        ref_dt     python: (hasattr(item,'getDateSampled') and item.getDateSampled()) or now_dt;
+        now_dt  python: modules['DateTime'].DateTime();
+        ref_dt  python: (hasattr(item,'getDateSampled') and item.getDateSampled()) or now_dt;
 
-        dob_raw    python: patient and ((hasattr(patient,'getDateOfBirth') and patient.getDateOfBirth()) or (hasattr(patient,'getBirthDate') and patient.getBirthDate()) or (hasattr(patient,'getBirthdate') and patient.getBirthdate())) or None;
-        dob_dt     python: dob_raw and modules['DateTime'].DateTime(dob_raw) or None;
+        dob_raw python: patient and ((hasattr(patient,'getDateOfBirth') and patient.getDateOfBirth()) or (hasattr(patient,'getBirthDate') and patient.getBirthDate()) or (hasattr(patient,'getBirthdate') and patient.getBirthdate())) or None;
+        dob_dt  python: dob_raw and modules['DateTime'].DateTime(dob_raw) or None;
 
-        delta_days python: (dob_dt and (ref_dt - dob_dt)) and float(ref_dt - dob_dt) or 0.0;
-        years_i    python: int(delta_days/365.25);
-        months_i   python: int(delta_days/30.4375);
-        days_i     python: int(round(delta_days));
+        delta_d python: (dob_dt and (ref_dt - dob_dt) and float(ref_dt - dob_dt)) or 0.0;
+        years_i python: int(delta_d/365.25);
+        months_i python: int(delta_d/30.4375);
+        days_i python: int(round(delta_d));
 
-        age_calc   python: dob_dt and (years_i >= 1 and ('%d años' % years_i) or (months_i >= 1 and ('%d meses' % months_i) or ('%d días' % days_i))) or '';
-        age_txt    python: (age_raw and age_raw.replace('years','años').replace('year','año').replace('yrs','años').replace('yr','año').replace('months','meses').replace('month','mes').replace('days','días').replace('day','día')) or age_calc;
+        age_calc python: dob_dt and (years_i >= 1 and ('%d años' % years_i) or (months_i >= 1 and ('%d meses' % months_i) or ('%d días' % days_i))) or '';
+
+        age_txt python: (age_raw and age_raw.replace('years','años').replace('year','año').replace('yrs','años').replace('yr','año').replace('months','meses').replace('month','mes').replace('days','días').replace('day','día')) or age_calc;
       ">
       <div class="line sex-age-line" tal:condition="python: sex_txt or age_txt">
         <span tal:condition="python: sex_txt" tal:content="python: sex_txt">femenino</span>
