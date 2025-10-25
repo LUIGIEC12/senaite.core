@@ -53,25 +53,65 @@ try:
 except Exception:
     ploneapi = None
 
+# Plone 5+: la zona horaria está en el registry (plone.portal_timezone)
+try:
+    from plone.registry.interfaces import IRegistry
+except Exception:
+    IRegistry = None
+
 
 def _get_portal_tzname():
     """Devuelve SIEMPRE el nombre de zona horaria configurado en el portal.
-    Fallback a la tz “actual” de plone.api y, por último, a la del sistema.
+
+    Orden de resolución:
+      1) Registry: 'plone.portal_timezone'
+      2) Propiedad del sitio: 'timezone' / 'portal_timezone'
+      3) plone.api.portal.get_current_timezone() (coerción a str)
+      4) Tz del sistema (DateTime().timezone())
+      5) 'UTC'
     """
+    # 1) Registry
+    try:
+        if IRegistry is not None:
+            registry = getUtility(IRegistry)
+            if registry is not None:
+                # get() o acceso dict, según versión
+                tzname = None
+                try:
+                    tzname = registry.get('plone.portal_timezone', None)
+                except Exception:
+                    try:
+                        tzname = registry['plone.portal_timezone']
+                    except Exception:
+                        tzname = None
+                if tzname:
+                    return tzname
+    except Exception:
+        pass
+
+    # 2) Propiedad en el sitio
     try:
         if ploneapi is not None:
             site = ploneapi.portal.get()
-            # Plone guarda la tz del portal como property 'timezone'
-            tzname = getattr(site, "getProperty", lambda *a, **k: None)("timezone", None)
-            if tzname:
-                return tzname
-            # Fallback: la “actual” (a veces depende de REQUEST y puede ser UTC)
-            tzname = ploneapi.portal.get_current_timezone()
-            if tzname:
-                return tzname
+            getter = getattr(site, "getProperty", None)
+            if getter:
+                tzname = (getter("timezone", None) or
+                          getter("portal_timezone", None))
+                if tzname:
+                    return tzname
     except Exception:
         pass
-    # Último fallback: la tz del sistema donde corre Zope
+
+    # 3) API "current" (puede depender de REQUEST; convertir a texto)
+    try:
+        if ploneapi is not None:
+            tzobj = ploneapi.portal.get_current_timezone()
+            if tzobj:
+                return getattr(tzobj, "zone", None) or str(tzobj)
+    except Exception:
+        pass
+
+    # 4) Tz del sistema Zope
     try:
         return DateTime().timezone()
     except Exception:
@@ -271,7 +311,8 @@ def get_variables(context, **kw):
 
     # Augment the variables map depending on the portal type
     if IAnalysisRequest.providedBy(context):
-        now = DateTime()
+        # >>> Ajuste tz portal para defaults de fechas (coherencia total con prefijos)
+        now = _now_portal_tz()
         sampling_date = context.getSamplingDate()
         sampling_date = sampling_date and DT2dt(sampling_date) or DT2dt(now)
         date_sampled = context.getDateSampled()
