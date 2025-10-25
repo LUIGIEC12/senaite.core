@@ -68,28 +68,22 @@
       </div>
     </tal:patientline>
 
-    <!-- Línea 2.5: Sexo • Edad (sexo ya te funcionaba; añadimos edad robusta) -->
+    <!-- Línea 2.5: Sexo • Edad -->
     <tal:sexage define="
         sex_raw python: (hasattr(item,'getSex') and item.getSex()) or (patient and hasattr(patient,'getSex') and patient.getSex()) or (patient and hasattr(patient,'getGender') and patient.getGender()) or '';
         sex_lc  python: sex_raw and sex_raw.strip().lower() or '';
         sex_txt python: (sex_lc and ((sex_lc.startswith('f') or sex_lc.startswith('w')) and 'femenino' or ((sex_lc.startswith('m') or sex_lc.startswith('h')) and 'masculino' or sex_lc))) or '';
 
-        age_raw python: patient and ((hasattr(patient,'getCurrentAgeAsText') and patient.getCurrentAgeAsText()) or (hasattr(patient,'getAgeAsText') and patient.getAgeAsText())) or '';
-
-        now_dt  python: modules['DateTime'].DateTime();
-        ref_dt  python: (hasattr(item,'getDateSampled') and item.getDateSampled()) or now_dt;
-
-        dob_raw python: patient and ((hasattr(patient,'getDateOfBirth') and patient.getDateOfBirth()) or (hasattr(patient,'getBirthDate') and patient.getBirthDate()) or (hasattr(patient,'getBirthdate') and patient.getBirthdate())) or None;
-        dob_dt  python: dob_raw and modules['DateTime'].DateTime(dob_raw) or None;
-
-        delta_d python: (dob_dt and (ref_dt - dob_dt) and float(ref_dt - dob_dt)) or 0.0;
-        years_i python: int(delta_d/365.25);
-        months_i python: int(delta_d/30.4375);
-        days_i python: int(round(delta_d));
-
-        age_calc python: dob_dt and (years_i >= 1 and ('%d años' % years_i) or (months_i >= 1 and ('%d meses' % months_i) or ('%d días' % days_i))) or '';
-
-        age_txt python: (age_raw and age_raw.replace('years','años').replace('year','año').replace('yrs','años').replace('yr','año').replace('months','meses').replace('month','mes').replace('days','días').replace('day','día')) or age_calc;
+        age_val python:
+          (hasattr(item,'getPatientAgeAsText') and item.getPatientAgeAsText()) or
+          (hasattr(item,'getAgeAsText') and item.getAgeAsText()) or
+          (hasattr(item,'getPatientAge') and item.getPatientAge()) or
+          (hasattr(item,'getAge') and item.getAge()) or
+          (patient and hasattr(patient,'getCurrentAgeAsText') and patient.getCurrentAgeAsText()) or
+          (patient and hasattr(patient,'getAgeAsText') and patient.getAgeAsText()) or
+          '';
+        age_str python: age_val and str(age_val) or '';
+        age_txt python: age_str and (age_str.isdigit() and (age_str + ' años') or age_str) or '';
       ">
       <div class="line sex-age-line" tal:condition="python: sex_txt or age_txt">
         <span tal:condition="python: sex_txt" tal:content="python: sex_txt">femenino</span>
