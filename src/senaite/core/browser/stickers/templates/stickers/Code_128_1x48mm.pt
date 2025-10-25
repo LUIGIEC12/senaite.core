@@ -68,7 +68,7 @@
       </div>
     </tal:patientline>
 
-    <!-- Línea 2.5: Sexo • Edad -->
+    <!-- Línea 2.5: Sexo • Edad (robusto para relativedelta / números / texto en inglés) -->
     <tal:sexage define="
         sex_raw python: (hasattr(item,'getSex') and item.getSex()) or (patient and hasattr(patient,'getSex') and patient.getSex()) or (patient and hasattr(patient,'getGender') and patient.getGender()) or '';
         sex_lc  python: sex_raw and sex_raw.strip().lower() or '';
@@ -83,7 +83,34 @@
           (patient and hasattr(patient,'getAgeAsText') and patient.getAgeAsText()) or
           '';
         age_str python: age_val and str(age_val) or '';
-        age_txt python: age_str and (age_str.isdigit() and (age_str + ' años') or age_str) or '';
+
+        has_rd python: ('years=' in age_str) or ('months=' in age_str) or ('days=' in age_str);
+
+        y_i python: has_rd and age_str.find('years=') or -1;
+        y_s python: (y_i!=-1) and age_str[y_i+6:].split(',',1)[0].replace('+','').replace(')','').strip() or '';
+        y   python: y_s and abs(int(y_s)) or 0;
+
+        m_i python: has_rd and age_str.find('months=') or -1;
+        m_s python: (m_i!=-1) and age_str[m_i+7:].split(',',1)[0].replace('+','').replace(')','').strip() or '';
+        m   python: m_s and abs(int(m_s)) or 0;
+
+        d_i python: has_rd and age_str.find('days=') or -1;
+        d_s python: (d_i!=-1) and age_str[d_i+5:].split(',',1)[0].replace('+','').replace(')','').strip() or '';
+        d   python: d_s and abs(int(d_s)) or 0;
+
+        age_has_rd python: (y or m or d) and 1 or 0;
+        age_txt_rd python: y and ('%d %s' % (y, (y==1 and 'año' or 'años'))) or (m and ('%d %s' % (m, (m==1 and 'mes' or 'meses'))) or (d and ('%d %s' % (d, (d==1 and 'día' or 'días'))) or ''));
+
+        age_is_digit python: (not age_has_rd) and age_str and age_str.isdigit() or 0;
+        age_txt_digit python: age_is_digit and ('%s %s' % (age_str, (int(age_str)==1 and 'año' or 'años'))) or '';
+
+        age_txt_plain python: (not age_has_rd and not age_is_digit) and age_str and age_str\
+          .replace('years','años').replace('year','año')\
+          .replace('yrs','años').replace('yr','año')\
+          .replace('months','meses').replace('month','mes')\
+          .replace('days','días').replace('day','día') or '';
+
+        age_txt python: age_has_rd and age_txt_rd or (age_is_digit and age_txt_digit or age_txt_plain);
       ">
       <div class="line sex-age-line" tal:condition="python: sex_txt or age_txt">
         <span tal:condition="python: sex_txt" tal:content="python: sex_txt">femenino</span>
