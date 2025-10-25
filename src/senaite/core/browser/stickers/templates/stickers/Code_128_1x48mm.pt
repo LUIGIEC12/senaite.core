@@ -107,32 +107,39 @@
       </div>
     </tal:patientline>
 
-    <!-- Línea 2.5 NUEVA: Sexo • Edad (se muestra solo si hay datos) -->
-    <tal:sexageline condition="python:
+    <!-- Línea 2.5 NUEVA: Sexo • Edad (normalizado a 'Masculino/Femenino' y edad en español) -->
+    <tal:sexage define="
+        sex_raw python:
           (hasattr(item, 'getSex') and item.getSex())
           or (patient and hasattr(patient, 'getSex') and patient.getSex())
-          or (patient and (hasattr(patient, 'getCurrentAgeAsText') or hasattr(patient, 'getAgeAsText')))">
-      <div class="line sex-age-line">
-        <!-- Sexo (AR primero; si no, Patient) -->
-        <span tal:condition="python: hasattr(item, 'getSex') and item.getSex()"
-              tal:content="python: item.getSex()">Sexo</span>
-        <span tal:condition="python: not (hasattr(item, 'getSex') and item.getSex()) and patient and hasattr(patient, 'getSex') and patient.getSex()"
-              tal:content="python: patient.getSex()">Sexo</span>
-
-        <!-- Separador "•" solo si hay sexo Y edad -->
-        <span tal:condition="python:
-              ((hasattr(item, 'getSex') and item.getSex()) or (patient and hasattr(patient, 'getSex') and patient.getSex()))
-              and patient and (hasattr(patient, 'getCurrentAgeAsText') or hasattr(patient, 'getAgeAsText'))">
+          or (patient and hasattr(patient, 'getGender') and patient.getGender())
+          or '';
+        sex_lc   python: sex_raw and sex_raw.strip().lower() or '';
+        sex_txt  python: (sex_lc.startswith('m') or sex_lc.startswith('h')) and 'Masculino' or (sex_lc.startswith('f') or sex_lc.startswith('w')) and 'Femenino' or (sex_raw or '');
+        age_raw  python:
+          (patient and (
+            (hasattr(patient, 'getCurrentAgeAsText') and patient.getCurrentAgeAsText())
+            or (hasattr(patient, 'getAgeAsText') and patient.getAgeAsText())
+          )) or '';
+        age_txt  python: age_raw and age_raw\
+          .replace('years', 'años')\
+          .replace('year', 'año')\
+          .replace('yrs', 'años')\
+          .replace('yr', 'año')\
+          .replace('months', 'meses')\
+          .replace('month', 'mes')\
+          .replace('days', 'días')\
+          .replace('day', 'día') or '';
+      ">
+      <div class="line sex-age-line"
+           tal:condition="python: sex_txt or age_txt">
+        <span tal:condition="sex_txt" tal:content="sex_txt">Masculino</span>
+        <span tal:condition="python: sex_txt and age_txt">
           &nbsp;•&nbsp;
         </span>
-
-        <!-- Edad (preferir getCurrentAgeAsText) -->
-        <span tal:condition="python: patient and hasattr(patient, 'getCurrentAgeAsText')"
-              tal:content="python: patient.getCurrentAgeAsText()">Edad</span>
-        <span tal:condition="python: patient and not hasattr(patient, 'getCurrentAgeAsText') and hasattr(patient, 'getAgeAsText')"
-              tal:content="python: patient.getAgeAsText()">Edad</span>
+        <span tal:condition="age_txt" tal:content="age_txt">42 años</span>
       </div>
-    </tal:sexageline>
+    </tal:sexage>
 
     <!-- Línea 3: Fecha • Tipo de muestra -->
     <div class="line date-type-line">
