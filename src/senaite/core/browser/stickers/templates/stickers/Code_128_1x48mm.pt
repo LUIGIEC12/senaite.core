@@ -48,6 +48,7 @@
     }
 
     .sticker .sample-info .id-line { font-weight: 700; }
+    .sticker .sample-info .sex-age-line { font-size: 7.5px; } /* un pelín más compacta */
 
     .sticker .sample-info .hazardous-icon {
       width: 10px; height: 10px;
@@ -105,6 +106,33 @@
               tal:content="python: patient.Title()">Nombre Paciente</span>
       </div>
     </tal:patientline>
+
+    <!-- Línea 2.5 NUEVA: Sexo • Edad (se muestra solo si hay datos) -->
+    <tal:sexageline condition="python:
+          (hasattr(item, 'getSex') and item.getSex())
+          or (patient and hasattr(patient, 'getSex') and patient.getSex())
+          or (patient and (hasattr(patient, 'getCurrentAgeAsText') or hasattr(patient, 'getAgeAsText')))">
+      <div class="line sex-age-line">
+        <!-- Sexo (AR primero; si no, Patient) -->
+        <span tal:condition="python: hasattr(item, 'getSex') and item.getSex()"
+              tal:content="python: item.getSex()">Sexo</span>
+        <span tal:condition="python: not (hasattr(item, 'getSex') and item.getSex()) and patient and hasattr(patient, 'getSex') and patient.getSex()"
+              tal:content="python: patient.getSex()">Sexo</span>
+
+        <!-- Separador "•" solo si hay sexo Y edad -->
+        <span tal:condition="python:
+              ((hasattr(item, 'getSex') and item.getSex()) or (patient and hasattr(patient, 'getSex') and patient.getSex()))
+              and patient and (hasattr(patient, 'getCurrentAgeAsText') or hasattr(patient, 'getAgeAsText'))">
+          &nbsp;•&nbsp;
+        </span>
+
+        <!-- Edad (preferir getCurrentAgeAsText) -->
+        <span tal:condition="python: patient and hasattr(patient, 'getCurrentAgeAsText')"
+              tal:content="python: patient.getCurrentAgeAsText()">Edad</span>
+        <span tal:condition="python: patient and not hasattr(patient, 'getCurrentAgeAsText') and hasattr(patient, 'getAgeAsText')"
+              tal:content="python: patient.getAgeAsText()">Edad</span>
+      </div>
+    </tal:sexageline>
 
     <!-- Línea 3: Fecha • Tipo de muestra -->
     <div class="line date-type-line">
