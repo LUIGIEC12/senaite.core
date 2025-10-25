@@ -75,7 +75,6 @@ def _get_portal_tzname():
         if IRegistry is not None:
             registry = getUtility(IRegistry)
             if registry is not None:
-                # get() o acceso dict, según versión
                 tzname = None
                 try:
                     tzname = registry.get('plone.portal_timezone', None)
@@ -311,13 +310,32 @@ def get_variables(context, **kw):
 
     # Augment the variables map depending on the portal type
     if IAnalysisRequest.providedBy(context):
-        # >>> Ajuste tz portal para defaults de fechas (coherencia total con prefijos)
+        # ===== Ajuste tz portal para defaults de fechas (coherencia total con prefijos)
         now = _now_portal_tz()
-        sampling_date = context.getSamplingDate()
-        sampling_date = sampling_date and DT2dt(sampling_date) or DT2dt(now)
-        date_sampled = context.getDateSampled()
-        date_sampled = date_sampled and DT2dt(date_sampled) or DT2dt(now)
+
+        # Conservar objetos DateTime "raw" del AR si existen (no convertir aún)
+        raw_date_sampled = context.getDateSampled() or None
+        raw_sampling_date = context.getSamplingDate() or None
+
+        # Defaults visibles (DT2dt) siguen usando 'now' en tz del portal
+        sampling_date = raw_sampling_date and DT2dt(raw_sampling_date) or DT2dt(now)
+        date_sampled = raw_date_sampled and DT2dt(raw_date_sampled) or DT2dt(now)
         test_count = 1
+
+        # >>>>> CLAVE: forzar yymmdd a partir de la FECHA DE MUESTREO en tz del portal
+        # Preferimos DateSampled; si no existe, usamos SamplingDate; si tampoco, usamos 'now'
+        tzname = _get_portal_tzname()
+        dt_for_prefix = (raw_date_sampled or raw_sampling_date or now)
+        try:
+            # Asegura objeto DateTime y lo fuerza a la zona del portal antes de formatear
+            if not isinstance(dt_for_prefix, DateTime):
+                dt_for_prefix = DateTime(dt_for_prefix)
+            yymmdd_local = dt_for_prefix.toZone(tzname).strftime("%y%m%d")
+        except Exception:
+            yymmdd_local = now.strftime("%y%m%d")
+        # Override del yymmdd que usará el ID (clave del generador incluida)
+        variables["yymmdd"] = yymmdd_local
+        # <<<<< FIN CLAVE
 
         variables.update({
             "clientId": context.getClientID(),
