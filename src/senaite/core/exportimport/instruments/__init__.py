@@ -130,6 +130,7 @@ __all__ = [
     "varian.vistapro.icp",
     "cobasintegra.model_400_plus.model_400_plus",
     "facscalibur.calibur.model_e9750",
+    "cobas_c111.model_c111.cobas_c111", #Infolabsa
 ]
 
 # Parsers are for auto-import. If empty, then auto-import won't wun for that
@@ -175,6 +176,7 @@ PARSERS = [
     ["varian.vistapro.icp", "VistaPROICPParser"],
     ["cobasintegra.model_400_plus.model_400_plus", "CobasIntegra400plus2CSVParser"],  # noqa: E501
     ["facscalibur.calibur.model_e9750", "FacsCalibur2CSVParser"],
+    ["cobas_c111.model_c111.cobas_c111", "CobasC111Parser"], #Infolabsa
 ]
 
 
