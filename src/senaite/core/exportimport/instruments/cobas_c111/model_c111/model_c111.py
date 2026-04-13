@@ -50,3 +50,5 @@ def Import(context, request):
         'log': logs,
         'warns': warns
     })
+
+cobas_c111 = "cobas_c111"
