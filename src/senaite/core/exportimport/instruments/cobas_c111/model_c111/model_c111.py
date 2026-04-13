@@ -13,55 +13,60 @@ import traceback
 title = "Cobas C111"
 
 
-def Import(context, request):
+class CobasC111(object):
+    """Interfaz clásica SENAITE"""
 
-    infile = request.form.get('cobas_c111_file', None)
-    fileformat = request.form.get('cobas_c111_format', None)
-    instrument = request.form.get('instrument', None)
+    def __init__(self):
+        self.title = title
 
-    errors = []
-    logs = []
-    warns = []
+    def Import(self, context, request):
 
-    parser = None
+        infile = request.form.get('cobas_c111_file', None)
+        fileformat = request.form.get('cobas_c111_format', None)
+        instrument = request.form.get('instrument', None)
 
-    if not infile:
-        errors.append(_("No file selected"))
+        errors = []
+        logs = []
+        warns = []
+
+        parser = None
+
+        if not infile:
+            errors.append(_("No file selected"))
+            return json.dumps({
+                'errors': errors,
+                'log': logs,
+                'warns': warns
+            })
+
+        if fileformat == 'astm':
+            parser = CobasC111Parser(infile)
+        else:
+            errors.append(_("Formato no soportado"))
+
+        if parser:
+            importer = CobasC111Importer(
+                parser=parser,
+                context=context,
+                override=[False, False],
+                instrument_uid=instrument
+            )
+
+            try:
+                importer.process()
+            except Exception:
+                errors.append(traceback.format_exc())
+
+            errors = importer.errors
+            logs = importer.logs
+            warns = importer.warns
+
         return json.dumps({
             'errors': errors,
             'log': logs,
             'warns': warns
         })
 
-    # 👉 FORMATO SOPORTADO
-    if fileformat == 'astm':
-        parser = CobasC111Parser(infile)
-    else:
-        errors.append(_("Formato no soportado"))
 
-    if parser:
-        importer = CobasC111Importer(
-            parser=parser,
-            context=context,
-            override=[False, False],
-            instrument_uid=instrument
-        )
-
-        try:
-            importer.process()
-        except Exception:
-            errors.append(traceback.format_exc())
-
-        errors = importer.errors
-        logs = importer.logs
-        warns = importer.warns
-
-    return json.dumps({
-        'errors': errors,
-        'log': logs,
-        'warns': warns
-    })
-
-
-# 🔥 ESTO ES LO MÁS IMPORTANTE
-cobas_c111 = Import
+# 🔥 ESTE ES EL REGISTRO CORRECTO
+cobas_c111 = CobasC111()
