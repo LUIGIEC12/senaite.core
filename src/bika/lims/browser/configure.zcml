@@ -32,6 +32,7 @@
   <include package=".widgets"/>
   <include package=".workflow"/>
   <include package=".worksheet"/>
+<include package="senaite.core.exportimport.instruments.cobas_c111" />
 
   <browser:page
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
