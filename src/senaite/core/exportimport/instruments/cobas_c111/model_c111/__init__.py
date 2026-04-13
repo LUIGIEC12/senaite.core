@@ -1,1 +1,1 @@
-from .model_c111 import *
+from .model_c111 import cobas_c111
