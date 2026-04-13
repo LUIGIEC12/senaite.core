@@ -2,88 +2,75 @@
 
 from bika.lims import bikaMessageFactory as _
 from senaite.core.i18n import translate as t
+from senaite.core.exportimport.instruments import IInstrumentImportInterface
+
 from .parser import CobasC111Parser
 from .importer import CobasC111Importer
+
+from zope.interface import implementer
+
 import json
 import traceback
 
 
-class CobasC111(object):
-    """Modelo del instrumento Cobas C111 para SENAITE"""
+title = "Cobas C111"
 
-    title = "Cobas C111"
-    description = "Interfaz de importación para Cobas C111"
-    file_formats = ("astm",)
 
-    def __init__(self):
-        self.parser = CobasC111Parser
-        self.importer = CobasC111Importer
+@implementer(IInstrumentImportInterface)
+class cobas_c111(object):
+    """Cobas C111 Import Interface"""
+
+    def __init__(self, context):
+        self.context = context
+
+    def __call__(self):
+        return self
 
     def Import(self, context, request):
-        """Punto de entrada para la importación desde la UI"""
+
+        infile = request.form.get('cobas_c111_file', None)
+        fileformat = request.form.get('cobas_c111_format', None)
+        instrument = request.form.get('instrument', None)
 
         errors = []
         logs = []
         warns = []
 
-        try:
-            # 🔹 Obtener datos del formulario
-            infile = request.form.get('cobas_c111_file')
-            fileformat = request.form.get('cobas_c111_format')
-            instrument_uid = request.form.get('instrument')
+        parser = None
 
-            # 🔴 Validaciones básicas
-            if not infile:
-                errors.append(_("No file selected"))
-                return self._response(errors, logs, warns)
+        if not infile:
+            errors.append(_("No file selected"))
+            return json.dumps({
+                'errors': errors,
+                'log': logs,
+                'warns': warns
+            })
 
-            if not fileformat:
-                errors.append(_("No file format selected"))
-                return self._response(errors, logs, warns)
+        # 👉 Define formatos soportados
+        if fileformat == 'astm':
+            parser = CobasC111Parser(infile)
+        else:
+            errors.append(_("Formato no soportado"))
 
-            if fileformat not in self.file_formats:
-                errors.append(_("Formato no soportado: %s") % fileformat)
-                return self._response(errors, logs, warns)
-
-            if not instrument_uid:
-                warns.append(_("Instrumento no especificado"))
-
-            logs.append(_("Iniciando importación Cobas C111"))
-
-            # 🔹 Crear parser
-            parser = self.parser(infile)
-
-            # 🔹 Crear importer
-            importer = self.importer(
+        if parser:
+            importer = CobasC111Importer(
                 parser=parser,
                 context=context,
                 override=[False, False],
-                instrument_uid=instrument_uid
+                instrument_uid=instrument
             )
 
-            # 🔹 Ejecutar proceso
-            importer.process()
+            try:
+                importer.process()
+            except Exception:
+                errors.append(traceback.format_exc())
 
-            # 🔹 Recoger resultados
-            errors.extend(importer.errors)
-            logs.extend(importer.logs)
-            warns.extend(importer.warns)
+            errors = importer.errors
+            logs = importer.logs
+            warns = importer.warns
 
-            logs.append(_("Importación finalizada"))
-
-        except Exception:
-            errors.append(traceback.format_exc())
-
-        return self._response(errors, logs, warns)
-
-    # 🔧 Helper para respuesta estándar SENAITE
-    def _response(self, errors, logs, warns):
         return json.dumps({
             'errors': errors,
             'log': logs,
             'warns': warns
         })
-
-
-# 🔥 REGISTRO OBLIGATORIO DEL INSTRUMENTO
-cobas_c111 = CobasC111
