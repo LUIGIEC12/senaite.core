@@ -65,6 +65,7 @@ from thermoscientific.multiskan import go  # noqa: F401
 from varian.vistapro import icp as icp_2  # noqa: F401
 from senaite.core.exportimport.instruments.cobas_c111 import model_c111  # noqa
 from senaite.core.exportimport.instruments.mindray_bc3000 import model_mindray_bc3000
+from senaite.core.exportimport.instruments.sysmex_xn1000 import model_sysmex_xn1000
 from zope.component import getAdapters
 from zope.interface import Interface
 
@@ -133,6 +134,7 @@ __all__ = [
     "facscalibur.calibur.model_e9750",
     "mindray_bc3000.model_mindray_bc3000",#Infolabsa
     "cobas_c111.model_c111",#Infolabsa
+    "sysmex_xn1000.model_sysmex_xn1000",#Infolabsa
 ]
 
 # Parsers are for auto-import. If empty, then auto-import won't wun for that
@@ -180,6 +182,7 @@ PARSERS = [
     ["facscalibur.calibur.model_e9750", "FacsCalibur2CSVParser"],
     ["cobas_c111.model_c111", "CobasC111Parser"], #Infolabsa
     ["mindray_bc3000.model_mindray_bc3000", "MindrayBC3000Parser"],#Infolabsa
+    ["sysmex_xn1000.model_sysmex_xn1000", "SysmexXN1000Parser"],#Infolabsa
 ]
 
 
