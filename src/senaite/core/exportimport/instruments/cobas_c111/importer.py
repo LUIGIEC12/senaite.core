@@ -1,41 +1,17 @@
 # -*- coding: utf-8 -*-
-from senaite.core.exportimport.instruments.importer import BaseImporter
-from .parser import CobasC111Parser
 
-class CobasC111Importer(BaseImporter):
+from senaite.core.exportimport.instruments.importer import AnalysisResultsImporter
 
-    def __init__(self, instrument):
-        super(CobasC111Importer, self).__init__(instrument)
-        self.parser = CobasC111Parser()
 
-    def process(self, infile):
-        data = infile.read()
-        parsed = self.parser.parse(data)
+class CobasC111Importer(AnalysisResultsImporter):
 
-        for item in parsed:
-            self.process_result(item)
+    def __init__(self, parser, context, override, instrument_uid):
+        super(CobasC111Importer, self).__init__(
+            parser=parser,
+            context=context,
+            override=override,
+            instrument_uid=instrument_uid
+        )
 
-    def process_result(self, item):
-        sample_id = item.get("SampleID")
-        analysis = item.get("Analysis")
-        result = item.get("Result")
-
-        # 🔥 Buscar muestra
-        sample = self.get_sample(sample_id)
-
-        if not sample:
-            self.log("Sample not found: %s" % sample_id)
-            return
-
-        # 🔥 Buscar análisis
-        analysis_obj = self.get_analysis(sample, analysis)
-
-        if not analysis_obj:
-            self.log("Analysis not found: %s" % analysis)
-            return
-
-        # 🔥 Guardar resultado
-        analysis_obj.setResult(result)
-        analysis_obj.reindexObject()
-
-        self.log("Imported %s -> %s" % (analysis, result))
+    def getKeywordsToBeExcluded(self):
+        return []
