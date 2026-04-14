@@ -85,7 +85,6 @@ def Import(context, request):
         'warns': warns
     })
 
-
-# 🔥🔥🔥 ESTO ES LO MÁS IMPORTANTE 🔥🔥🔥
-# DEBE SER EL MÓDULO, NO UN STRING
+# 🔥 EXPONER Import COMO ATRIBUTO DEL MÓDULO
+Import = Import
 cobas_c111 = Import
