@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class CobasC111Importer(object):
 
     def __init__(self, parser, context, override, instrument_uid):
