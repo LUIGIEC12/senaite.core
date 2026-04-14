@@ -66,6 +66,8 @@ from varian.vistapro import icp as icp_2  # noqa: F401
 from senaite.core.exportimport.instruments.cobas_c111 import model_c111  # noqa
 from senaite.core.exportimport.instruments.mindray_bc3000 import model_mindray_bc3000
 from senaite.core.exportimport.instruments.sysmex_xn1000 import model_sysmex_xn1000
+from senaite.core.exportimport.instruments.cobas_u411 import model_cobas_u411
+from senaite.core.exportimport.instruments.urisys_1100 import model_urisys_1100
 from zope.component import getAdapters
 from zope.interface import Interface
 
@@ -135,6 +137,8 @@ __all__ = [
     "mindray_bc3000.model_mindray_bc3000",#Infolabsa
     "cobas_c111.model_c111",#Infolabsa
     "sysmex_xn1000.model_sysmex_xn1000",#Infolabsa
+    "cobas_u411.model_cobas_u411",#Infolabsa
+    "urisys_1100.model_urisys_1100",#Infolabsa
 ]
 
 # Parsers are for auto-import. If empty, then auto-import won't wun for that
@@ -183,6 +187,9 @@ PARSERS = [
     ["cobas_c111.model_c111", "CobasC111Parser"], #Infolabsa
     ["mindray_bc3000.model_mindray_bc3000", "MindrayBC3000Parser"],#Infolabsa
     ["sysmex_xn1000.model_sysmex_xn1000", "SysmexXN1000Parser"],#Infolabsa
+    ["cobas_u411.model_cobas_u411", "CobasU411Parser"], #Infolabsa
+    ["urisys_1100.model_urisys_1100", "Urisys1100Parser"],#Infolabsa
+   
 ]
 
 
