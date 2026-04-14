@@ -11,10 +11,9 @@ title = "Cobas C111"
 
 
 def Import(context, request):
-    """Cobas C111 results import"""
 
-    infile = request.form.get('cobas_c111_file')
-    fileformat = request.form.get('cobas_c111_format')
+    infile = request.form.get('cobas_c111_file', None)
+    fileformat = request.form.get('cobas_c111_format', None)
     instrument = request.form.get('instrument', None)
 
     errors = []
@@ -23,18 +22,14 @@ def Import(context, request):
 
     parser = None
 
-    # Validación archivo
     if not infile:
         errors.append(_("No file selected"))
 
-    # Selección parser
     if fileformat == 'astm':
         parser = CobasC111Parser(infile)
     else:
-        errors.append(t(_("Unrecognized file format ${fileformat}",
-                          mapping={"fileformat": fileformat})))
+        errors.append(_("Formato no soportado"))
 
-    # Importación
     if parser:
         importer = CobasC111Importer(
             parser=parser,
@@ -43,18 +38,14 @@ def Import(context, request):
             instrument_uid=instrument
         )
 
-        tbex = ''
         try:
             importer.process()
         except Exception:
-            tbex = traceback.format_exc()
+            errors.append(traceback.format_exc())
 
         errors = importer.errors
         logs = importer.logs
         warns = importer.warns
-
-        if tbex:
-            errors.append(tbex)
 
     return json.dumps({
         'errors': errors,
@@ -63,5 +54,5 @@ def Import(context, request):
     })
 
 
-# 👇 ESTO ES LO MÁS IMPORTANTE
-cobas_c111 = Import
+# 👇 ESTO ES LO CRÍTICO (DEBE ESTAR FUERA DE TODO)
+cobas_c111 = "cobas_c111"
