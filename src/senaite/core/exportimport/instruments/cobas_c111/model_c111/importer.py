@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
-class CobasC111Importer(object):
+
+from senaite.core.exportimport.instruments.importer import AnalysisResultsImporter
+
+
+class CobasC111Importer(AnalysisResultsImporter):
 
     def __init__(self, parser, context, override, instrument_uid):
-        self.parser = parser
-        self.context = context
-        self.override = override
-        self.instrument_uid = instrument_uid
-
-        self.errors = []
-        self.logs = []
-        self.warns = []
+        super(CobasC111Importer, self).__init__(
+            parser=parser,
+            context=context,
+            override=override,
+            instrument_uid=instrument_uid
+        )
 
     def process(self):
-        data = self.parser.parse()
-        self.logs.append("Procesado OK")
+        # Aquí puedes personalizar si quieres
+        super(CobasC111Importer, self).process()
