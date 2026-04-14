@@ -64,6 +64,7 @@ from thermoscientific.gallery import Ts9861x  # noqa: F401
 from thermoscientific.multiskan import go  # noqa: F401
 from varian.vistapro import icp as icp_2  # noqa: F401
 from senaite.core.exportimport.instruments.cobas_c111 import model_c111  # noqa
+from senaite.core.exportimport.instruments.mindray_bc3000 import model_mindray_bc3000
 from zope.component import getAdapters
 from zope.interface import Interface
 
@@ -130,7 +131,7 @@ __all__ = [
     "varian.vistapro.icp",
     "cobasintegra.model_400_plus.model_400_plus",
     "facscalibur.calibur.model_e9750",
-    #"cobas_c111.model_c111.cobas_c111",
+    "mindray_bc3000.model_mindray_bc3000",#Infolabsa
     "cobas_c111.model_c111",#Infolabsa
 ]
 
@@ -178,6 +179,7 @@ PARSERS = [
     ["cobasintegra.model_400_plus.model_400_plus", "CobasIntegra400plus2CSVParser"],  # noqa: E501
     ["facscalibur.calibur.model_e9750", "FacsCalibur2CSVParser"],
     ["cobas_c111.model_c111", "CobasC111Parser"], #Infolabsa
+    ["mindray_bc3000.model_mindray_bc3000", "MindrayBC3000Parser"],#Infolabsa
 ]
 
 
