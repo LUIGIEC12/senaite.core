@@ -1,10 +1,6 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope"
-    xmlns:zcml="http://namespaces.zope.org/zcml">
+    xmlns="http://namespaces.zope.org/zope">
 
-    <adapter
-        factory=".model_c111.cobas_c111"
-        provides="senaite.core.exportimport.instruments.IInstrumentImportInterface"
-    />
+    <include package=".model_c111" />
 
 </configure>
