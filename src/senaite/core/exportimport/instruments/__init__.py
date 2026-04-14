@@ -177,7 +177,7 @@ PARSERS = [
     ["varian.vistapro.icp", "VistaPROICPParser"],
     ["cobasintegra.model_400_plus.model_400_plus", "CobasIntegra400plus2CSVParser"],  # noqa: E501
     ["facscalibur.calibur.model_e9750", "FacsCalibur2CSVParser"],
-    ["cobas_c111.model_c111.cobas_c111", "CobasC111Parser"], #Infolabsa
+    ["cobas_c111.model_c111", "CobasC111Parser"], #Infolabsa
 ]
 
 
