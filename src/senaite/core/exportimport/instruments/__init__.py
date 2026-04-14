@@ -63,7 +63,7 @@ from thermoscientific.arena import xt20  # noqa: F401
 from thermoscientific.gallery import Ts9861x  # noqa: F401
 from thermoscientific.multiskan import go  # noqa: F401
 from varian.vistapro import icp as icp_2  # noqa: F401
-from cobas_c111.model_c111 import cobas_c111 # noqa: F401
+from senaite.core.exportimport.instruments.cobas_c111 import model_c111  # noqa
 from zope.component import getAdapters
 from zope.interface import Interface
 
