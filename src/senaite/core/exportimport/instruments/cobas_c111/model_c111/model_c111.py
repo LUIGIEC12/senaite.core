@@ -1,37 +1,63 @@
 # -*- coding: utf-8 -*-
+#
+# Cobas C111 - Instrument Interface (SENAITE)
+#
 
 from bika.lims import bikaMessageFactory as _
 from senaite.core.i18n import translate as t
-from .parser import CobasC111Parser
-from .importer import CobasC111Importer
+
 import json
 import traceback
-import sys
 
+# IMPORTS LOCALES
+from .parser import CobasC111Parser
+from .importer import CobasC111Importer
+
+
+# 🔥 ESTE TITLE ES EL QUE SE MUESTRA EN LA UI
 title = "Cobas C111"
 
 
 def Import(context, request):
-
-    infile = request.form.get('cobas_c111_file', None)
-    fileformat = request.form.get('cobas_c111_format', None)
-    instrument = request.form.get('instrument', None)
+    """Importador de resultados Cobas C111"""
 
     errors = []
     logs = []
     warns = []
 
-    parser = None
+    try:
+        infile = request.form.get('cobas_c111_file', None)
+        fileformat = request.form.get('cobas_c111_format', None)
+        instrument = request.form.get('instrument', None)
 
-    if not infile:
-        errors.append(_("No file selected"))
+        # VALIDACIÓN ARCHIVO
+        if not infile:
+            errors.append(_("No file selected"))
+            return json.dumps({
+                'errors': errors,
+                'log': logs,
+                'warns': warns
+            })
 
-    if fileformat == 'astm':
-        parser = CobasC111Parser(infile)
-    else:
-        errors.append(_("Formato no soportado"))
+        # 🔥 PARSER
+        parser = None
 
-    if parser:
+        if fileformat == 'astm':
+            parser = CobasC111Parser()
+        else:
+            errors.append(
+                t(_("Formato no soportado: ${fileformat}",
+                    mapping={"fileformat": fileformat}))
+            )
+
+        if not parser:
+            return json.dumps({
+                'errors': errors,
+                'log': logs,
+                'warns': warns
+            })
+
+        # 🔥 IMPORTER (ESTRUCTURA CORRECTA SENAITE)
         importer = CobasC111Importer(
             parser=parser,
             context=context,
@@ -39,14 +65,19 @@ def Import(context, request):
             instrument_uid=instrument
         )
 
+        # 🔥 PROCESO
         try:
-            importer.process()
+            importer.process(infile)
         except Exception:
             errors.append(traceback.format_exc())
 
+        # RESULTADOS
         errors = importer.errors
         logs = importer.logs
         warns = importer.warns
+
+    except Exception:
+        errors.append(traceback.format_exc())
 
     return json.dumps({
         'errors': errors,
@@ -55,5 +86,6 @@ def Import(context, request):
     })
 
 
-# 🔥 ESTA LÍNEA ES LA CLAVE
-cobas_c111 = sys.modules[__name__]
+# 🔥🔥🔥 ESTO ES LO MÁS IMPORTANTE 🔥🔥🔥
+# DEBE SER EL MÓDULO, NO UN STRING
+cobas_c111 = Import
