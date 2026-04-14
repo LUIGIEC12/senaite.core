@@ -130,7 +130,8 @@ __all__ = [
     "varian.vistapro.icp",
     "cobasintegra.model_400_plus.model_400_plus",
     "facscalibur.calibur.model_e9750",
-    "cobas_c111.model_c111.cobas_c111", #Infolabsa
+    #"cobas_c111.model_c111.cobas_c111",
+    "cobas_c111.model_c111",#Infolabsa
 ]
 
 # Parsers are for auto-import. If empty, then auto-import won't wun for that
