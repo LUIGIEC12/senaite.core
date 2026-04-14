@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class CobasC111Parser(object):
 
     def parse(self, file_content):
