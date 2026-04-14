@@ -86,6 +86,6 @@ def Import(context, request):
     })
 
 
-# 🔥🔥🔥 ESTO ES LO MÁS IMPORTANTE 🔥🔥🔥
-# DEBE SER EL MÓDULO, NO UN STRING
 cobas_c111 = Import
+
+Import = Import
