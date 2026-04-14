@@ -13,5 +13,5 @@ class CobasC111Importer(AnalysisResultsImporter):
             instrument_uid=instrument_uid
         )
 
-    def process(self):
-        super(CobasC111Importer, self).process()
+    def getKeywordsToBeExcluded(self):
+        return []
