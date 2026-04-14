@@ -6,6 +6,7 @@ from .parser import CobasC111Parser
 from .importer import CobasC111Importer
 import json
 import traceback
+import sys
 
 title = "Cobas C111"
 
@@ -54,5 +55,5 @@ def Import(context, request):
     })
 
 
-# 👇 ESTO ES LO CRÍTICO (DEBE ESTAR FUERA DE TODO)
-cobas_c111 = "cobas_c111"
+# 🔥 ESTA LÍNEA ES LA CLAVE
+cobas_c111 = sys.modules[__name__]
