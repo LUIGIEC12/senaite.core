@@ -11,7 +11,6 @@ title = "Cobas C111"
 
 
 def Import(context, request):
-    """Cobas C111 results import"""
 
     infile = request.form.get('cobas_c111_file')
     fileformat = request.form.get('cobas_c111_format')
@@ -23,18 +22,14 @@ def Import(context, request):
 
     parser = None
 
-    # Validación archivo
     if not infile:
         errors.append(_("No file selected"))
 
-    # Selección parser
     if fileformat == 'astm':
         parser = CobasC111Parser(infile)
     else:
-        errors.append(t(_("Unrecognized file format ${fileformat}",
-                          mapping={"fileformat": fileformat})))
+        errors.append(_("Formato no soportado"))
 
-    # Importación
     if parser:
         importer = CobasC111Importer(
             parser=parser,
@@ -61,7 +56,3 @@ def Import(context, request):
         'log': logs,
         'warns': warns
     })
-
-
-# 👇 ESTO ES LO MÁS IMPORTANTE
-cobas_c111 = Import
