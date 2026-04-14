@@ -14,5 +14,4 @@ class CobasC111Importer(AnalysisResultsImporter):
         )
 
     def process(self):
-        # Aquí puedes personalizar si quieres
         super(CobasC111Importer, self).process()
