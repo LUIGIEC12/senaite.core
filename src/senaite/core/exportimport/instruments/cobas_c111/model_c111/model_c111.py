@@ -12,8 +12,8 @@ title = "Cobas C111"
 
 def Import(context, request):
 
-    infile = request.form.get('cobas_c111_file')
-    fileformat = request.form.get('cobas_c111_format')
+    infile = request.form.get('cobas_c111_file', None)
+    fileformat = request.form.get('cobas_c111_format', None)
     instrument = request.form.get('instrument', None)
 
     errors = []
@@ -38,21 +38,21 @@ def Import(context, request):
             instrument_uid=instrument
         )
 
-        tbex = ''
         try:
             importer.process()
         except Exception:
-            tbex = traceback.format_exc()
+            errors.append(traceback.format_exc())
 
         errors = importer.errors
         logs = importer.logs
         warns = importer.warns
-
-        if tbex:
-            errors.append(tbex)
 
     return json.dumps({
         'errors': errors,
         'log': logs,
         'warns': warns
     })
+
+
+# 👇 ESTO ES LO CRÍTICO (DEBE ESTAR FUERA DE TODO)
+cobas_c111 = "cobas_c111"
