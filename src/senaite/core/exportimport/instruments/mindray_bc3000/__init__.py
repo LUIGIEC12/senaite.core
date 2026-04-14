@@ -1,1 +1,1 @@
-from . import model_mindray_bc3000
+# -*- coding: utf-8 -*-
