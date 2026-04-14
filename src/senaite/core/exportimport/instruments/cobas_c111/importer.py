@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from senaite.core.exportimport.instruments.importer import BaseImporter
 from .parser import CobasC111Parser
 
