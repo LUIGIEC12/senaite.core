@@ -5,11 +5,11 @@ class CobasC111Parser(object):
     def parse(self, raw_data):
         results = []
 
-        # 🔥 1. Limpiar capa ASTM (control chars)
+        #  Limpiar capa ASTM
         cleaned = raw_data.replace('\x02', '').replace('\x03', '') \
                           .replace('\x17', '').replace('\x04', '')
 
-        # 🔥 2. Separar registros ASTM (CR)
+        # Separar registros ASTM
         records = cleaned.split('\r')
 
         current_sample = None
@@ -22,17 +22,17 @@ class CobasC111Parser(object):
             fields = record.split('|')
             record_type = fields[0]
 
-            # 🧾 PATIENT
+            # PATIENT
             if record_type == 'P':
                 if len(fields) > 3:
                     current_sample = fields[3].strip()
 
-            # 🧪 ORDER
+            # ORDER
             elif record_type == 'O':
                 if len(fields) > 2:
                     current_sample = fields[2].strip()
 
-            # 🔬 RESULT (🔥 CLAVE)
+            # RESULT
             elif record_type == 'R':
                 try:
                     test_field = fields[2]  # ^^^111
@@ -41,7 +41,7 @@ class CobasC111Parser(object):
                     flag = fields[6]
                     status = fields[8]
 
-                    # 🔥 Extraer código de test (ej: 111)
+                    # Extraer código de test
                     test_code = test_field.split('^')[-1]
 
                     results.append({
