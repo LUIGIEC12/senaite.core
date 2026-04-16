@@ -2,37 +2,50 @@
 
 class CobasC111Parser(object):
 
-    def __init__(self, infile):
-        self.infile = infile
+    def parse(self, file_content):
+        results = []
 
-    def parse(self):
-        results = {}
-        content = self.infile.read()
+        sample_id = None
 
-        if isinstance(content, bytes):
-            content = content.decode("utf-8")
-
-        lines = content.splitlines()
+        lines = file_content.split("\r")
 
         for line in lines:
-            parts = line.split(";")
-
-            if len(parts) < 3:
+            if not line.strip():
                 continue
 
-            sample_id = parts[0].strip()
-            analysis = parts[1].strip()
-            value = parts[2].strip()
+            fields = line.split("|")
+            record_type = fields[0]
 
-            if sample_id not in results:
-                results[sample_id] = {
-                    "SampleID": sample_id,
-                    "Analyses": []
-                }
+            # =========================
+            # PATIENT RECORD
+            # =========================
+            if record_type == "P":
+                if len(fields) > 3:
+                    sample_id = fields[3].strip()
 
-            results[sample_id]["Analyses"].append({
-                "Keyword": analysis,
-                "Result": value
-            })
+            # =========================
+            # RESULT RECORD
+            # =========================
+            elif record_type == "R":
 
-        return list(results.values())
+                try:
+                    test_field = fields[2]
+                    test_id = test_field.split("^")[3]
+
+                    value = fields[3].strip()
+                    unit = fields[4].strip() if len(fields) > 4 else ""
+
+                    flag = fields[6].strip() if len(fields) > 6 else "N"
+
+                    results.append({
+                        "SampleID": sample_id,
+                        "Analysis": test_id,
+                        "Result": value,
+                        "Unit": unit,
+                        "Flag": flag,
+                    })
+
+                except Exception:
+                    continue
+
+        return results
