@@ -651,6 +651,26 @@ class SamplesView(ListingView):
             item["parent"] = obj.getRawParentAnalysisRequest
             item["children"] = obj.getDescendantsUIDs or []
 
+                # 🔴 MARCAR EN ROJO SI ALGÚN ANALITO ESTÁ FUERA DE RANGO
+        try:
+            analyses = obj.getAnalyses(full_objects=True)
+
+            for analysis in analyses:
+
+                # Caso 1: fuera de rango por especificación
+                if analysis.getResultOutOfRange():
+                    item['row_class'] = 'out-of-range'
+                    break
+
+                # Caso 2: flags del equipo (HL7 / ASTM)
+                flag = analysis.getResultFlag()
+                if flag in ['H', 'L', 'HH', 'LL', 'A']:
+                    item['row_class'] = 'out-of-range'
+                    break
+
+        except Exception as e:
+            print("ERROR OUT OF RANGE:", str(e))
+      
         return item
 
     @view.memoize
