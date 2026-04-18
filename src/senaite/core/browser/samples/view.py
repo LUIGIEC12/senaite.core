@@ -650,27 +650,34 @@ class SamplesView(ListingView):
         if self.show_partitions:
             item["parent"] = obj.getRawParentAnalysisRequest
             item["children"] = obj.getDescendantsUIDs or []
+        # --- INICIO DE TU CÓDIGO PERSONALIZADO ---
+        for x in range(len(items)):
+            if not items[x].has_key('obj'):
+                continue
+                
+            brain_or_obj = items[x]['obj']
+            
+            # Obtener el objeto real (despertarlo de la ZODB)
+            if hasattr(brain_or_obj, 'getObject'):
+                ar_obj = brain_or_obj.getObject()
+            else:
+                ar_obj = brain_or_obj
 
-                # 🔴 MARCAR EN ROJO SI ALGÚN ANALITO ESTÁ FUERA DE RANGO
-        try:
-            analyses = obj.getAnalyses(full_objects=True)
-
+            # Revisar si hay análisis fuera de rango
+            is_out_of_range = False
+            # getAnalyses te trae los objetos de los analitos de esa muestra
+            analyses = ar_obj.getAnalyses(full_objects=True) 
+            
             for analysis in analyses:
-
-                # Caso 1: fuera de rango por especificación
+                # getResultOutOfRange es un método nativo que devuelve True si el resultado no cumple
                 if analysis.getResultOutOfRange():
-                    item['row_class'] = 'out-of-range'
-                    break
-
-                # Caso 2: flags del equipo (HL7 / ASTM)
-                flag = analysis.getResultFlag()
-                if flag in ['H', 'L', 'HH', 'LL', 'A']:
-                    item['row_class'] = 'out-of-range'
-                    break
-
-        except Exception as e:
-            print("ERROR OUT OF RANGE:", str(e))
-      
+                    is_out_of_range = True
+                    break # Salimos del ciclo rápido si ya encontramos uno malo
+            
+            # Inyectar la clase CSS si está fuera de rango
+            if is_out_of_range:
+                current_css = items[x].get('css_class', '')
+                items[x]['css_class'] = current_css + ' out-of-range-row'
         return item
 
     @view.memoize
