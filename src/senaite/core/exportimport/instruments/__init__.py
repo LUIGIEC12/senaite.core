@@ -28,7 +28,7 @@ from alere.pima import cd4  # noqa: F401
 from beckmancoulter.access import model2  # noqa: F401
 from bika.lims import api
 from biodrop.ulite import ulite  # noqa: F401
-from cobasintegra.model_400_plus import model_400_plus  # noqa: F401
+from cobasintegra.model_400_plus import model_400_plus  # Infolabsa
 from eltra.cs import cs2000  # noqa: F401
 from facscalibur.calibur import model_e9750  # noqa: F401
 from foss.fiastar import fiastar  # noqa: F401
@@ -63,6 +63,9 @@ from thermoscientific.arena import xt20  # noqa: F401
 from thermoscientific.gallery import Ts9861x  # noqa: F401
 from thermoscientific.multiskan import go  # noqa: F401
 from varian.vistapro import icp as icp_2  # noqa: F401
+from senaite.core.exportimport.instruments.cobas_c111 import model_c111  # Infolabsa
+from senaite.core.exportimport.instruments.cobas_u411 import model_cobas_u411 #Infolabsa
+from senaite.core.exportimport.instruments.urisys_1100 import model_urisys_1100 #infolabsa
 from zope.component import getAdapters
 from zope.interface import Interface
 
@@ -127,8 +130,11 @@ __all__ = [
     "thermoscientific.gallery.Ts9861x",
     "thermoscientific.multiskan.go",
     "varian.vistapro.icp",
-    "cobasintegra.model_400_plus.model_400_plus",
+    "cobasintegra.model_400_plus.model_400_plus", #Infolabsa
     "facscalibur.calibur.model_e9750",
+    "cobas_c111.model_c111",#Infolabsa
+    "cobas_u411.model_cobas_u411",#Infolabsa
+    "urisys_1100.model_urisys_1100",#Infolabsa
 ]
 
 # Parsers are for auto-import. If empty, then auto-import won't wun for that
@@ -172,8 +178,11 @@ PARSERS = [
     ["nuclisens.easyq", "EasyQXMLParser"],
     ["genexpert.genexpert", "GeneXpertParser"],
     ["varian.vistapro.icp", "VistaPROICPParser"],
-    ["cobasintegra.model_400_plus.model_400_plus", "CobasIntegra400plus2CSVParser"],  # noqa: E501
+    ["cobasintegra.model_400_plus.model_400_plus", "CobasIntegra400plus2CSVParser"],  # Infolabsa
     ["facscalibur.calibur.model_e9750", "FacsCalibur2CSVParser"],
+    ["cobas_c111.model_c111", "CobasC111Parser"], #Infolabsa
+    ["cobas_u411.model_cobas_u411", "CobasU411Parser"], #Infolabsa
+    ["urisys_1100.model_urisys_1100", "Urisys1100Parser"],#Infolabsa
 ]
 
 
