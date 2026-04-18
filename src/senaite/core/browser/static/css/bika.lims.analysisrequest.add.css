@@ -183,3 +183,7 @@
     white-space: pre-line;
     line-height: 1.5;
 }
+/* INFOLABSA */
+tr.out-of-range {
+    background-color: #ffcccc !important;
+}
