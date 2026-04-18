@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 
-class CobasC111Parser(object):
+class CobasU411Parser(object):
 
-    def parse(self, raw_data):
+    def __init__(self, raw_data):
+        if isinstance(raw_data, bytes):
+            raw_data = raw_data.decode('utf-8', errors='ignore')
+        self.raw_data = raw_data
+
+    def parse(self):
         results = []
 
-        #  Limpiar capa ASTM
-        cleaned = raw_data.replace('\x02', '').replace('\x03', '') \
-                          .replace('\x17', '').replace('\x04', '')
+        cleaned = self.raw_data.replace('\x02', '') \
+                              .replace('\x03', '') \
+                              .replace('\x17', '') \
+                              .replace('\x04', '')
 
-        # Separar registros ASTM
         records = cleaned.split('\r')
 
         current_sample = None
@@ -22,26 +27,20 @@ class CobasC111Parser(object):
             fields = record.split('|')
             record_type = fields[0]
 
-            # PATIENT
-            if record_type == 'P':
-                if len(fields) > 3:
-                    current_sample = fields[3].strip()
+            if record_type == 'O':
+                current_sample = fields[2] if len(fields) > 2 else current_sample
 
-            # ORDER
-            elif record_type == 'O':
-                if len(fields) > 2:
-                    current_sample = fields[2].strip()
+            elif record_type == 'P' and not current_sample:
+                current_sample = fields[3] if len(fields) > 3 else current_sample
 
-            # RESULT
             elif record_type == 'R':
                 try:
-                    test_field = fields[2]  # ^^^111
-                    value = fields[3]
-                    units = fields[4]
-                    flag = fields[6]
-                    status = fields[8]
+                    test_field = fields[2] if len(fields) > 2 else ''
+                    value = fields[3] if len(fields) > 3 else ''
+                    units = fields[4] if len(fields) > 4 else ''
+                    flag = fields[6] if len(fields) > 6 else ''
+                    status = fields[8] if len(fields) > 8 else ''
 
-                    # Extraer código de test
                     test_code = test_field.split('^')[-1]
 
                     results.append({
@@ -53,7 +52,8 @@ class CobasC111Parser(object):
                         "Status": status,
                     })
 
-                except Exception:
+                except Exception as e:
+                    print("Parser error:", str(e))
                     continue
 
         return results
