@@ -653,25 +653,29 @@ class SamplesView(ListingView):
             # --- INICIO DE TU CÓDIGO PERSONALIZADO CORREGIDO ---
 
         try:
-           is_out_of_range = False
-           full_obj = api.get_object(obj)
+             from senaite.core.catalog import ANALYSIS_CATALOG
 
-           analyses = full_obj.getAnalyses(full_objects=True)
+             is_out_of_range = False
+             analyses = ANALYSIS_CATALOG({
+               "getRequestUID": obj.UID,
+             })
 
-           for analysis in analyses:
-               if analysis.getResultOutOfRange():
-                   is_out_of_range = True
-                   break
+             for brain in analyses:
+                analysis = brain.getObject()
+                if analysis.getResultOutOfRange():
+                    is_out_of_range = True
+                    break
 
-           if is_out_of_range:
-                current_css = item.get('row_class', '')
-                item['row_class'] = current_css + ' out-of-range-row'
+             if is_out_of_range:
+                 current_css = item.get('row_class', '')
+                 item['row_class'] = current_css + ' out-of-range-row'
 
         except Exception as e:
-             import logging
-             logger = logging.getLogger("SENAITE")
-             logger.error("Error evaluando out-of-range en Sample %s: %s" % (obj.getId, str(e)))
-        return item
+              import logging
+              logger = logging.getLogger("SENAITE")
+              logger.error("Error evaluando out-of-range en Sample %s: %s" % (obj.getId, str(e)))
+               # --- FIN FIX ---
+              return item
 
     @view.memoize
     def get_object_by_uid(self, uid):
