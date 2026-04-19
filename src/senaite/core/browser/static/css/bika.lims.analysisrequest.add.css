@@ -184,8 +184,8 @@
     line-height: 1.5;
 }
 /* --- PERSONALIZACION: Muestras fuera de rango --- */
-table.listing tr.out-of-range-row {
-    background-color: #ffe6e6 !important; /* Un rojo claro para el fondo */
+.out-of-range-row {
+    background-color: red !important;
 }
 
 /* Opcional: poner el texto del ID en rojo fuerte */
