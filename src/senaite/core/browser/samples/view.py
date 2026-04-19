@@ -669,12 +669,14 @@ class SamplesView(ListingView):
              if is_out_of_range:
                  current_css = item.get('row_class', '')
                  item['row_class'] = current_css + ' out-of-range-row'
-
+             if is_out_of_range:
+                 item["getId"] = "🔥 " + str(obj.getId)
         except Exception as e:
               import logging
               logger = logging.getLogger("SENAITE")
               logger.error("Error evaluando out-of-range en Sample %s: %s" % (obj.getId, str(e)))
                # --- FIN FIX ---
+
               return item
 
     @view.memoize
