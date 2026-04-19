@@ -19,3 +19,6 @@
 .out-of-range-row {
     background-color: red !important;
 }
+tr.out-of-range-row {
+    background-color: #ffcccc !important;
+}
