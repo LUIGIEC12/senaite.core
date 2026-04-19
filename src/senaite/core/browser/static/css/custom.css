@@ -2,7 +2,6 @@
     background-color: #ffe6e6 !important;
 }
 
-.out-of-range-row td {
-    font-weight: bold;
-    color: #b30000;
+.out-of-range-row:hover {
+    background-color: #ffcccc !important;
 }
