@@ -652,29 +652,26 @@ class SamplesView(ListingView):
             item["children"] = obj.getDescendantsUIDs or []
             # --- INICIO DE TU CÓDIGO PERSONALIZADO CORREGIDO ---
 
-
         try:
-         is_out_of_range = False
+            is_out_of_range = False
 
-      # Obtener análisis del sample
-         analyses = obj.getAnalyses(full_objects=True)
+          # Obtener análisis del objeto actual
+            analyses = obj.getAnalyses(full_objects=True)
 
-         for analysis in analyses:
-            if analysis.getResultOutOfRange():
-             is_out_of_range = True
-            break
+            for analysis in analyses:
+                if analysis.getResultOutOfRange():
+                    is_out_of_range = True
+                    break
 
-         # Aplicar clase CSS a la fila
-         if is_out_of_range:
-            current_css = item.get('css_class', '')
-            item['css_class'] = (current_css + ' out-of-range-row').strip()
+          # Si hay resultados fuera de rango → marcar fila
+            if is_out_of_range:
+                current_css = item.get('css_class', '')
+                item['css_class'] = current_css + ' out-of-range-row'
 
         except Exception as e:
-            # Evita que un error rompa la vista completa
-            logger = api.get_logger(__name__)
-            logger.error(f"Error evaluando out-of-range en Sample {obj.getId}: {e}")
-
-    # --- FIN DE TU CÓDIGO PERSONALIZADO ---
+             import logging
+             logger = logging.getLogger("SENAITE")
+             logger.error("Error evaluando out-of-range en Sample %s: %s" % (obj.getId, str(e)))
         return item
 
     @view.memoize
