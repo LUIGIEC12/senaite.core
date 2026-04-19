@@ -6754,4 +6754,7 @@ button.close {
     display: none !important;
   }
 }
+tr.out-of-range-row {
+    background-color: #ffcccc !important;
+}
 /*# sourceMappingURL=bootstrap.css.map */
