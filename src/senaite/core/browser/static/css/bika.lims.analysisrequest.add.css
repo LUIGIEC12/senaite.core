@@ -193,3 +193,6 @@ table.listing tr.out-of-range-row td.ID a {
     color: #cc0000 !important;
     font-weight: bold;
 }
+tr.out-of-range-row {
+    background-color: #ffcccc !important;
+}
