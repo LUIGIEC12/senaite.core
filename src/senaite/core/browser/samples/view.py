@@ -653,9 +653,9 @@ class SamplesView(ListingView):
             # --- INICIO DE TU CÓDIGO PERSONALIZADO CORREGIDO ---
 
         try:
+            
             is_out_of_range = False
 
-          # Obtener análisis del objeto actual
             analyses = obj.getAnalyses(full_objects=True)
 
             for analysis in analyses:
@@ -663,10 +663,9 @@ class SamplesView(ListingView):
                     is_out_of_range = True
                     break
 
-          # Si hay resultados fuera de rango → marcar fila
             if is_out_of_range:
-                current_css = item.get('css_class', '')
-                item['css_class'] = current_css + ' out-of-range-row'
+                current_css = item.get('class', '')
+                item['class'] = current_css + ' out-of-range-row'
 
         except Exception as e:
              import logging
