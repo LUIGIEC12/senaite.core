@@ -653,19 +653,19 @@ class SamplesView(ListingView):
             # --- INICIO DE TU CÓDIGO PERSONALIZADO CORREGIDO ---
 
         try:
-            
-            is_out_of_range = False
+           is_out_of_range = False
+           full_obj = api.get_object(obj)
 
-            analyses = obj.getAnalyses(full_objects=True)
+           analyses = full_obj.getAnalyses(full_objects=True)
 
-            for analysis in analyses:
-                if analysis.getResultOutOfRange():
-                    is_out_of_range = True
-                    break
+           for analysis in analyses:
+               if analysis.getResultOutOfRange():
+                   is_out_of_range = True
+                   break
 
-            if is_out_of_range:
-                current_css = item.get('class', '')
-                item['class'] = current_css + ' out-of-range-row'
+           if is_out_of_range:
+                current_css = item.get('row_class', '')
+                item['row_class'] = current_css + ' out-of-range-row'
 
         except Exception as e:
              import logging
